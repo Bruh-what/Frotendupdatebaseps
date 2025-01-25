@@ -1,11 +1,12 @@
-import React, { useState } from "react"
-import { Upload, Plus } from "lucide-react"
-import { Input } from "../../components/_Common/Input"
-import { Textarea } from "../../components/_Common/TextArea"
-import { Card, CardContent } from "../../components/_Common/Card"
-import { Label } from "../../components/_Common/Label"
-import axios from "axios"
-import { supabase } from "../../lib/supabaseClient"
+import React, { useState } from "react";
+import { Upload, Plus } from "lucide-react";
+import { Input } from "../../components/_Common/Input";
+import { Textarea } from "../../components/_Common/TextArea";
+import { Card, CardContent } from "../../components/_Common/Card";
+import { Label } from "../../components/_Common/Label";
+import axios from "axios";
+import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
 
 export default function CreateOpportunity() {
   const [formData, setFormData] = useState({
@@ -17,33 +18,33 @@ export default function CreateOpportunity() {
     duration: 3,
     benefits: "",
     image: null, // Optional image field
-  })
+  });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
     if (file) {
       setFormData((prev) => ({
         ...prev,
         image: file,
-      }))
+      }));
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { data, error } = await supabase.auth.getSession()
-    const token = data.session.access_token
-    let userid = data.session.user.id
-    let athleteName = data.session.user.user_metadata.full_name
+    const { data, error } = await supabase.auth.getSession();
+    const token = data.session.access_token;
+    let userid = data.session.user.id;
+    let athleteName = data.session.user.user_metadata.full_name;
 
     // Construct JSON object from formData
     const opportunityData = {
@@ -56,23 +57,27 @@ export default function CreateOpportunity() {
       priceAsk: formData.priceAsk,
       duration: formData.duration,
       benefits: formData.benefits,
-    }
+    };
 
     try {
-      const response = await axios.post("/api/opportunities", opportunityData, {
-        headers: {
-          "Content-Type": "application/json", // Set Content-Type to JSON
-          Authorization: `Bearer ${token}`, // Include Supabase token
-        },
-      })
+      const response = await PROSPONSER.post(
+        "/opportunities",
+        opportunityData,
+        {
+          headers: {
+            "Content-Type": "application/json", // Set Content-Type to JSON
+            Authorization: `Bearer ${token}`, // Include Supabase token
+          },
+        }
+      );
 
-      console.log("Opportunity created:", response.data)
-      alert("Opportunity created successfully!")
+      console.log("Opportunity created:", response.data);
+      alert("Opportunity created successfully!");
     } catch (error) {
-      console.error("Error creating opportunity:", error)
-      alert("Failed to create opportunity.")
+      console.error("Error creating opportunity:", error);
+      alert("Failed to create opportunity.");
     }
-  }
+  };
 
   return (
     <div className="container px-4 py-8 max-w-3xl">
@@ -234,5 +239,5 @@ export default function CreateOpportunity() {
         </div>
       </form>
     </div>
-  )
+  );
 }

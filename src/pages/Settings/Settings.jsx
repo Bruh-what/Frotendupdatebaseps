@@ -355,7 +355,7 @@ export default function Settings() {
 
       const userId = sessionData.session.user.id;
 
-      const response = await PROSPONSER.get(`/api/athletes/profile/${userId}`, {
+      const response = await PROSPONSER.get(`/athletes/profile/${userId}`, {
         headers: {
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
