@@ -427,11 +427,11 @@
 // };
 
 // export default OpportunitiesTable;
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Eye, Trash2, Plus } from 'lucide-react';
-import { supabase } from '../../lib/supabaseClient';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { Eye, Trash2, Plus } from "lucide-react";
+import { supabase } from "../../lib/supabaseClient";
 
 const OpportunitiesTable = () => {
   const [opportunities, setOpportunities] = useState([]);
@@ -439,26 +439,26 @@ const OpportunitiesTable = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getStatusColor = (opportunity) => {
-    if (!opportunity.isActive) return 'bg-red-100 text-red-800';
+    if (!opportunity.isActive) return "bg-red-100 text-red-800";
 
     const relatedContract = contracts.find(
       (contract) => contract.opportunityId === opportunity._id
     );
 
     if (relatedContract) {
-      if (relatedContract.status.toLowerCase() === 'active') {
-        return 'bg-green-100 text-green-800';
+      if (relatedContract.status.toLowerCase() === "active") {
+        return "bg-green-100 text-green-800";
       }
-      if (relatedContract.status.toLowerCase() === 'pending') {
-        return 'bg-yellow-100 text-yellow-800';
+      if (relatedContract.status.toLowerCase() === "pending") {
+        return "bg-yellow-100 text-yellow-800";
       }
     }
 
-    return 'bg-blue-100 text-blue-800';
+    return "bg-blue-100 text-blue-800";
   };
 
   const getStatusText = (opportunity) => {
-    if (!opportunity.isActive) return 'Closed';
+    if (!opportunity.isActive) return "Closed";
 
     const relatedContract = contracts.find(
       (contract) => contract.opportunityId === opportunity._id
@@ -466,8 +466,8 @@ const OpportunitiesTable = () => {
 
     if (relatedContract) {
       // Show Closed instead of Pending
-      if (relatedContract.status.toLowerCase() === 'pending') {
-        return 'Closed';
+      if (relatedContract.status.toLowerCase() === "pending") {
+        return "Closed";
       }
       return (
         relatedContract.status.charAt(0).toUpperCase() +
@@ -475,7 +475,7 @@ const OpportunitiesTable = () => {
       );
     }
 
-    return 'Open';
+    return "Open";
   };
 
   const fetchData = async () => {
@@ -485,8 +485,8 @@ const OpportunitiesTable = () => {
       const userId = sessionData.session.user.id;
 
       const [opportunitiesResponse, contractsResponse] = await Promise.all([
-        axios.post(
-          '/api/opportunities/getopportunities',
+        PROSPONSER.post(
+          "/opportunities/getopportunities",
           { athleteId: userId },
           {
             headers: {
@@ -494,7 +494,7 @@ const OpportunitiesTable = () => {
             },
           }
         ),
-        axios.get('/api/contracts', {
+        axios.get("/api/contracts", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -504,7 +504,7 @@ const OpportunitiesTable = () => {
       setOpportunities(opportunitiesResponse.data);
       setContracts(contractsResponse.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
     }
