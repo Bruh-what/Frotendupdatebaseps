@@ -632,11 +632,11 @@ const OpportunitiesTable = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Opportunities</h2>
         <Link
-          to="/opportunities/create"
-          className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+          to="/CreateOpportunity"
+          className="flex items-center gap-1 bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-4 rounded-full shadow-xs"
         >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Opportunity
+          <Plus className="w-4 h-4" />
+          <span>Create Opportunity</span>
         </Link>
       </div>
 
