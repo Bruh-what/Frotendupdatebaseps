@@ -486,7 +486,7 @@ const OpportunitiesTable = () => {
 
       const [opportunitiesResponse, contractsResponse] = await Promise.all([
         axios.post(
-          "api/opportunities/getopportunities",
+          "/opportunities/getopportunities",
           { athleteId: userId },
           {
             headers: {
