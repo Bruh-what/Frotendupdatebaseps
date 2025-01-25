@@ -158,7 +158,7 @@ import { supabase } from "../../lib/supabaseClient";
 import axios from "axios";
 import { Card, CardContent } from "../../components/_Common/Card";
 import { Badge } from "../../components/_Common/Badge";
-
+import { PROSPONSER } from "../../https/config";
 // export default function ContractsPage() {
 //   const navigate = useNavigate();
 //   const [contracts, setContracts] = useState([]);
@@ -653,7 +653,7 @@ export default function ContractsPage() {
   const handleAcceptContract = async (contractId) => {
     try {
       setAcceptingId(contractId);
-      const response = await axios.put(`/api/contracts/${contractId}/accept`);
+      const response = await PROSPONSER.put(`/contracts/${contractId}/accept`);
 
       if (response.data) {
         // Update the specific contract in state
@@ -701,7 +701,7 @@ export default function ContractsPage() {
         setUserRole(role);
         setUserId(userId);
 
-        const response = await axios.get("/api/contracts", {
+        const response = await PROSPONSER.get("/contracts", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${sessionData.session.access_token}`,

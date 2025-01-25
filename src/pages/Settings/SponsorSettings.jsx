@@ -327,7 +327,7 @@ import { Label } from "../../components/_Common/Label";
 import { Input } from "../../components/_Common/Input";
 import { Textarea } from "../../components/_Common/TextArea";
 import { supabase } from "../../lib/supabaseClient";
-import axios from "axios";
+import { PROSPONSER } from "../../https/config";
 
 export default function SponsorSettings() {
   const [formData, setFormData] = useState({
@@ -347,7 +347,7 @@ export default function SponsorSettings() {
 
       const userId = sessionData.session.user.id;
 
-      const response = await axios.get(`/api/sponsors/profile/${userId}`, {
+      const response = await PROSPONSER.get(`/sponsors/profile/${userId}`, {
         headers: {
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
@@ -386,7 +386,7 @@ export default function SponsorSettings() {
         ...formData,
       };
 
-      const response = await axios.post("/api/sponsors/profile", payload, {
+      const response = await PROSPONSER.post("/sponsors/profile", payload, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionData.session.access_token}`,

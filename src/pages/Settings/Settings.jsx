@@ -329,7 +329,7 @@ import { useState, useEffect } from "react";
 import { Input } from "../../components/_Common/Input";
 import { Textarea } from "../../components/_Common/TextArea";
 import { supabase } from "../../lib/supabaseClient";
-import axios from "axios";
+import { PROSPONSER } from "../../https/config";
 
 export default function Settings() {
   const [formData, setFormData] = useState({
@@ -355,7 +355,7 @@ export default function Settings() {
 
       const userId = sessionData.session.user.id;
 
-      const response = await axios.get(`/api/athletes/profile/${userId}`, {
+      const response = await PROSPONSER.get(`/api/athletes/profile/${userId}`, {
         headers: {
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
@@ -389,7 +389,7 @@ export default function Settings() {
         ...formData,
       };
 
-      const response = await axios.post("/api/athletes/profile", payload, {
+      const response = await PROSPONSER.post("/athletes/profile", payload, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionData.session.access_token}`,
