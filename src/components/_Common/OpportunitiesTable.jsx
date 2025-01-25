@@ -432,6 +432,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Eye, Trash2, Plus } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
 
 const OpportunitiesTable = () => {
   const [opportunities, setOpportunities] = useState([]);
@@ -485,7 +486,7 @@ const OpportunitiesTable = () => {
       const userId = sessionData.session.user.id;
 
       const [opportunitiesResponse, contractsResponse] = await Promise.all([
-        axios.post(
+        PROSPONSER.post(
           "/opportunities/getopportunities",
           { athleteId: userId },
           {
@@ -494,7 +495,7 @@ const OpportunitiesTable = () => {
             },
           }
         ),
-        axios.get("/api/contracts", {
+        PROSPONSER.get("/api/contracts", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import Statcards from './Statcards';
-import { ProfileViews } from './ProfileViews';
-import MessagesContainer from './MessagesContainer';
-import OpportunitiesTable from './OpportunitiesTable';
+import Statcards from "./Statcards";
+import { ProfileViews } from "./ProfileViews";
+import MessagesContainer from "./MessagesContainer";
+import OpportunitiesTable from "./OpportunitiesTable";
 
 function Grid() {
   return (
     <>
       <div className="px-4 text-2xl font-bold mb-6">
-        {' '}
+        {" "}
         <h1>Hey, welcome back!</h1>
       </div>
       <div className="px-4 flex gap-6 mt-4 flex-col pb-6">

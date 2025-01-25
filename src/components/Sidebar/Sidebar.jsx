@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import {
   BriefcaseBusiness,
   CreditCard,
@@ -6,23 +6,23 @@ import {
   LayoutDashboard,
   Mail,
   Settings2,
-} from "lucide-react"
-import { NavLink } from "react-router-dom"
-import logo from "../../assets/logofinalised.svg"
-import Search from "../../components/_Common/Search"
-import { useNavigate } from "react-router-dom"
-import { supabase } from "../../lib/supabaseClient"
+} from "lucide-react";
+import { NavLink } from "react-router-dom";
+import logo from "../../assets/logofinalised.svg";
+import Search from "../../components/_Common/Search";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabaseClient";
 const Sidebar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error("Error signing out:", error.message)
-      return
+      console.error("Error signing out:", error.message);
+      return;
     }
-    navigate("/login") // Redirect to login page after logout
-  }
+    navigate("/login"); // Redirect to login page after logout
+  };
   return (
     <div className="flex flex-col p-6 w-[200px] gap-6 border-r-[1px] border-gray-100 items-center">
       <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto" />
@@ -48,8 +48,8 @@ const Sidebar = () => {
         </li>
       </ul>
     </div>
-  )
-}
+  );
+};
 
 // Reusable NavItem Component
 const NavItem = ({ to, label, Icon }) => (
@@ -64,6 +64,6 @@ const NavItem = ({ to, label, Icon }) => (
     <Icon className="w-5 h-4" />
     <li>{label}</li>
   </NavLink>
-)
+);
 
-export default Sidebar
+export default Sidebar;
