@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { role } = useAuth();
   return (
     <>
-      <div className="bg-white w-full pb-4 mt-8 ">
+      <div className="bg-white w-full p-4 mt-4">
         {/* <Topbar /> */}
         {role === "athlete" ? <Grid /> : <GridSponsor />}
       </div>

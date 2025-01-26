@@ -24,10 +24,16 @@ const Sidebar = () => {
     navigate("/login"); // Redirect to login page after logout
   };
   return (
-    <div className="flex flex-col p-6 w-[200px] gap-6 border-r-[1px] border-gray-100 items-center">
-      <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto" />
+    <div className="flex flex-col p-6 w-[300px] gap-6 border-r-[1px] border-gray-100 items-center">
+      {/* <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto " /> */}
+      <img
+        src={logo}
+        alt="Prosponsor Logo"
+        className="w-24 h-auto cursor-pointer mb-4"
+        onClick={() => (window.location.href = "https://prosponsor.co.uk")}
+      />
       {/* <h3 className="text-xl font-bold text-[#151515] p-2">Prosponsor</h3> */}
-      <Search />
+      {/* <Search /> */}
       <ul className="flex flex-col gap-3 text-gray-900 w-full mb-[200px]">
         <NavItem to="/" label="Dashboard" Icon={LayoutDashboard} />
         <NavItem to="/messages" label="Messages" Icon={Mail} />
@@ -37,7 +43,11 @@ const Sidebar = () => {
           Icon={BriefcaseBusiness}
         />
         <NavItem to="/contracts" label="Contracts" Icon={File} />
-        <NavItem to="/settings" label="Settings" Icon={Settings2} />
+        <NavItem
+          to="/settings"
+          label={<span className="whitespace-nowrap">Account Settings</span>}
+          Icon={Settings2}
+        />
         <NavItem to="/billing" label="Billing" Icon={CreditCard} />
         <li
           onClick={handleLogout}

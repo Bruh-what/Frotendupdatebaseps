@@ -644,16 +644,16 @@ const OpportunitiesTable = () => {
         {opportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="flex items-center justify-between p-4 rounded-2xl bg-gray-50"
+            className="flex items-center justify-between p-3 rounded-2xl bg-gray-50"
           >
-            <div className="space-y-1">
+            <div className="space-y-1 flex flex-row gap-2">
               <h3 className="font-medium text-gray-900">{opportunity.title}</h3>
               <div className="flex items-center space-x-4">
                 <p className="text-sm text-gray-500">
                   ${opportunity.priceAsk?.toLocaleString()}
                 </p>
-                <span className="text-sm text-gray-400">•</span>
-                <p className="text-sm text-gray-500">{opportunity.sport}</p>
+                {/* <span className="text-sm text-gray-400">•</span>
+                <p className="text-sm text-gray-500">{opportunity.sport}</p> */}
               </div>
             </div>
 
@@ -668,6 +668,7 @@ const OpportunitiesTable = () => {
 
               <Link
                 to={`/opportunities/${opportunity._id}`}
+                state={{ opportunity }}
                 className="p-2 text-gray-500 hover:text-gray-700"
               >
                 <Eye className="w-4 h-4" />

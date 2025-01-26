@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
 import axios from "axios";
 import { format } from "date-fns";
+import { PROSPONSER } from "../../https/config";
 
 export default function ContractDetails() {
   const [contract, setContract] = useState(null);

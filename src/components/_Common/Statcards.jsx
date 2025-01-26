@@ -214,11 +214,11 @@
 
 // export default Statcards;
 
-import React, { useState, useEffect } from 'react';
-import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
-import { supabase } from '../../lib/supabaseClient';
-import axios from 'axios';
-import { PROSPONSER } from '../../https/config';
+import React, { useState, useEffect } from "react";
+import { FiTrendingDown, FiTrendingUp } from "react-icons/fi";
+import { supabase } from "../../lib/supabaseClient";
+import axios from "axios";
+import { PROSPONSER } from "../../https/config";
 
 function Statcards() {
   // Initialize with null to distinguish between loading and zero values
@@ -238,11 +238,11 @@ function Statcards() {
         const userId = sessionData.session.user.id;
 
         const [contractsResponse, opportunitiesResponse] = await Promise.all([
-          PROSPONSER.get('/contracts', {
+          PROSPONSER.get("/contracts", {
             headers: { Authorization: `Bearer ${token}` },
           }),
           PROSPONSER.post(
-            '/opportunities/getopportunities',
+            "/opportunities/getopportunities",
             { athleteId: userId },
             { headers: { Authorization: `Bearer ${token}` } }
           ),
@@ -254,7 +254,7 @@ function Statcards() {
         );
 
         const activeContracts = userContracts.filter(
-          (contract) => contract.status.toLowerCase() === 'active'
+          (contract) => contract.status.toLowerCase() === "active"
         );
 
         const totalEarnings = activeContracts.reduce(
@@ -263,7 +263,7 @@ function Statcards() {
         );
 
         const pendingContracts = userContracts.filter(
-          (contract) => contract.status.toLowerCase() === 'pending'
+          (contract) => contract.status.toLowerCase() === "pending"
         ).length;
 
         if (isMounted) {
@@ -274,7 +274,7 @@ function Statcards() {
           });
         }
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        console.error("Error fetching stats:", error);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -297,29 +297,29 @@ function Statcards() {
       <Card
         title="Total Earnings"
         value={`$${stats.totalEarnings.toLocaleString()}`}
-        pillText={`${stats.totalEarnings > 0 ? '+' : ''}${
+        pillText={`${stats.totalEarnings > 0 ? "+" : ""}${
           stats.totalEarnings
         }%`}
-        trend={stats.totalEarnings > 0 ? 'up' : 'down'}
-        period="From Jan 1st - Jul 31st"
+        trend={stats.totalEarnings > 0 ? "up" : "down"}
+        // period="From Jan 1st - Jul 31st"
       />
       <Card
         title="Opportunities Posted"
         value={stats.totalOpportunities}
-        pillText={`${stats.totalOpportunities > 0 ? '+' : ''}${
+        pillText={`${stats.totalOpportunities > 0 ? "+" : ""}${
           stats.totalOpportunities
         }%`}
-        trend={stats.totalOpportunities > 0 ? 'up' : 'down'}
-        period="From Jan 1st - Jul 31st"
+        trend={stats.totalOpportunities > 0 ? "up" : "down"}
+        // period="From Jan 1st - Jul 31st"
       />
       <Card
         title="Pending Offers"
         value={stats.pendingContracts}
-        pillText={`${stats.pendingContracts > 0 ? '+' : ''}${
+        pillText={`${stats.pendingContracts > 0 ? "+" : ""}${
           stats.pendingContracts
         }%`}
-        trend={stats.pendingContracts > 0 ? 'up' : 'down'}
-        period="From Jan 1st - Jul 31st"
+        trend={stats.pendingContracts > 0 ? "up" : "down"}
+        // period="From Jan 1st - Jul 31st"
       />
     </div>
   );
@@ -338,12 +338,12 @@ const Card = (props) => {
 
         <span
           className={`text-xs flex items-center gap-1 font-medium px-2 py-1 rounded ${
-            trend === 'up'
-              ? 'bg-green-100 text-green-700'
-              : 'bg-red-100 text-red-700'
+            trend === "up"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
           }`}
         >
-          {trend === 'up' ? <FiTrendingUp /> : <FiTrendingDown />} {pillText}
+          {trend === "up" ? <FiTrendingUp /> : <FiTrendingDown />} {pillText}
         </span>
       </div>
 

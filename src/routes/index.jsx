@@ -22,6 +22,7 @@ import useAuth from "../hooks/useAuth";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ContractDetails from "../pages/Contracts/ContractDetails";
 import UserProfile from "../components/_Common/UserProfile.jsx";
+import OpportunityDetails from "../pages/Opportunities/OpportunityDetails.jsx";
 
 const AppRoutes = () => {
   const { isAuthenticated, loading, role } = useAuth();
@@ -51,6 +52,7 @@ const AppRoutes = () => {
             role === "athlete" ? <Opportunities /> : <SponsorOpportunities />
           }
         />
+
         <Route path="/Contracts" element={<Contracts />} />
         <Route
           path="/Settings"
@@ -58,6 +60,7 @@ const AppRoutes = () => {
         />
         <Route path="/Billing" element={<Billing />} />
         <Route path="/CreateOpportunity" element={<CreateOpportunity />} />
+        <Route path="/opportunities/:id" element={<OpportunityDetails />} />
         <Route
           path="/SponsorOpportunities"
           element={<SponsorOpportunities />}
