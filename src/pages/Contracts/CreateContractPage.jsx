@@ -5,6 +5,7 @@ import { Input } from "../../components/_Common/Input";
 import { Textarea } from "../../components/_Common/TextArea";
 import { Label } from "../../components/_Common/Label";
 import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
 
 export default function CreateContractPage() {
   const location = useLocation();
@@ -118,6 +119,33 @@ export default function CreateContractPage() {
       });
 
       console.log("Contract created successfully:", response.data);
+
+      // Create message with contract data
+      // const messageData = {
+      //   senderId: sponsorId,
+      //   receiverId: opportunity.athleteId,
+      //   content: `New contract offer for ${opportunity.title}`,
+      //   messageType: "contract", // Add message type
+      //   contractData: {
+      //     _id: response.data._id,
+      //     title: opportunity.title,
+      //     sport: opportunity.sport,
+      //     totalPrice: formData.totalPrice,
+      //     milestones: formData.milestones,
+      //     status: "pending",
+      //     opportunityId: opportunity._id,
+      //     athleteId: opportunity.athleteId,
+      //     sponsorId: sponsorId,
+      //   },
+      // };
+
+      // // Send message with contract data
+      // await PROSPONSER.post("/messages", messageData, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     "Content-Type": "application/json",
+      //   },
+      // });
 
       // Navigate to success page or contracts list
       navigate("/contracts", {
