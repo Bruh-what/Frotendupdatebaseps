@@ -71,7 +71,7 @@ function Statcards() {
         value={`$${totalSpending.toLocaleString()}`}
         pillText="2.75%"
         trend="up"
-        period="From Jan 1st - Jul 31st"
+        // period="From Jan 1st - Jul 31st"
       />
       <Card
         title="Active contracts"
@@ -80,7 +80,7 @@ function Statcards() {
           activeContractsCount > 0 ? "+" : ""
         }${activeContractsCount}%`}
         trend={activeContractsCount > 0 ? "up" : "down"}
-        period="From Jan 1st - Jul 31st"
+        // period="From Jan 1st - Jul 31st"
       />
       <Card
         title="Pending contracts"
@@ -89,7 +89,7 @@ function Statcards() {
           pendingContractsCount > 0 ? "+" : ""
         }${pendingContractsCount}%`}
         trend={pendingContractsCount > 0 ? "up" : "down"}
-        period="Previous 365 days"
+        // period="Previous 365 days"
       />
     </>
   );
