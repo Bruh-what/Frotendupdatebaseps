@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import logo from "../../assets/logofinalised.svg";
 
-export default function SignUp() {
+export default function Signup() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
