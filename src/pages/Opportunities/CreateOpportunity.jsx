@@ -4,7 +4,6 @@ import { Input } from "../../components/_Common/Input";
 import { Textarea } from "../../components/_Common/TextArea";
 import { Card, CardContent } from "../../components/_Common/Card";
 import { Label } from "../../components/_Common/Label";
-import axios from "axios";
 import { supabase } from "../../lib/supabaseClient";
 import { PROSPONSER } from "../../https/config";
 

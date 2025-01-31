@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Instagram, Twitter, Globe, Users } from "lucide-react";
+import { PROSPONSER } from "../../https/config";
 
 export default function UserProfile() {
   const { userId } = useParams();
@@ -13,7 +14,8 @@ export default function UserProfile() {
         const {
           data: { session },
         } = await supabase.auth.getSession();
-        const response = await axios.get(`/api/profiles/${userId}`, {
+        // const response = await axios.get(`/api/profiles/${userId}`, {
+        const response = await PROSPONSER.get(`/api/profiles/${userId}`, {
           headers: {
             Authorization: `Bearer ${session.access_token}`,
           },

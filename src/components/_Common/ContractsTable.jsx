@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Eye } from 'lucide-react';
-import { supabase } from '../../lib/supabaseClient';
-import { PROSPONSER } from '../../https/config';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Eye } from "lucide-react";
+import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
 
 const ContractsTable = () => {
   const [contracts, setContracts] = useState([]);
@@ -11,14 +10,14 @@ const ContractsTable = () => {
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'active':
-        return 'bg-green-100 text-green-800';
-      case 'completed':
-        return 'bg-blue-100 text-blue-800';
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "active":
+        return "bg-green-100 text-green-800";
+      case "completed":
+        return "bg-blue-100 text-blue-800";
       default:
-        return 'bg-gray-100 text-gray-800';
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -27,12 +26,12 @@ const ContractsTable = () => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      if (!session) throw new Error('No authenticated session');
+      if (!session) throw new Error("No authenticated session");
 
-      const response = await PROSPONSER.get('/contracts', {
+      const response = await PROSPONSER.get("/contracts", {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
@@ -42,7 +41,7 @@ const ContractsTable = () => {
       );
       setContracts(userContracts);
     } catch (error) {
-      console.error('Error fetching contracts:', error);
+      console.error("Error fetching contracts:", error);
     } finally {
       setLoading(false);
     }
@@ -64,9 +63,9 @@ const ContractsTable = () => {
         {contracts.map((contract) => (
           <div
             key={contract._id}
-            className="flex items-center justify-between p-4 rounded-2xl bg-gray-50"
+            className="flex items-center justify-between p-3 rounded-xl bg-gray-50"
           >
-            <div className="space-y-1">
+            <div className="space-y-1 flex flex-row gap-2">
               <h3 className="font-medium text-gray-900">
                 {contract.sport} Contract
               </h3>
@@ -81,7 +80,6 @@ const ContractsTable = () => {
                 </p> */}
               </div>
             </div>
-
             <div className="flex items-center gap-4">
               <span
                 className={`px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(

@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '../../components/_Common/Avatar';
-import { Badge } from '../../components/_Common/Badge';
-import axios from 'axios';
-import { supabase } from '../../lib/supabaseClient';
-import { Link } from 'react-router-dom';
-import { PROSPONSER } from '../../https/config';
+} from "../../components/_Common/Avatar";
+import { Badge } from "../../components/_Common/Badge";
+import { supabase } from "../../lib/supabaseClient";
+import { Link } from "react-router-dom";
+import { PROSPONSER } from "../../https/config";
 
 export default function SponsorOpportunitiesPage() {
   const [opportunities, setOpportunities] = useState([]);
@@ -17,22 +16,46 @@ export default function SponsorOpportunitiesPage() {
   const [error, setError] = useState(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
-  const [messageText, setMessageText] = useState('');
-
+  const [messageText, setMessageText] = useState("");
+  const [athleteProfiles, setAthleteProfiles] = useState({});
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchOpportunities();
-  }, []);
+  const fetchAthleteAvatar = async (athleteId) => {
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const response = await PROSPONSER.get(`/athletes/profile/${athleteId}`, {
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
+      setAthleteProfiles((prev) => ({
+        ...prev,
+        [athleteId]: response.data,
+      }));
+    } catch (error) {
+      console.error("Error fetching athlete avatar:", error);
+    }
+  };
 
   const fetchOpportunities = async () => {
     try {
       setLoading(true);
-      const response = await PROSPONSER.get('/opportunities/all');
+      const { data: sessionData } = await supabase.auth.getSession();
+      const response = await PROSPONSER.get("/opportunities/all", {
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
       setOpportunities(response.data);
+
+      response.data.forEach((opp) => {
+        if (opp.athleteId) {
+          fetchAthleteAvatar(opp.athleteId);
+        }
+      });
     } catch (error) {
-      console.error('Error fetching opportunities:', error);
-      setError('Failed to fetch opportunities.');
+      console.error("Error fetching opportunities:", error);
+      setError("Failed to fetch opportunities.");
     } finally {
       setLoading(false);
     }
@@ -48,9 +71,8 @@ export default function SponsorOpportunitiesPage() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      if (!session) throw new Error('No authenticated session');
+      if (!session) throw new Error("No authenticated session");
 
-      // Format message data according to API requirements
       const messageData = {
         senderId: session.user.id,
         receiverId: selectedOpportunity.athleteId,
@@ -68,18 +90,17 @@ export default function SponsorOpportunitiesPage() {
         },
       };
 
-      // Send message using proper endpoint and headers
-      const response = await PROSPONSER.post('/messages', messageData, {
+      const response = await PROSPONSER.post("/messages", messageData, {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       if (response.data.success) {
         setShowMessageModal(false);
-        setMessageText('');
-        navigate('/messages', {
+        setMessageText("");
+        navigate("/messages", {
           state: {
             conversationId: response.data.conversationId,
             opportunityData: messageData.opportunityData,
@@ -87,10 +108,14 @@ export default function SponsorOpportunitiesPage() {
         });
       }
     } catch (error) {
-      console.error('Send message error:', error);
-      setError('Failed to send message.');
+      console.error("Send message error:", error);
+      setError("Failed to send message.");
     }
   };
+
+  useEffect(() => {
+    fetchOpportunities();
+  }, []);
 
   if (loading) return <div>Loading opportunities...</div>;
   if (error) return <div>{error}</div>;
@@ -107,7 +132,13 @@ export default function SponsorOpportunitiesPage() {
           >
             <div className="flex items-center mb-4">
               <Avatar>
-                <AvatarImage src={opportunity.athleteImage} />
+                <AvatarImage
+                  src={
+                    athleteProfiles[opportunity.athleteId]?.avatar ||
+                    opportunity.athleteImage
+                  }
+                  alt={opportunity.athleteName}
+                />
                 <AvatarFallback>{opportunity.athleteName[0]}</AvatarFallback>
               </Avatar>
               <div className="ml-3">
@@ -152,7 +183,7 @@ export default function SponsorOpportunitiesPage() {
               <button
                 onClick={() => {
                   setShowMessageModal(false);
-                  setMessageText('');
+                  setMessageText("");
                 }}
                 className="px-4 py-2 rounded-full bg-gray-100 text-gray-900"
               >

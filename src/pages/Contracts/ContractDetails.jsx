@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
-import axios from "axios";
 import { format } from "date-fns";
 import { PROSPONSER } from "../../https/config";
 
@@ -19,7 +18,7 @@ export default function ContractDetails() {
         } = await supabase.auth.getSession();
         if (!session) throw new Error("No authenticated session");
 
-        const response = await axios.get(`/api/contracts/${id}`, {
+        const response = await PROSPONSER.get(`/contracts/${id}`, {
           headers: {
             Authorization: `Bearer ${session.access_token}`,
             "Content-Type": "application/json",

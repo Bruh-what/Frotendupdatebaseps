@@ -12,6 +12,7 @@ import logo from "../../assets/logofinalised.svg";
 import Search from "../../components/_Common/Search";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
+import { FaSignOutAlt } from "react-icons/fa";
 const Sidebar = () => {
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ const Sidebar = () => {
           onClick={handleLogout}
           className="flex flex-row gap-1 items-center p-2 pr-4 rounded-md cursor-pointer hover:bg-gray-100 text-gray-900"
         >
-          <CreditCard className="w-5 h-4" />
+          <FaSignOutAlt className="w-5 h-4" />
           Log Out
         </li>
       </ul>

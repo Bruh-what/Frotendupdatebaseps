@@ -2,21 +2,7 @@ import React, { useEffect, useState } from "react";
 import messageService from "../../services/messageService";
 
 const MessagesContainer = () => {
-  const [messages, setMessages] = useState([
-    // {
-    //   id: 1,
-    //   avatar: "https://api.dicebear.com/9.x/pixel-art-neutral/svg?seed=Ryker",
-    //   message: "Hey are we still open to this?",
-    //   status: "Open",
-    // },
-    // {
-    //   id: 2,
-    //   avatar:
-    //     "https://api.dicebear.com/9.x/pixel-art-neutral/svg?seed=Mackenzie",
-    //   message: "Would $1500 work?",
-    //   status: "Open",
-    // },
-  ]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const fetchMessages = async () => {

@@ -110,7 +110,7 @@ import { useParams } from "react-router-dom";
 import { Instagram, Twitter, Youtube } from "lucide-react";
 import { Badge } from "../../components/_Common/Badge";
 import { supabase } from "../../lib/supabaseClient";
-import axios from "axios";
+import { PROSPONSER } from "../../https/config";
 
 export default function AthletePage() {
   const { athleteId } = useParams();
@@ -124,7 +124,7 @@ export default function AthletePage() {
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session) throw new Error("No authenticated session");
 
-      const response = await axios.get(`/api/athletes/profile/${athleteId}`, {
+      const response = await PROSPONSER.get(`/athletes/profile/${athleteId}`, {
         headers: {
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
