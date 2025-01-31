@@ -7,7 +7,7 @@ import Messages from "../pages/Messages/Messages";
 import Opportunities from "../pages/Opportunities/Opportunities";
 import Contracts from "../pages/Contracts/Contracts";
 import Settings from "../pages/Settings/Settings";
-import SignUp from "../pages/Signup/SignUp.jsx";
+import SignUp from "../pages/SignUp/Signup.jsx";
 import Billing from "../pages/Billing/Billing";
 import TopBar from "../components/Topbar/Topbar";
 import CreateOpportunity from "../pages/Opportunities/CreateOpportunity";
