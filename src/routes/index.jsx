@@ -7,7 +7,7 @@ import Messages from "../pages/Messages/Messages";
 import Opportunities from "../pages/Opportunities/Opportunities";
 import Contracts from "../pages/Contracts/Contracts";
 import Settings from "../pages/Settings/Settings";
-import SignUp from "../pages/Signup/Signup.jsx";
+import Signup from "../pages/Signup/Signup.jsx";
 import Billing from "../pages/Billing/Billing";
 import TopBar from "../components/Topbar/Topbar";
 import CreateOpportunity from "../pages/Opportunities/CreateOpportunity";
@@ -70,7 +70,7 @@ const AppRoutes = () => {
         {/* <Route path="/SponsorSettings" element={<SponsorSettings />} /> */}
         <Route path="/AnalyticsPage" element={<AnalyticsPage />} />
         <Route path="/AthletePage" element={<AthletePage />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<SignIn />} />
         {/* <Route path="/profile/:userId" element={<UserProfile />} /> */}
       </Routes>
