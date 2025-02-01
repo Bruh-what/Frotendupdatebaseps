@@ -69,7 +69,8 @@ const AppRoutes = () => {
         <Route path="/CreateContractPage" element={<CreateContractPage />} />
         {/* <Route path="/SponsorSettings" element={<SponsorSettings />} /> */}
         <Route path="/AnalyticsPage" element={<AnalyticsPage />} />
-        <Route path="/AthletePage" element={<AthletePage />} />
+        <Route path="/athlete/:athleteId" element={<AthletePage />} />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<SignIn />} />
         {/* <Route path="/profile/:userId" element={<UserProfile />} /> */}

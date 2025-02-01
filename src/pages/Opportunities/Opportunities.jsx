@@ -100,7 +100,7 @@ export default function MyOpportunitiesPage() {
                   <Badge variant="outline">{opportunity.duration} Months</Badge>
                 </div>
                 <p className="text-lg font-bold">
-                  ${opportunity.priceAsk.toLocaleString()}
+                  £{opportunity.priceAsk.toLocaleString()}
                 </p>
               </CardContent>
               <CardFooter className="bg-[#FEFEFE] p-4 flex items-center justify-between">

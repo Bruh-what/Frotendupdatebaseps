@@ -254,7 +254,7 @@ export default function ContractDetails() {
         <div className="p-5 border-b border-gray-100">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
             <h1 className="text-xl font-semibold text-gray-800">
-              {contract.sport} Contract
+              {contract.opportunityTitle || contract.sport} contract
             </h1>
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${

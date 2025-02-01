@@ -163,9 +163,12 @@ export default function AthletePage() {
         <div className="flex flex-col md:flex-row gap-6 items-start">
           <div className="relative">
             <img
-              src={`https://api.dicebear.com/7.x/initials/svg?seed=${athleteData.firstName} ${athleteData.lastName}`}
+              src={
+                athleteData.avatar ||
+                `https://api.dicebear.com/7.x/initials/svg?seed=${athleteData.firstName} ${athleteData.lastName}`
+              }
               alt={`${athleteData.firstName} ${athleteData.lastName}`}
-              className="h-32 w-32 rounded-full border-4 border-white shadow-lg"
+              className="h-16 w-16 object-cover rounded-full"
             />
           </div>
 
@@ -181,7 +184,6 @@ export default function AthletePage() {
               </div>
               <p className="text-gray-600">{athleteData.email}</p>
             </div>
-
             <div className="flex gap-4">
               {athleteData.instagram && (
                 <a
@@ -202,22 +204,42 @@ export default function AthletePage() {
                 </a>
               )}
             </div>
-
             <p className="text-gray-600">{athleteData.bio}</p>
 
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mt-6">
-              {athleteData.images?.map((image, index) => (
-                <div
-                  key={index}
-                  className="aspect-square rounded-lg overflow-hidden"
-                >
-                  <img
-                    src={image}
-                    alt={`Portfolio ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold mb-4">Gallery</h3>
+              <div className="grid grid-cols-5 gap-4">
+                {[...Array(5)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="aspect-square rounded-lg overflow-hidden bg-gray-100"
+                  >
+                    {athleteData.images && athleteData.images[index] ? (
+                      <img
+                        src={athleteData.images[index]}
+                        alt={`Gallery image ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        <svg
+                          className="h-8 w-8"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -169,12 +169,13 @@ export default function SponsorSettings() {
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Company Name</Label>
+                <Label>Your Name / Company Name</Label>
                 <Input
                   name="companyName"
                   value={formData.companyName}
                   onChange={handleChange}
                   required
+                  className="rounded-lg"
                 />
               </div>
 
@@ -185,6 +186,7 @@ export default function SponsorSettings() {
                   value={formData.website}
                   onChange={handleChange}
                   type="url"
+                  className="rounded-lg"
                 />
               </div>
 
@@ -194,7 +196,7 @@ export default function SponsorSettings() {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="min-h-[150px]"
+                  className="min-h-[150px] rounded-lg"
                 />
               </div>
             </div>

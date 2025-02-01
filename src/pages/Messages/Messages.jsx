@@ -2204,16 +2204,29 @@ export default function Messages() {
   const [newMessage, setNewMessage] = useState("");
   const [acceptingContractId, setAcceptingContractId] = useState(null);
 
+  // useEffect(() => {
+  //   const initializeMessages = async () => {
+  //     await fetchConversations();
+  //     if (location.state?.selectedConversation) {
+  //       handleConversationSelect(location.state.selectedConversation);
+  //     }
+  //   };
+  //   initializeMessages();
+  // }, []);
   useEffect(() => {
     const initializeMessages = async () => {
       await fetchConversations();
       if (location.state?.selectedConversation) {
-        handleConversationSelect(location.state.selectedConversation);
+        await handleConversationSelect(location.state.selectedConversation);
+        // Initialize contracts if provided
+        if (location.state?.initialContracts) {
+          setContracts(location.state.initialContracts);
+        }
       }
     };
+
     initializeMessages();
   }, []);
-
   useEffect(() => {
     const combined = [
       ...messages.map((msg) => ({

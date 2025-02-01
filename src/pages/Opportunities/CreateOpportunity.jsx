@@ -90,7 +90,7 @@ export default function CreateOpportunity() {
             <CardContent className="p-6">
               <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
               <div className="space-y-4">
-                <div>
+                <div className="space-y-2">
                   <Label>Opportunity Title</Label>
                   <Input
                     name="title"
@@ -98,24 +98,25 @@ export default function CreateOpportunity() {
                     onChange={handleInputChange}
                     placeholder="e.g., Summer Motocross Championship Sponsorship"
                     required
+                    className="rounded-lg"
                   />
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label>Description</Label>
                   <Textarea
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
                     placeholder="Describe the sponsorship opportunity in detail..."
-                    className="min-h-[100px]"
+                    className="min-h-[100px] rounded-lg"
                     required
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label>Sport Category</Label>
+                  <div className="space-y-2">
+                    {/* <Label>Sport Category</Label>
                     <select
                       name="sport"
                       value={formData.sport}
@@ -125,16 +126,26 @@ export default function CreateOpportunity() {
                       <option value="motocross">Motocross</option>
                       <option value="cycling">Cycling</option>
                       <option value="running">Running</option>
-                    </select>
+                    </select> */}
+                    <Label>Sport Category</Label>
+                    <Input
+                      name="sport"
+                      value={formData.sport}
+                      onChange={handleInputChange}
+                      placeholder="Enter sport category..."
+                      className="w-full h-10 px-3  border border-input bg-background rounded-lg"
+                      required
+                    />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label>Location</Label>
                     <Input
                       name="location"
                       value={formData.location}
                       onChange={handleInputChange}
-                      placeholder="e.g., California, USA"
+                      placeholder="e.g., London, UK"
                       required
+                      className="rounded-lg"
                     />
                   </div>
                 </div>
@@ -149,21 +160,23 @@ export default function CreateOpportunity() {
               </h2>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
+                  <div className="space-y-2">
                     <Label>Duration</Label>
                     <select
                       name="duration"
                       value={formData.duration}
                       onChange={handleInputChange}
-                      className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                      className="w-full h-10 px-3 rounded-lg border border-input bg-background"
                     >
+                      <option value={12}>14 days</option>
+                      <option value={12}>1 month</option>
                       <option value={3}>3 months</option>
                       <option value={6}>6 months</option>
                       <option value={12}>12 months</option>
                     </select>
                   </div>
-                  <div>
-                    <Label>Budget (USD)</Label>
+                  <div className="space-y-2">
+                    <Label>Budget (£)</Label>
                     <Input
                       name="priceAsk"
                       type="number"
@@ -175,14 +188,14 @@ export default function CreateOpportunity() {
                   </div>
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label>Sponsorship Benefits</Label>
                   <Textarea
                     name="benefits"
                     value={formData.benefits}
                     onChange={handleInputChange}
                     placeholder="List the benefits sponsors will receive..."
-                    className="min-h-[100px]"
+                    className="min-h-[100px] rounded-lg"
                     required
                   />
                 </div>
@@ -190,7 +203,7 @@ export default function CreateOpportunity() {
             </CardContent>
           </Card>
 
-          <Card>
+          {/* <Card>
             <CardContent className="p-6">
               <h2 className="text-lg font-semibold mb-4">Media</h2>
               <div className="space-y-4">
@@ -219,7 +232,7 @@ export default function CreateOpportunity() {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <div className="flex justify-end gap-4 pb-6">
             <button

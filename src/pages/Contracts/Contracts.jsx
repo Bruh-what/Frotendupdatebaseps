@@ -157,7 +157,7 @@ export default function ContractsPage() {
               <CardContent className="p-6 space-y-4">
                 <div className="flex justify-between items-start">
                   <h2 className="text-xl font-semibold">
-                    {contract.title || contract.sport}
+                    {contract.opportunityTitle || "Untitled Opportunity"}
                   </h2>
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
@@ -180,8 +180,7 @@ export default function ContractsPage() {
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Sponsor</span>
                     <span className="font-medium">
-                      {userProfiles[contract.sponsorId]?.firstName}{" "}
-                      {userProfiles[contract.sponsorId]?.lastName}
+                      {userProfiles[contract.sponsorId]?.companyName}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
@@ -212,7 +211,7 @@ export default function ContractsPage() {
                     View Details
                   </button>
 
-                  {contract.athleteId === userId &&
+                  {/* {contract.athleteId === userId &&
                   contract.status === "pending" ? (
                     <button
                       onClick={() => handleAcceptContract(contract._id)}
@@ -238,6 +237,58 @@ export default function ContractsPage() {
                           }`
                         )
                       }
+                      className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white py-2 px-4 rounded-full text-sm font-medium"
+                    >
+                      Message{" "}
+                      {userId === contract.athleteId ? "Sponsor" : "Athlete"}
+                    </button>
+                  )} */}
+                  {contract.athleteId === userId &&
+                  contract.status === "pending" ? (
+                    <button
+                      onClick={() => handleAcceptContract(contract._id)}
+                      disabled={acceptingId === contract._id}
+                      className={`flex-1 ${
+                        acceptingId === contract._id
+                          ? "bg-green-300"
+                          : "bg-green-700 hover:bg-green-800"
+                      } text-white py-2 px-4 rounded-full text-sm font-medium`}
+                    >
+                      {acceptingId === contract._id
+                        ? "Accepting..."
+                        : "Accept Offer"}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        // First fetch contracts for this conversation
+                        const otherUserId =
+                          userId === contract.athleteId
+                            ? contract.sponsorId
+                            : contract.athleteId;
+
+                        // Pass both conversation and contracts data
+                        navigate("/messages", {
+                          state: {
+                            selectedConversation: {
+                              userId: otherUserId,
+                              name:
+                                userId === contract.athleteId
+                                  ? userProfiles[contract.sponsorId]
+                                      ?.companyName || "Sponsor"
+                                  : `${
+                                      userProfiles[contract.athleteId]
+                                        ?.firstName || ""
+                                    } ${
+                                      userProfiles[contract.athleteId]
+                                        ?.lastName || ""
+                                    }` || "Athlete",
+                            },
+                            // Pass the relevant contract for initialization
+                            initialContracts: [contract],
+                          },
+                        });
+                      }}
                       className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white py-2 px-4 rounded-full text-sm font-medium"
                     >
                       Message{" "}

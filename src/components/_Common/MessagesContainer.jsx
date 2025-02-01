@@ -128,10 +128,22 @@ const MessagesContainer = () => {
     fetchConversations();
   }, []);
 
+  // const handleConversationClick = (conversation) => {
+  //   navigate("/messages", {
+  //     state: {
+  //       selectedConversation: conversation,
+  //     },
+  //   });
+  // };
   const handleConversationClick = (conversation) => {
     navigate("/messages", {
       state: {
-        selectedConversation: conversation,
+        selectedConversation: {
+          userId: conversation.userId,
+          name: conversation.name,
+        },
+        // Pass the contract data like we do in Contracts.jsx
+        initialContracts: conversation.contracts || [],
       },
     });
   };

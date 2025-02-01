@@ -160,7 +160,7 @@ export default function OpportunityDetails() {
               </p>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-4">
+            {/* <div className="bg-gray-50 rounded-lg p-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <span className="text-gray-500">Opportunity ID: </span>
@@ -175,7 +175,7 @@ export default function OpportunityDetails() {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex justify-end gap-4 pt-4">
               <button

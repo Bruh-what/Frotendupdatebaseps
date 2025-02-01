@@ -98,6 +98,7 @@ export default function CreateContractPage() {
         athleteId: opportunity.athleteId,
         sponsorId: sponsorId,
         opportunityId: opportunity._id,
+        opportunityTitle: opportunity.title,
         sport: opportunity.sport,
         totalPrice: parseFloat(formData.totalPrice),
         milestones: formData.milestones.map((milestone) => ({
@@ -193,7 +194,7 @@ export default function CreateContractPage() {
         )}
 
         {/* Opportunity Preview */}
-        <div className="card bg-white shadow-sm rounded-lg">
+        <div className="card bg-gray-50  rounded-lg shadow-md">
           <div className="card-content p-4">
             <div className="flex gap-4">
               <div className="flex-1 space-y-2">
@@ -236,7 +237,7 @@ export default function CreateContractPage() {
                     totalPrice: e.target.value,
                   }))
                 }
-                className="input pl-7"
+                className="input pl-7 rounded-lg"
                 required
               />
             </div>
@@ -257,7 +258,7 @@ export default function CreateContractPage() {
                       onChange={(e) =>
                         handleMilestoneChange(i, "description", e.target.value)
                       }
-                      className="textarea min-h-[100px]"
+                      className="textarea min-h-[100px] rounded-lg"
                       placeholder="Enter milestone description"
                       required
                     />
