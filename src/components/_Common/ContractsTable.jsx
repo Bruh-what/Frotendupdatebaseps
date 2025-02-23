@@ -67,13 +67,13 @@ const ContractsTable = () => {
           >
             <div className="space-y-1 flex flex-row gap-2">
               <h3 className="font-medium text-gray-900">
-                {contract.sport} Contract
+                {contract.opportunityTitle || "Untitled Opportunity"}
               </h3>
               <div className="flex items-center space-x-4">
                 <p className="text-sm text-gray-500">
                   ${contract.totalPrice?.toLocaleString()}
                 </p>
-                <span className="text-sm text-gray-400">•</span>
+
                 {/* <p className="text-sm text-gray-500">
                   Milestones: {contract.completedMilestones}/
                   {contract.totalMilestones}

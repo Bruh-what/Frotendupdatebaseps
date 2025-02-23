@@ -96,7 +96,7 @@ export default function CreateOpportunity() {
                     name="title"
                     value={formData.title}
                     onChange={handleInputChange}
-                    placeholder="e.g., Summer Motocross Championship Sponsorship"
+                    placeholder="Summer Motocross Championship Sponsorship"
                     required
                     className="rounded-lg"
                   />
@@ -143,7 +143,7 @@ export default function CreateOpportunity() {
                       name="location"
                       value={formData.location}
                       onChange={handleInputChange}
-                      placeholder="e.g., London, UK"
+                      placeholder="London, UK"
                       required
                       className="rounded-lg"
                     />
@@ -182,7 +182,7 @@ export default function CreateOpportunity() {
                       type="number"
                       value={formData.priceAsk}
                       onChange={handleInputChange}
-                      placeholder="e.g., 5000"
+                      placeholder="5000"
                       required
                     />
                   </div>

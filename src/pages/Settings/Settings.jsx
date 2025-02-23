@@ -365,7 +365,7 @@ export default function Settings() {
         ...formData,
       };
 
-      const response = await PROSPONSER.post("athletes/profile", payload, {
+      const response = await PROSPONSER.post("/athletes/profile", payload, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionData.session.access_token}`,

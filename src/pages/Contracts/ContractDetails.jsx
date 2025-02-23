@@ -254,7 +254,7 @@ export default function ContractDetails() {
         <div className="p-5 border-b border-gray-100">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
             <h1 className="text-xl font-semibold text-gray-800">
-              {contract.opportunityTitle || contract.sport} contract
+              Contract details
             </h1>
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${
@@ -333,7 +333,7 @@ export default function ContractDetails() {
             <div className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
               <p className="text-sm text-gray-500">Total Value</p>
               <p className="text-lg font-medium text-gray-800">
-                ${contract.totalPrice.toLocaleString()}
+                £{contract.totalPrice.toLocaleString()}
               </p>
             </div>
             <div className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">

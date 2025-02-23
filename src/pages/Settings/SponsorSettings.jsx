@@ -129,12 +129,12 @@ export default function SponsorSettings() {
       <div className="flex-1 space-y-6 w-[800px]">
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-lg font-semibold mb-4">Company Information</h2>
+            <h2 className="text-lg font-semibold mb-4">Sponsor Information</h2>
 
             {/* Avatar Upload Section */}
             <div className="mb-6 space-y-2">
               <label className="block text-sm font-medium text-gray-700">
-                Company Logo
+                Sponsor Profile Image
               </label>
               <div className="flex items-center space-x-4">
                 <div className="shrink-0">
