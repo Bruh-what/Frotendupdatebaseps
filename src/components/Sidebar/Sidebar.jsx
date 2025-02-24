@@ -29,7 +29,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col p-6 w-[300px] gap-6 border-r-[1px] border-gray-100 items-center">
+    <div className="flex flex-col p-6 w-[300px] justify-between gap-6 border-r-[1px] border-gray-100 items-center">
       {/* <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto " /> */}
       <img
         src={logo}

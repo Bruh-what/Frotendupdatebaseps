@@ -2449,7 +2449,7 @@ export default function Messages() {
     setSearch(e.target.value);
   };
   const filteredApi = conversations.filter((data) =>
-    data.name.toLowerCase().includes(search.toLowerCase())
+    (data.name || "").toLowerCase().includes((search || "").toLowerCase())
   );
 
   return (
@@ -2471,7 +2471,7 @@ export default function Messages() {
           <SearchIcon className="w-5 text-[#64748B]" />
         </div>
 
-        {filteredApi.map((conversation) => (
+        {filteredApi?.map((conversation) => (
           <div
             key={conversation.userId}
             onClick={() => handleConversationSelect(conversation)}
