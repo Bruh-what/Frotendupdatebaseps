@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import { Label } from "../../components/_Common/Label";
-import { Input } from "../../components/_Common/Input";
-import { Textarea } from "../../components/_Common/TextArea";
-import { supabase } from "../../lib/supabaseClient";
-import { PROSPONSER } from "../../https/config";
+import { useState, useEffect } from 'react';
+import { Label } from '../../components/_Common/Label';
+import { Input } from '../../components/_Common/Input';
+import { Textarea } from '../../components/_Common/TextArea';
+import { supabase } from '../../lib/supabaseClient';
+import { PROSPONSER } from '../../https/config';
 
 export default function SponsorSettings() {
   const [formData, setFormData] = useState({
-    companyName: "",
-    website: "",
-    description: "",
+    companyName: '',
+    website: '',
+    description: '',
     images: [],
-    avatar: "", // Added avatar field
+    avatar: '', // Added avatar field
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
   const [avatarUploading, setAvatarUploading] = useState(false);
 
   const handleAvatarUpload = async (e) => {
@@ -36,11 +36,11 @@ export default function SponsorSettings() {
         };
 
         const response = await PROSPONSER.post(
-          "/sponsors/profile",
+          '/sponsors/profile',
           updatedProfile,
           {
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${sessionData.session.access_token}`,
             },
           }
@@ -49,8 +49,8 @@ export default function SponsorSettings() {
         setFormData(response.data.data);
       };
     } catch (error) {
-      console.error("Error uploading avatar:", error);
-      alert("Failed to upload image");
+      console.error('Error uploading avatar:', error);
+      alert('Failed to upload image');
     } finally {
       setAvatarUploading(false);
     }
@@ -60,7 +60,7 @@ export default function SponsorSettings() {
     try {
       setLoading(true);
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error("No authenticated session");
+      if (!sessionData.session) throw new Error('No authenticated session');
 
       const userId = sessionData.session.user.id;
 
@@ -74,8 +74,14 @@ export default function SponsorSettings() {
         setFormData(response.data.data);
       }
     } catch (error) {
-      console.error("Error fetching profile:", error);
-      setError(error.message);
+      console.error('Error fetching profile:', error);
+      setFormData({
+        companyName: '',
+        website: '',
+        description: '',
+        images: [],
+        avatar: '', // Added avatar field
+      });
     } finally {
       setLoading(false);
     }
@@ -89,7 +95,7 @@ export default function SponsorSettings() {
     e.preventDefault();
     try {
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error("No authenticated session");
+      if (!sessionData.session) throw new Error('No authenticated session');
 
       const userId = sessionData.session.user.id;
 
@@ -98,18 +104,18 @@ export default function SponsorSettings() {
         ...formData,
       };
 
-      const response = await PROSPONSER.post("sponsors/profile", payload, {
+      const response = await PROSPONSER.post('sponsors/profile', payload, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
       });
 
       setFormData(response.data.data);
-      alert("Profile updated successfully!");
+      alert('Profile updated successfully!');
     } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("Failed to update profile.");
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile.');
     }
   };
 
@@ -122,7 +128,6 @@ export default function SponsorSettings() {
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-6 p-6">

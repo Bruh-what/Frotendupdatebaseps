@@ -16,6 +16,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../feature/auth/auth.action";
 import toast from "react-hot-toast";
+import UpgradeToPro from "../upgradePro";
 const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -35,7 +36,7 @@ const Sidebar = () => {
       />
       {/* <h3 className="text-xl font-bold text-[#151515] p-2">Prosponsor</h3> */}
       {/* <Search /> */}
-      <ul className="flex flex-col gap-3 text-gray-900 w-full mb-[200px]">
+      <ul className="flex flex-col gap-3 text-[#111827] font-medium w-full">
         <NavItem to="/" label="Dashboard" Icon={LayoutDashboard} />
         <NavItem to="/messages" label="Messages" Icon={Mail} />
         <NavItem
@@ -50,6 +51,9 @@ const Sidebar = () => {
           Icon={Settings2}
         />
         <NavItem to="/billing" label="Billing" Icon={CreditCard} />
+      </ul>
+      <div className="flex flex-col gap-20 mt-14">
+        <UpgradeToPro />
         <li
           onClick={handleLogout}
           className="flex flex-row gap-1 items-center p-2 pr-4 rounded-md cursor-pointer hover:bg-gray-100 text-gray-900"
@@ -57,7 +61,7 @@ const Sidebar = () => {
           <FaSignOutAlt className="w-5 h-4" />
           Log Out
         </li>
-      </ul>
+      </div>
     </div>
   );
 };
@@ -68,7 +72,7 @@ const NavItem = ({ to, label, Icon }) => (
     to={to}
     className={({ isActive }) =>
       `flex flex-row gap-1 items-center p-2 pr-4 rounded-md ${
-        isActive ? "bg-gray-100  text-gray-900" : "hover:bg-gray-100"
+        isActive ? "bg-[#111827]  text-[#F9FAFB]" : "hover:bg-gray-100"
       }`
     }
   >
