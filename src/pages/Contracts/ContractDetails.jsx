@@ -176,11 +176,12 @@
 //     </div>
 //   );
 // }
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { format } from "date-fns";
-import { supabase } from "../../lib/supabaseClient";
-import { PROSPONSER } from "../../https/config";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { format } from 'date-fns';
+import { supabase } from '../../lib/supabaseClient';
+import { PROSPONSER } from '../../https/config';
+import toast from 'react-hot-toast';
 
 export default function ContractDetails() {
   const [contract, setContract] = useState(null);
@@ -196,7 +197,7 @@ export default function ContractDetails() {
         const {
           data: { session },
         } = await supabase.auth.getSession();
-        if (!session) throw new Error("No authenticated session");
+        if (!session) throw new Error('No authenticated session');
 
         const contractResponse = await PROSPONSER.get(`/contracts/${id}`, {
           headers: {
@@ -231,7 +232,7 @@ export default function ContractDetails() {
           setSponsorDetails(sponsorResponse.data.data);
         }
       } catch (error) {
-        setError("Failed to load contract details");
+        setError('Failed to load contract details');
       } finally {
         setLoading(false);
       }
@@ -239,6 +240,37 @@ export default function ContractDetails() {
 
     fetchAllDetails();
   }, [id]);
+
+  const handlePayment = async (milestone) => {
+    try {
+      await PROSPONSER.post(
+        `/contracts/${id}/request-payment/${milestone._id}`
+      );
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) throw new Error('No authenticated session');
+
+      const contractResponse = await PROSPONSER.get(`/contracts/${id}`, {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (contractResponse.data) {
+        const contractData = contractResponse?.data?.data;
+        setContract(contractData);
+      }
+
+      toast.success('payment recieved');
+    } catch (error) {
+      console.error(
+        'Payment request failed:',
+        error.response?.data || error.message
+      );
+      toast.error('payment error');
+    }
+  };
 
   if (loading)
     return <div className="p-6 text-center">Loading contract details...</div>;
@@ -258,11 +290,11 @@ export default function ContractDetails() {
             </h1>
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${
-                contract.status === "active"
-                  ? "bg-green-100 text-green-800"
-                  : contract.status === "pending"
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-gray-100 text-gray-800"
+                contract.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : contract.status === 'pending'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-gray-100 text-gray-800'
               }`}
             >
               {contract.status.charAt(0).toUpperCase() +
@@ -271,7 +303,7 @@ export default function ContractDetails() {
           </div>
           <div className="flex flex-wrap gap-3 text-sm text-gray-500">
             <span>
-              Created: {format(new Date(contract.createdAt), "MMM d, yyyy")}
+              Created: {format(new Date(contract.createdAt), 'MMM d, yyyy')}
             </span>
             <span>•</span>
             <span>ID: {contract.id}</span>
@@ -291,13 +323,13 @@ export default function ContractDetails() {
                   <p className="font-medium text-gray-800">
                     {athleteDetails
                       ? `${athleteDetails.firstName} ${athleteDetails.lastName}`
-                      : "Loading..."}
+                      : 'Loading...'}
                   </p>
                 </div>
                 <div className="hover:bg-gray-50 p-2 rounded-md transition-colors">
                   <p className="text-sm text-gray-500">Sponsor</p>
                   <p className="font-medium text-gray-800">
-                    {sponsorDetails ? sponsorDetails.companyName : "Loading..."}
+                    {sponsorDetails ? sponsorDetails.companyName : 'Loading...'}
                   </p>
                 </div>
               </div>
@@ -310,13 +342,13 @@ export default function ContractDetails() {
                 <div className="hover:bg-gray-50 p-2 rounded-md transition-colors">
                   <p className="text-sm text-gray-500">Start Date</p>
                   <p className="font-medium text-gray-800">
-                    {format(new Date(contract.duration.start), "MMM d, yyyy")}
+                    {format(new Date(contract.duration.start), 'MMM d, yyyy')}
                   </p>
                 </div>
                 <div className="hover:bg-gray-50 p-2 rounded-md transition-colors">
                   <p className="text-sm text-gray-500">End Date</p>
                   <p className="font-medium text-gray-800">
-                    {format(new Date(contract.duration.end), "MMM d, yyyy")}
+                    {format(new Date(contract.duration.end), 'MMM d, yyyy')}
                   </p>
                 </div>
               </div>
@@ -373,19 +405,23 @@ export default function ContractDetails() {
                         {milestone.description}
                       </p>
                       <p className="text-xs text-gray-500 mt-1">
-                        Due:{" "}
-                        {format(new Date(milestone.dueDate), "MMM d, yyyy")}
+                        Due:{' '}
+                        {format(new Date(milestone.dueDate), 'MMM d, yyyy')}
                       </p>
                     </div>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        milestone.status === "completed"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-gray-200 text-gray-600"
-                      }`}
-                    >
-                      {milestone.status.charAt(0).toUpperCase() +
-                        milestone.status.slice(1)}
+                    <span>
+                      {milestone.status === 'pending' ? (
+                        <button
+                          onClick={() => handlePayment(milestone)}
+                          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                        >
+                          Request Payment of ${milestone.price}
+                        </button>
+                      ) : (
+                        <span className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+                          ${milestone?.price} Amount Recieved
+                        </span>
+                      )}
                     </span>
                   </div>
                 </div>
