@@ -70,17 +70,17 @@ function Grid() {
   return (
     <>
       <div className="flex justify-end gap-2 items-center">
+        <div className="flex gap-2 pr-2">
+          <div>
+            {' '}
+            <img src={msg} alt="msg" width="100%" />
+          </div>
+          <div>
+            <img src={bell} alt="bell" width="100%" />
+          </div>
+        </div>
         {profileData?.avatar ? (
           <>
-            <div className="flex gap-2 pr-2">
-              <div>
-                {' '}
-                <img src={msg} alt="msg" width="100%" />
-              </div>
-              <div>
-                <img src={bell} alt="bell" width="100%" />
-              </div>
-            </div>
             <div>
               <p className="text-[12px] font-[500] text-[#9CA3AF]">
                 James Murray
