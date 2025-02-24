@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Label } from '../../components/_Common/Label';
-import { Input } from '../../components/_Common/Input';
-import { Textarea } from '../../components/_Common/TextArea';
-import { supabase } from '../../lib/supabaseClient';
-import { PROSPONSER } from '../../https/config';
+import { useState, useEffect } from "react";
+import { Label } from "../../components/_Common/Label";
+import { Input } from "../../components/_Common/Input";
+import { Textarea } from "../../components/_Common/TextArea";
+import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
 
 export default function SponsorSettings() {
   const [formData, setFormData] = useState({
-    companyName: '',
-    website: '',
-    description: '',
+    companyName: "",
+    website: "",
+    email: "",
+    description: "",
     images: [],
-    avatar: '', // Added avatar field
+    avatar: "",
+    link: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -36,11 +38,11 @@ export default function SponsorSettings() {
         };
 
         const response = await PROSPONSER.post(
-          '/sponsors/profile',
+          "/sponsors/profile",
           updatedProfile,
           {
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
               Authorization: `Bearer ${sessionData.session.access_token}`,
             },
           }
@@ -49,8 +51,8 @@ export default function SponsorSettings() {
         setFormData(response.data.data);
       };
     } catch (error) {
-      console.error('Error uploading avatar:', error);
-      alert('Failed to upload image');
+      console.error("Error uploading avatar:", error);
+      alert("Failed to upload image");
     } finally {
       setAvatarUploading(false);
     }
@@ -60,7 +62,7 @@ export default function SponsorSettings() {
     try {
       setLoading(true);
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error('No authenticated session');
+      if (!sessionData.session) throw new Error("No authenticated session");
 
       const userId = sessionData.session.user.id;
 
@@ -74,13 +76,15 @@ export default function SponsorSettings() {
         setFormData(response.data.data);
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      console.error("Error fetching profile:", error);
       setFormData({
-        companyName: '',
-        website: '',
-        description: '',
+        companyName: "",
+        website: "",
+        description: "",
         images: [],
-        avatar: '', // Added avatar field
+        avatar: "",
+        link: "",
+        email: "",
       });
     } finally {
       setLoading(false);
@@ -95,7 +99,7 @@ export default function SponsorSettings() {
     e.preventDefault();
     try {
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error('No authenticated session');
+      if (!sessionData.session) throw new Error("No authenticated session");
 
       const userId = sessionData.session.user.id;
 
@@ -104,18 +108,18 @@ export default function SponsorSettings() {
         ...formData,
       };
 
-      const response = await PROSPONSER.post('sponsors/profile', payload, {
+      const response = await PROSPONSER.post("sponsors/profile", payload, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
       });
 
       setFormData(response.data.data);
-      alert('Profile updated successfully!');
+      alert("Profile updated successfully!");
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Failed to update profile.');
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile.");
     }
   };
 
@@ -130,78 +134,130 @@ export default function SponsorSettings() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-6 p-6">
+    <form onSubmit={handleSubmit} className="flex gap-6 p-6 w-[75rem]">
       <div className="flex-1 space-y-6 w-[800px]">
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-lg font-semibold mb-4">Sponsor Information</h2>
-
-            {/* Avatar Upload Section */}
+          <div className="bg-white p-6 rounded-lg">
+            <h2 className="text-[24px] font-semibold mb-4">Profile settings</h2>
             <div className="mb-6 space-y-2">
-              <label className="block text-sm font-medium text-gray-700">
-                Sponsor Profile Image
+              <label className="block text-[16px] font-medium text-[#111827]">
+                Sponsor Profile
               </label>
               <div className="flex items-center space-x-4">
                 <div className="shrink-0">
                   {formData.avatar ? (
                     <img
                       src={formData.avatar}
-                      alt="Company Logo"
-                      className="h-16 w-16 object-cover rounded-full"
+                      alt="Avatar"
+                      className="h-16 w-16 object-cover rounded-full cursor-pointer"
+                      onClick={() =>
+                        document.getElementById("avatar-input").click()
+                      }
                     />
                   ) : (
-                    <div className="h-16 w-16 rounded-full bg-gray-200" />
+                    <div
+                      className="h-16 w-16 rounded-full bg-gray-200 cursor-pointer"
+                      onClick={() =>
+                        document.getElementById("avatar-input").click()
+                      }
+                    />
                   )}
                 </div>
-                <Input
+                <input
+                  id="avatar-input"
                   type="file"
                   accept="image/*"
                   onChange={handleAvatarUpload}
                   disabled={avatarUploading}
-                  className="block w-full h-full py-2 text-sm text-slate-500 border-none
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-violet-50 file:text-violet-700
-                    hover:file:bg-violet-100 
-                    focus:outline-none focus:ring-0"
+                  className="hidden"
                 />
                 {avatarUploading && (
                   <p className="text-sm text-gray-500">Uploading...</p>
                 )}
+                <div>
+                  <label className="block text-[16px] font-medium text-[#111827]">
+                    Profile picture
+                  </label>
+                  <p className="text-sm text-gray-500">
+                    Use a profile picture to stand out. Upload an image that is
+                    312px
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label>Your Name / Company Name</Label>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2 col-span-2">
+                <label className="block text-[16px] font-medium text-[#111827]">
+                  Display name
+                </label>
+                <p className="text-sm text-gray-500">
+                  How your name will appear to other members.
+                </p>
                 <Input
                   name="companyName"
                   value={formData.companyName}
                   onChange={handleChange}
                   required
-                  className="rounded-lg"
+                  className="bg-[#F3F4F6]"
                 />
               </div>
-
               <div className="space-y-2">
-                <Label>Website</Label>
+                <label className="block text-[16px] font-medium text-[#111827]">
+                  Email address{" "}
+                </label>
+                <p className="text-sm text-gray-500">
+                  Your primary email. Used for contracts.{" "}
+                </p>
+                <Input
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="bg-[#F3F4F6]"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-[16px] font-medium text-[#111827]">
+                  Business website{" "}
+                </label>
+                <p className="text-sm text-gray-500">
+                  Your official brand’s website.{" "}
+                </p>
                 <Input
                   name="website"
                   value={formData.website}
                   onChange={handleChange}
-                  type="url"
-                  className="rounded-lg"
+                  required
+                  className="bg-[#F3F4F6]"
                 />
               </div>
-
-              <div className="space-y-2">
-                <Label>Description</Label>
+              <div className="space-y-2 col-span-2">
+                <label className="block text-[16px] font-medium text-[#111827]">
+                  Brand bio{" "}
+                </label>
+                <p className="text-sm text-gray-500">
+                  This will be visible to athletes. We recommend you list all
+                  your company info here. Feel free to list past sponsorships
+                </p>
                 <Textarea
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="min-h-[150px] rounded-lg"
+                  className="h-[10rem] w-full bg-[#F3F4F6]"
+                />
+              </div>
+              <div className="space-y-2 col-span-2">
+                <label className="block text-[16px] font-medium text-[#111827]">
+                  Instagram profile link{" "}
+                </label>
+
+                <Input
+                  name="link"
+                  value={formData.link}
+                  onChange={handleChange}
+                  required
+                  className="bg-[#F3F4F6]"
                 />
               </div>
             </div>
@@ -211,14 +267,12 @@ export default function SponsorSettings() {
             <button
               type="button"
               onClick={() => fetchSponsorProfile()}
-              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
-            >
+              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
-            >
+              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
               Save changes
             </button>
           </div>
