@@ -8,10 +8,12 @@ export default function Settings() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    surname: "",
     email: "",
     gender: "",
     dateOfBirth: "",
     age: "",
+    username: "",
     instagram: "",
     tiktok: "",
     youtube: "",
@@ -23,8 +25,22 @@ export default function Settings() {
   });
 
   const [loading, setLoading] = useState(true);
-
   const [avatarUploading, setAvatarUploading] = useState(false);
+
+  const calculateAge = (dateOfBirth) => {
+    if (!dateOfBirth) return "";
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age.toString();
+  };
 
   const handleAvatarUpload = async (e) => {
     try {
@@ -82,7 +98,12 @@ export default function Settings() {
       });
 
       if (response.data) {
-        setFormData(response.data);
+        const profileData = response.data;
+        const age = calculateAge(profileData.dateOfBirth);
+        setFormData({
+          ...profileData,
+          age: age,
+        });
       }
     } catch (error) {
       setLoading(false);
@@ -91,10 +112,12 @@ export default function Settings() {
       setFormData({
         firstName: "",
         lastName: "",
+        surname: "",
         email: "",
         gender: "",
         dateOfBirth: "",
         age: "",
+        username: "",
         instagram: "",
         tiktok: "",
         youtube: "",
@@ -212,8 +235,8 @@ export default function Settings() {
                 How your name will appear to other members.
               </p>
               <Input
-                name="firstName"
-                value={formData.firstName}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
@@ -225,8 +248,8 @@ export default function Settings() {
               </label>
               <p className="text-sm text-gray-500">Your official first name</p>
               <Input
-                name="lastName"
-                value={formData.lastName}
+                name="firstName"
+                value={formData.firstName}
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
@@ -238,9 +261,8 @@ export default function Settings() {
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
               <Input
-                type="email"
-                name="email"
-                value={formData.email}
+                name="surname"
+                value={formData.surname}
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
@@ -263,7 +285,7 @@ export default function Settings() {
               />
             </div>
             <div className="space-y-2">
-              <label className="block text-[16px] font-medium text-[#111827]">
+              <label className=" text-[16px] font-medium text-[#111827]">
                 Age
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
