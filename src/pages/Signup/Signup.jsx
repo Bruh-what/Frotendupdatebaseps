@@ -1,66 +1,46 @@
-import { useState } from "react";
-import { supabase } from "../../lib/supabaseClient";
+import { useEffect, useState } from "react";
+// import { supabase } from "../../lib/supabaseClient";
 import logo from "../../assets/logofinalised.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { signupUser } from "../../feature/auth/auth.action";
+import { clearAuthMessages } from "../../feature/auth/auth.slicer";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const naviage = useNavigate();
+  const dispatch = useDispatch();
+  const { IsRegisterLoading, error, success } = useSelector(
+    (state) => state.auth
+  );
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    role: "athlete", // Default role set to athlete
+    role: "athlete",
   });
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSignup = async (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
-    console.log(formData);
-
-    try {
-      const { data: signUpData, error: signUpError } =
-        await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-          options: {
-            data: {
-              full_name: formData.firstName + " " + formData.lastName,
-            },
-          },
-        });
-
-      if (signUpError) {
-        setError(signUpError.message);
-        return;
-      }
-
-      const { user } = signUpData;
-      const { error: profileError } = await supabase.from("profiles").insert([
-        {
-          uid: user.id,
-          role: formData.role, // Use the selected role
-        },
-      ]);
-
-      if (profileError) {
-        setError(profileError.message);
-        return;
-      }
-
-      setSuccess(
-        "Signup successful! Please check your email for a confirmation link."
-      );
-    } catch (err) {
-      setError("Something went wrong, please try again.");
-    }
+    dispatch(clearAuthMessages());
+    dispatch(signupUser(formData));
   };
+  useEffect(() => {
+    if (success) {
+      toast.success(success);
+      naviage("/login");
+      dispatch(clearAuthMessages());
+    }
+    if (error) {
+      toast.error(error);
+      dispatch(clearAuthMessages());
+    }
+  }, [IsRegisterLoading, error, success]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-stretch">

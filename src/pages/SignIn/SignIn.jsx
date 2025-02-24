@@ -243,42 +243,44 @@
 //     </div>
 //   );
 // }
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
 import logo from "../../assets/logofinalised.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { signinUser } from "../../feature/auth/auth.action";
+import toast from "react-hot-toast";
+import { clearAuthMessages } from "../../feature/auth/auth.slicer";
 
 export default function SignIn() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { success, IsLoginLoading, error, user } = useSelector(
+    (state) => state.auth
+  );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
-  const handleSignIn = async (e) => {
+  const handleSignIn = (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
-
-    try {
-      const { data: signInData, error: signInError } =
-        await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-      if (signInError) {
-        setError(signInError.message);
-        return;
-      }
-
-      setSuccess("Sign in successful! Redirecting...");
-      console.log("Signed-in user:", signInData.user);
-      navigate("/");
-    } catch (err) {
-      setError("Something went wrong, please try again.");
-    }
+    dispatch(signinUser({ email, password }));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearAuthMessages());
+    }
+    if (success) {
+      toast.success(success);
+      setTimeout(() => {
+        navigate("/");
+        dispatch(clearAuthMessages());
+      }, 1000);
+      dispatch(clearAuthMessages());
+    }
+  }, [user, error, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-stretch">

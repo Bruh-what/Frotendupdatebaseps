@@ -23,7 +23,7 @@ export default function Settings() {
   });
 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
   const [avatarUploading, setAvatarUploading] = useState(false);
 
   const handleAvatarUpload = async (e) => {
@@ -85,8 +85,25 @@ export default function Settings() {
         setFormData(response.data);
       }
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching profile:", error);
-      setError(error.message);
+
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        gender: "",
+        dateOfBirth: "",
+        age: "",
+        instagram: "",
+        tiktok: "",
+        youtube: "",
+        x: "",
+        bio: "",
+        images: [],
+        avatar: "",
+        totalFollowers: "",
+      });
     } finally {
       setLoading(false);
     }
@@ -133,10 +150,9 @@ export default function Settings() {
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
-    <form onSubmit={handleSubmit} className="">
+    <form onSubmit={handleSubmit} className="w-[75rem] p-12">
       <div className="bg-white  ">
         <div className="p-12 pr-16">
           {" "}
@@ -182,7 +198,7 @@ export default function Settings() {
                 </label>
                 <p className="text-sm text-gray-500">
                   Use a profile picture to stand out. Upload an image that is
-                  312px square.
+                  312px square.surname
                 </p>
               </div>
             </div>
@@ -369,7 +385,7 @@ export default function Settings() {
           </div>
         </div>
         <div className="pl-12">
-          <div className="bg-white mt-4 rounded-lg shadow-sm ">
+          <div className="bg-white mt-4 rounded-lg  ">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h2 className="text-lg font-semibold">Portfolio Highlights</h2>
