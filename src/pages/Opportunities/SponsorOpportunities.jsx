@@ -175,7 +175,7 @@ export default function SponsorOpportunitiesPage() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container px-4 py-8 ">
       <h1 className="text-3xl font-bold mb-6">Sponsorship Opportunities</h1>
 
       {/* Add search bar */}
@@ -192,28 +192,13 @@ export default function SponsorOpportunitiesPage() {
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="bg-white rounded-lg shadow-md p-6"
+            className="bg-white rounded-2xl shadow-md p-6"
           >
-            <div className="flex items-center mb-4">
-              <Avatar>
-                <AvatarImage
-                  src={
-                    athleteProfiles[opportunity.athleteId]?.avatar ||
-                    opportunity.athleteImage
-                  }
-                  alt={opportunity.athleteName}
-                />
-                <AvatarFallback>{opportunity.athleteName[0]}</AvatarFallback>
-              </Avatar>
-              <div className="ml-3">
-                <h3 className="font-semibold">{opportunity.athleteName}</h3>
-                <p className="text-sm text-gray-500">{opportunity.sport}</p>
-              </div>
-            </div>
+            <h4 className="font-medium  text-[16px]">{opportunity.title}</h4>
+            <p className="text-sm mb-2 text-[12px] text-black font-medium">{opportunity.sport}</p>
 
-            <h4 className="font-medium mb-2">{opportunity.title}</h4>
-            <p className="text-gray-600 mb-4">{opportunity.description}</p>
-            <p className="text-gray-600 mb-4">£{opportunity.priceAsk}</p>
+            <p className="text-gray-600 mb-4 text-[12px]">{opportunity.description}</p>
+            <p className="text-gray-600 mb-4 text-[12px]">£{opportunity.priceAsk}</p>
             <div className="flex flex-wrap gap-2 mb-4">
               {opportunity.tags?.map((tag, index) => (
                 <Badge key={index} variant="secondary">
@@ -222,18 +207,47 @@ export default function SponsorOpportunitiesPage() {
               ))}
             </div>
 
-            <button
-              onClick={() => handleContactClick(opportunity)}
-              className="bg-[#4F46E5] hover:bg-[#4338CA] text-white py-2 px-6 rounded-full"
-            >
-              Contact
-            </button>
+            <div className="flex items-center flex-row mb-4 gap-2 justify-between max-xl:flex-col  max-sm:gap-0">
+              <div className="flex items-center max-sm:mb-2 w-full">
+
+                <Avatar>
+                  <AvatarImage
+                    src={
+                      athleteProfiles[opportunity.athleteId]?.avatar ||
+                      opportunity.athleteImage
+                    }
+                    alt={opportunity.athleteName}
+                  />
+                  <AvatarFallback>{opportunity.athleteName[0]}</AvatarFallback>
+                </Avatar>
+                      
+                <div className="ml-3 text-[8.89px]">
+                  <h3 className="font-semibold text-[12px] max-sm:text-[11px]">{opportunity.athleteName}</h3>
+                  <p className=" text-gray-500">
+                    <Link
+                      to={`/athlete/${opportunity.athleteId}`}
+                      className=" "
+                    >
+                      View Profile
+                    </Link>
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => handleContactClick(opportunity)}
+                className="bg-black hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full"
+              >
+                message
+              </button>
+            </div>
+            {/* 
             <Link
               to={`/athlete/${opportunity.athleteId}`}
               className="bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-6 rounded-full ml-2"
             >
               View Profile
-            </Link>
+            </Link> */}
           </div>
         ))}
       </div>
