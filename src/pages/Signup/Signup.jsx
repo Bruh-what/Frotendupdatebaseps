@@ -38,6 +38,7 @@ export default function Signup() {
     }
     if (error) {
       toast.error(error);
+      dispatch(clearAuthMessages());
     }
   }, [IsRegisterLoading, error, success]);
 
