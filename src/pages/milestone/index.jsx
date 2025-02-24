@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth"; // Assuming auth hook provides user role
 
 const MilestoneManager = () => {
+  const { role } = useAuth(); // Get user role ("athlete" or "sponsor")
   const [milestones, setMilestones] = useState([
     {
       id: 1,
@@ -10,6 +12,7 @@ const MilestoneManager = () => {
       amount: 7250,
       status: "Active & Funded",
       submitted: false,
+      approved: false,
     },
   ]);
 
@@ -24,10 +27,9 @@ const MilestoneManager = () => {
     description: "",
     amount: 0,
   });
-
   const [showForm, setShowForm] = useState(false);
 
-  // Add new milestone
+  // Add new milestone (Athlete only)
   const addMilestone = () => {
     if (
       newMilestone.title &&
@@ -39,23 +41,18 @@ const MilestoneManager = () => {
         title: newMilestone.title,
         description: newMilestone.description,
         amount: parseFloat(newMilestone.amount),
-        status: "Pending",
+        status: "Pending Approval",
         submitted: false,
+        approved: false,
       };
 
       setMilestones([...milestones, newMilestoneData]);
-      setEarnings((prev) => ({
-        ...prev,
-        funded: prev.funded + newMilestoneData.amount,
-      }));
-
-      // Reset form
       setNewMilestone({ title: "", description: "", amount: 0 });
       setShowForm(false);
     }
   };
 
-  // Submit work for review
+  // Submit work for review (Athlete)
   const submitForReview = (id) => {
     setMilestones((prev) =>
       prev.map((m) =>
@@ -64,11 +61,24 @@ const MilestoneManager = () => {
     );
   };
 
-  // Submit revision
-  const submitRevision = (id) => {
+  // Approve work (Sponsor)
+  const approveMilestone = (id) => {
     setMilestones((prev) =>
       prev.map((m) =>
-        m.id === id ? { ...m, status: "Revision Submitted" } : m
+        m.id === id ? { ...m, status: "Approved & Paid", approved: true } : m
+      )
+    );
+    setEarnings((prev) => ({
+      ...prev,
+      received: prev.received + milestones.find((m) => m.id === id).amount,
+    }));
+  };
+
+  // Request revision (Sponsor)
+  const requestRevision = (id) => {
+    setMilestones((prev) =>
+      prev.map((m) =>
+        m.id === id ? { ...m, status: "Revision Requested" } : m
       )
     );
   };
@@ -76,7 +86,6 @@ const MilestoneManager = () => {
   return (
     <div className="w-[900px] max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Milestone Timeline</h2>
-
       <div className="border-l-4 border-green-500 pl-6 space-y-6">
         {milestones.map((milestone, index) => (
           <div key={milestone.id} className="relative">
@@ -95,7 +104,8 @@ const MilestoneManager = () => {
                 ${milestone.amount.toFixed(2)}
               </p>
 
-              {milestone.status === "Active & Funded" &&
+              {role === "athlete" &&
+                milestone.status === "Active & Funded" &&
                 !milestone.submitted && (
                   <button
                     onClick={() => submitForReview(milestone.id)}
@@ -105,15 +115,19 @@ const MilestoneManager = () => {
                   </button>
                 )}
 
-              {milestone.status === "Work Submitted" && (
-                <div className="mt-2 p-2 bg-yellow-100 text-yellow-700 rounded">
-                  Work submitted for review
-                  <p className="text-sm">6 days ago</p>
+              {role === "sponsor" && milestone.status === "Work Submitted" && (
+                <div className="mt-2 flex gap-4">
                   <button
-                    onClick={() => submitRevision(milestone.id)}
-                    className="mt-2 py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+                    onClick={() => approveMilestone(milestone.id)}
+                    className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                   >
-                    Submit Revision
+                    Approve & Pay
+                  </button>
+                  <button
+                    onClick={() => requestRevision(milestone.id)}
+                    className="py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+                  >
+                    Request Revision
                   </button>
                 </div>
               )}
@@ -121,7 +135,7 @@ const MilestoneManager = () => {
           </div>
         ))}
 
-        {milestones.length < 4 && !showForm && (
+        {role === "athlete" && milestones.length < 4 && !showForm && (
           <button
             onClick={() => setShowForm(true)}
             className="flex items-center gap-2 text-green-600 font-medium hover:text-green-800"
@@ -179,30 +193,6 @@ const MilestoneManager = () => {
             </div>
           </div>
         )}
-      </div>
-
-      <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-        <h3 className="font-semibold">Earnings</h3>
-        <div className="relative h-2 bg-gray-300 rounded-full">
-          <div
-            className="absolute top-0 left-0 h-2 bg-green-500 rounded-full"
-            style={{
-              width: `${(earnings.funded / earnings.projectPrice) * 100}%`,
-            }}
-          />
-        </div>
-        <p className="mt-2 text-sm">
-          <span className="font-semibold">Received:</span> $
-          {earnings.received.toFixed(2)}
-        </p>
-        <p className="text-sm">
-          <span className="font-semibold">Funded (Escrow):</span> $
-          {earnings.funded.toFixed(2)}
-        </p>
-        <p className="text-sm">
-          <span className="font-semibold">Project Price:</span> $
-          {earnings.projectPrice.toFixed(2)}
-        </p>
       </div>
     </div>
   );
