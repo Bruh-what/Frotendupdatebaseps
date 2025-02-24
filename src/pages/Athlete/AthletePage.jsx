@@ -111,6 +111,8 @@ import { Instagram, Twitter, Youtube } from "lucide-react";
 import { Badge } from "../../components/_Common/Badge";
 import { supabase } from "../../lib/supabaseClient";
 import { PROSPONSER } from "../../https/config";
+import coverPhoto from "../../assets/images/profileCover.png";
+
 
 export default function AthletePage() {
   const { athleteId } = useParams();
@@ -151,64 +153,82 @@ export default function AthletePage() {
 
   return (
     <div className="min-h-screen w-full bg-white">
-      <div className="relative h-[300px] w-full">
+      <div className="relative h-[300px] w-full ">
         <img
-          src={athleteData.images?.[0] || "https://placehold.co/600x400"}
+          src={athleteData.images?.[0] || `${coverPhoto}`}
           alt="Cover"
           className="w-full h-[200px] object-cover"
         />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 -mt-20">
-        <div className="flex flex-col md:flex-row gap-6 items-start">
-          <div className="relative">
+        <div className="flex flex-col md:flex-row gap-6 items-start ">
+          <div className="absolute top-40 ">
             <img
               src={
                 athleteData.avatar ||
                 `https://api.dicebear.com/7.x/initials/svg?seed=${athleteData.firstName} ${athleteData.lastName}`
               }
               alt={`${athleteData.firstName} ${athleteData.lastName}`}
-              className="h-16 w-16 object-cover rounded-full"
+              className="h-20 w-20 max-sm:h-16 max-sm:w-16 object-cover rounded-full"
             />
           </div>
 
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-4 mt-10 max-sm:mt-5">
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-3xl font-bold">
+                <h1 className="text-3xl font-bold max-md:text-md max-sm:text-sm">
                   {athleteData.firstName} {athleteData.lastName}
                 </h1>
                 <Badge variant="secondary" className="rounded-full">
                   Athlete
                 </Badge>
               </div>
-              <p className="text-gray-600">{athleteData.email}</p>
-            </div>
-            <div className="flex gap-4">
+              <div className="flex gap-3 max-sm:flex-col">
+                <div>
+                  <p className="text-[#111827] text-[14px] max-sm:text-sm ">160k socal followers</p>
+                  <p className="text-[#111827] text-[14px] max-sm:text-sm ">{athleteData.email}</p>
+                </div>
+              
+              <div className=" flex items-end">
+                 <button
+                onClick={() => handleContactClick(opportunity)}
+                className="bg-[#4338CA] hover:bg-[#4338CA] text-white text-[14px] max-md:text-[10px] py-1 px-6 rounded-full "
+              >
+                message
+              </button>
+              </div>
+             
+
+              <div className="flex gap-4 items-end">
               {athleteData.instagram && (
                 <a
                   href={athleteData.instagram}
                   className="hover:text-purple-600"
                 >
-                  <Instagram className="h-5 w-5" />
+                  <Instagram className="h-6 w-6" />
                 </a>
               )}
               {athleteData.x && (
                 <a href={athleteData.x} className="hover:text-blue-400">
-                  <Twitter className="h-5 w-5" />
+                  <Twitter className="h-6 w-6" />
                 </a>
               )}
               {athleteData.youtube && (
                 <a href={athleteData.youtube} className="hover:text-red-600">
-                  <Youtube className="h-5 w-5" />
+                  <Youtube className="h-6 w-6" />
                 </a>
               )}
             </div>
-            <p className="text-gray-600">{athleteData.bio}</p>
+              </div>
+            </div>
+         
+            <p className="text-gray-600 max-sm:text-sm">{athleteData.bio}</p>
+
 
             <div className="mt-6">
               <h3 className="text-lg font-semibold mb-4">Gallery</h3>
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-3 gap-4 max-md:grid-cols-1 max-lg:grid-cols-2">
                 {[...Array(5)].map((_, index) => (
                   <div
                     key={index}
