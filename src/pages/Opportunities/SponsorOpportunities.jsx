@@ -311,7 +311,7 @@ export default function SponsorOpportunitiesPage() {
 
               <button
                 onClick={() => handleContactClick(opportunity)}
-                className="bg-black hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full">
+                className="bg-black transition duration-2 hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full">
                 message
               </button>
             </div>
@@ -342,7 +342,7 @@ export default function SponsorOpportunitiesPage() {
               <button
                 onClick={handleSendMessage}
                 disabled={!messageText.trim()}
-                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50">
+                className="px-4 py-2 transition duration-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50">
                 Send
               </button>
             </div>

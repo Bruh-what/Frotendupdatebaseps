@@ -85,7 +85,7 @@ const Billing = () => {
                 You will be redirected to a secure stripe portal <br /> for
                 attaching your card.
               </p>
-              <button class="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 rounded-full shadow-xs">
+              <button class="bg-[#4F46E5] transition duration-300 ease-in-out hover:bg-[#4338CA] text-white hover:text-white py-2 px-6 rounded-full shadow-xs">
                 Add a card
               </button>
             </div>

@@ -193,7 +193,7 @@ export default function AthletePage() {
               <div className=" flex items-end">
                  <button
                 onClick={() => handleContactClick(opportunity)}
-                className="bg-[#4338CA] hover:bg-[#4338CA] text-white text-[14px] max-md:text-[10px] py-1 px-6 rounded-full "
+                className="bg-[#4F46E5] transition duration-2 hover:bg-[#4338CA] text-white text-[14px] max-md:text-[10px] py-1 px-6 rounded-full "
               >
                 message
               </button>
