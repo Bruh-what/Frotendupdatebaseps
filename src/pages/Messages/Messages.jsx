@@ -2179,13 +2179,16 @@
 //   );
 // }
 // with contract offer
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
 import { format } from "date-fns";
 import useAuth from "../../hooks/useAuth";
 import { PROSPONSER } from "../../https/config";
-import Search from "../../components/_Common/Search";
+import { MoreHorizontal, SearchIcon, Send } from "lucide-react";
+import image from "../../assets/images/Rectangle 34624146.png";
+import smile from "../../assets/icons/smile.png";
+import paperclip from "../../assets/icons/paperclip.png";
 
 export default function Messages() {
   const { role } = useAuth();
@@ -2204,6 +2207,11 @@ export default function Messages() {
   const [userId, setUserId] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [acceptingContractId, setAcceptingContractId] = useState(null);
+
+  const messagesEndRef = useRef(null);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [combinedMessages]);
 
   // useEffect(() => {
   //   const initializeMessages = async () => {
@@ -2439,46 +2447,81 @@ export default function Messages() {
   if (error) return <div className="p-4 text-red-500">{error}</div>;
 
   return (
-    <div className=" h-screen flex bg-[#F9FAFB] w-full">
-      <div className=" p-4 w-96  border-r ">
-        <div className="p-4 border-b flex items-center justify-between">
+    <div className=" flex bg-[#F9FAFB] w-full">
+      <div className=" p-6 w-96  mt-10">
+        <div className=" flex items-center justify-between">
           <h2 className="text-xl font-semibold">Active conversations</h2>
           <h2 className="pr-3 pl-3 pt-1 pb-1 bg-[#F3F4F6] rounded-lg font-[500]">
             4
           </h2>
         </div>
-        <Search />
+        <div className="flex items-center bg-[#F3F4F6] w-full p-2 pr-4  rounded-md mt-10">
+          <input
+            type="text"
+            className="bg-[#F3F4F6] outline-none w-full text-[#64748B]"
+            placeholder="Search..."
+          />
+          <SearchIcon className="w-5 text-[#64748B]" />
+        </div>
+
         {conversations.map((conversation) => (
           <div
             key={conversation.userId}
             onClick={() => handleConversationSelect(conversation)}
-            className={`p-4 border-b hover:bg-gray-50 cursor-pointer ${
+            className={`rounded-lg mt-10 p-3   hover:bg-gray-50 cursor-pointer ${
               selectedConversation?.userId === conversation.userId
-                ? "bg-blue-50"
-                : ""
-            }`}
+                ? "bg-[#F3F4F6]"
+                : "bg-[#FFFF]"
+            } flex gap-4 items-center`}
           >
-            <h3 className="font-medium">{conversation.name}</h3>
-            <p className="text-sm text-gray-500 mt-1">
-              {truncateMessage(conversation.lastMessage)}
-            </p>
-            <p className="text-xs text-gray-400 mt-1">
-              {format(new Date(conversation.updatedAt), "MMM d, HH:mm")}
-            </p>
+            <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+              {image ? (
+                <img
+                  src={image}
+                  alt={image}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <span className="text-gray-500 text-sm">
+                  When not available
+                </span>
+              )}
+            </div>
+            <div>
+              <h3 className="font-[500] text-[15.7px]">{conversation.name}</h3>
+              <p className="text-sm text-[#637381] font-[500] max-w-[200px] mt-1 overflow-hidden">
+                {truncateMessage(conversation.lastMessage)}
+              </p>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex max-h-[100vh]  flex-col">
         {selectedConversation ? (
           <>
-            <div className="p-4 bg-white border-b">
-              <h3 className="font-medium text-lg">
-                {selectedConversation.name}
-              </h3>
+            <div className="p-4 bg-white flex justify-between items-center">
+              <div className="flex gap-3 items-center">
+                <div className="w-10 h-10 rounded-full">
+                  <img
+                    src={image}
+                    alt="profile-active"
+                    className="w-full h-full rounded-full"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-medium text-lg">
+                    {selectedConversation.name}
+                  </h3>
+                  <p className="font-[500] text-[12px] text-[#64748B]">
+                    Reply to message
+                  </p>
+                </div>
+              </div>
+              <MoreHorizontal />
             </div>
 
-            <div className="flex-1 overflow-y-auto p-8 space-y-4">
+            <div className="flex-1 overflow-auto p-8 space-y-4 bg-[#FFFFFF] ">
               {messagesLoading ? (
                 <div className="flex justify-center items-center h-full">
                   <span>Loading messages...</span>
@@ -2490,22 +2533,27 @@ export default function Messages() {
                     (item.type === "contract" && item.sponsorId === userId);
 
                   return (
-                    <div key={`${item.type}-${index}`} className="bg-[#FFFFFF]">
+                    <div key={`${item.type}-${index}`}>
                       {item.type === "message" && (
                         <div
                           className={`flex ${
                             isCurrentUser ? "justify-end" : "justify-start"
                           } mb-4`}
                         >
-                          <div
-                            className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                              isCurrentUser
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-200"
-                            }`}
-                          >
-                            <p>{item.content}</p>
-                            <span className="text-xs opacity-70">
+                          <div className={``}>
+                            <p className="text-[12.5px] mb-1 font-[500] text-[#64748B]">
+                              {selectedConversation.name}
+                            </p>
+                            <p
+                              className={`break-words max-w-[360px]  rounded-lg px-4 py-2 ${
+                                isCurrentUser
+                                  ? "bg-blue-500 text-white"
+                                  : "bg-gray-200"
+                              }`}
+                            >
+                              {item.content}
+                            </p>
+                            <span className="text-[12px] text-[#64748B] font-[500] opacity-70">
                               {format(new Date(item.createdAt), "MMM d, HH:mm")}
                             </span>
                           </div>
@@ -2644,27 +2692,46 @@ export default function Messages() {
                   );
                 })
               )}
+              <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-4 bg-white border-t">
+            <div className="px-8 py-4 bg-white ">
               <form
                 onSubmit={handleSendMessageInConversation}
                 className="flex gap-2"
               >
-                <input
-                  type="text"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  disabled={sendingMessage}
-                  className="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:border-blue-500"
-                  placeholder="Type a message..."
-                />
+                <div className="flex items-center justify-between border rounded-[5px] px-4 py-2 bg-[#F9FAFB] w-full">
+                  <input
+                    type="text"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    disabled={sendingMessage}
+                    className=" focus:outline-none focus:border-[#6366F1] bg-[#F9FAFB] w-[70%]"
+                    placeholder="Type a message..."
+                  />
+                  <div className="flex items-center gap-2">
+                    <button className="bg-none text-sm font-[500] text-[#64748B] ">
+                      Send contract
+                    </button>
+                    <img
+                      src={smile}
+                      alt=""
+                      className="w-5 h-5 hover:cursor-pointer"
+                    />
+                    <img
+                      src={paperclip}
+                      alt=""
+                      className="w-5 h-5 hover:cursor-pointer"
+                    />
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={sendingMessage || !newMessage.trim()}
-                  className="bg-blue-500 text-white rounded-full px-6 py-2 hover:bg-blue-600 disabled:opacity-50"
+                  className="bg-[#6366F1] text-white rounded-md px-3 py-2 hover:bg-blue-600 disabled:opacity-50"
                 >
-                  {sendingMessage ? "Sending..." : "Send"}
+                  {sendingMessage ? "Sending..." : <Send />}
                 </button>
               </form>
             </div>
