@@ -150,7 +150,7 @@ const MessagesContainer = () => {
 
   if (isLoading) {
     return (
-      <div className="border w-[60%] rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7] p-4">
+      <div className="border w-[45%] rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7] p-4">
         <p className="text-center text-gray-500">Loading conversations...</p>
       </div>
     );
@@ -158,14 +158,14 @@ const MessagesContainer = () => {
 
   if (error) {
     return (
-      <div className="border w-[60%] rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7] p-4">
+      <div className="border w-[45%] rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7] p-4">
         <p className="text-center text-red-500">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="border w-[60%] overflow-hidden rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7]">
+    <div className="border w-[45%] overflow-hidden rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7]">
       <div className="p-4 space-y-4">
         <div className="space-y-1">
           <h2 className="text-lg font-semibold">Open discussions</h2>

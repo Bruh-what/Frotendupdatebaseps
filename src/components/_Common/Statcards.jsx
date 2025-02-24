@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { FiTrendingDown, FiTrendingUp } from "react-icons/fi";
 import { supabase } from "../../lib/supabaseClient";
 import { PROSPONSER } from "../../https/config";
+import dollar from "../../assets/icons/Vector.svg";
+import breifcase from "../../assets/icons/briefcase.svg";
+import docs from "../../assets/icons/clipboard-document-list.svg";
 
 function Statcards() {
   // Initialize with null to distinguish between loading and zero values
@@ -76,34 +79,52 @@ function Statcards() {
   }
 
   return (
-    <div className="flex justify-between gap-3">
-      <Card
-        title="Total Earnings"
-        value={`$${stats.totalEarnings.toLocaleString()}`}
-        pillText={`${stats.totalEarnings > 0 ? "+" : ""}${
-          stats.totalEarnings
-        }%`}
-        trend={stats.totalEarnings > 0 ? "up" : "down"}
-        // period="From Jan 1st - Jul 31st"
-      />
-      <Card
-        title="Opportunities Posted"
-        value={stats.totalOpportunities}
+    <div className="flex justify-between items-center gap-3">
+      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full">
+        <div className="rounded-full bg-[#111827] p-3 w-fit">
+          <img src={dollar} alt="money" />
+        </div>
+        <div>
+          <p className="font-[500]">{`+$${stats.totalEarnings.toLocaleString()}`}</p>
+          <p className="text-[#9CA3AF] font-[500]">Total Earnings</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full">
+        <div className="rounded-full bg-[#111827] p-3 w-fit">
+          <img src={docs} alt="documents" />
+        </div>
+        <div>
+          <p className="font-[500]">{stats.totalOpportunities}</p>
+          <p className="text-[#9CA3AF] font-[500]">Opportunities Posted</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-4 border  rounded-2xl p-6 w-full">
+        <div className="rounded-full bg-[#111827] p-3 w-fit">
+          <img src={breifcase} alt="case" />
+        </div>
+        <div>
+          <p className="font-[500]">{stats.pendingContracts}</p>
+          <p className="text-[#9CA3AF] font-[500]">Pending Offers</p>
+        </div>
+      </div>
+      {/* <Card
+        title=""
+        value=
         pillText={`${stats.totalOpportunities > 0 ? "+" : ""}${
           stats.totalOpportunities
         }%`}
         trend={stats.totalOpportunities > 0 ? "up" : "down"}
         // period="From Jan 1st - Jul 31st"
-      />
-      <Card
-        title="Pending Offers"
-        value={stats.pendingContracts}
+      /> */}
+      {/* <Card
+        title=""
+        value=
         pillText={`${stats.pendingContracts > 0 ? "+" : ""}${
           stats.pendingContracts
         }%`}
         trend={stats.pendingContracts > 0 ? "up" : "down"}
         // period="From Jan 1st - Jul 31st"
-      />
+      /> */}
     </div>
   );
 }
