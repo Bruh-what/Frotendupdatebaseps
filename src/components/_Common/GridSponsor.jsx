@@ -46,6 +46,8 @@ function GridSponsor() {
 
   return (
     <>
+      {/* ////////////////////////////// */}
+
       <div className="px-4 flex items-center gap-4 mb-6 justify-between">
         <h1 className="text-2xl font-bold">Hey, welcome back!</h1>
         <Link to="/settings">
