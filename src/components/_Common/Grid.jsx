@@ -29,16 +29,16 @@
 // }
 
 // export default Grid;
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { supabase } from '../../lib/supabaseClient';
-import { PROSPONSER } from '../../https/config';
-import Statcards from './Statcards';
-import { ProfileViews } from './ProfileViews';
-import MessagesContainer from './MessagesContainer';
-import OpportunitiesTable from './OpportunitiesTable';
-import bell from '../../assets/icons/bell-alert.svg';
-import msg from '../../assets/icons/chat-bubble-left-ellipsis.svg';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
+import Statcards from "./Statcards";
+import { ProfileViews } from "./ProfileViews";
+import MessagesContainer from "./MessagesContainer";
+import OpportunitiesTable from "./OpportunitiesTable";
+import bell from "../../assets/icons/bell-alert.svg";
+import msg from "../../assets/icons/chat-bubble-left-ellipsis.svg";
 
 function Grid() {
   const [profileData, setProfileData] = useState(null);
@@ -60,7 +60,7 @@ function Grid() {
 
         setProfileData(response.data);
       } catch (error) {
-        console.error('Error fetching profile:', error);
+        console.error("Error fetching profile:", error);
       }
     };
 
@@ -72,7 +72,7 @@ function Grid() {
       <div className="flex justify-end gap-2 items-center">
         <div className="flex gap-2 pr-2">
           <div>
-            {' '}
+            {" "}
             <img src={msg} alt="msg" width="100%" />
           </div>
           <div>

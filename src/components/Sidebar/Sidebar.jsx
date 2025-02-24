@@ -29,7 +29,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col p-6 w-[300px] justify-between gap-6 border-r-[1px] border-gray-100 items-center">
+    <div className="h-screen flex flex-col p-6 w-[300px] justify-between gap-6 border-r-[1px] border-gray-100 items-center">
       {/* <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto " /> */}
       <img
         src={logo}
@@ -55,7 +55,7 @@ const Sidebar = () => {
         />
         <NavItem to="/billing" label="Billing" Icon={CreditCard} />
       </ul>
-      <div className="flex flex-col gap-20 mt-14">
+      <div className="flex flex-col gap-10 mt-14">
         <UpgradeToPro />
         <li
           onClick={handleLogout}
@@ -74,7 +74,7 @@ const NavItem = ({ to, label, Icon }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex flex-row gap-1 items-center p-2 pr-4 rounded-md ${
+      `flex flex-row gap-1 items-center p-2 pr-4 rounded-md w-[200px] ${
         isActive ? "bg-[#111827]  text-[#F9FAFB]" : "hover:bg-gray-100"
       }`
     }

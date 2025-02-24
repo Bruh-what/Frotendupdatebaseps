@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { FiFile, FiTrendingDown, FiTrendingUp } from "react-icons/fi";
 import { supabase } from "../../lib/supabaseClient";
 import { PROSPONSER } from "../../https/config";
+import dollar from "../../assets/icons/Vector.svg";
+import breifcase from "../../assets/icons/briefcase.svg";
+import docs from "../../assets/icons/clipboard-document-list.svg";
 
 function Statcards() {
   const [activeContractsCount, setActiveContractsCount] = useState(0);
@@ -61,34 +64,40 @@ function Statcards() {
     fetchContracts();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="container flex justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
 
   if (isLoading) <div>loading...</div>;
   return (
     <>
       <Card
         title="Total spending"
-        value={`$${totalSpending.toLocaleString()}`}
-        pillText="2.75%"
-        trend="up"
+        value={`+$${totalSpending.toLocaleString()}`}
+        // pillText="2.75%"
+        // trend="up"
         // period="From Jan 1st - Jul 31st"
       />
       <Card
         title="Active contracts"
         value={activeContractsCount}
-        pillText={`${
-          activeContractsCount > 0 ? "+" : ""
-        }${activeContractsCount}%`}
-        trend={activeContractsCount > 0 ? "up" : "down"}
+
+        // pillText={`${
+        // activeContractsCount > 0 ? "+" : ""
+        // }${activeContractsCount}%`}
+        // trend={activeContractsCount > 0 ? "up" : "down"}
         // period="From Jan 1st - Jul 31st"
       />
       <Card
         title="Pending contracts"
         value={pendingContractsCount}
-        pillText={`${
-          pendingContractsCount > 0 ? "+" : ""
-        }${pendingContractsCount}%`}
-        trend={pendingContractsCount > 0 ? "up" : "down"}
+        // pillText={`${
+        //   pendingContractsCount > 0 ? "+" : ""
+        // }${pendingContractsCount}%`}
+        // trend={pendingContractsCount > 0 ? "up" : "down"}
         // period="Previous 365 days"
       />
     </>
@@ -99,26 +108,18 @@ const Card = (props) => {
   const { title, value, pillText, trend, period } = props;
 
   return (
-    <div className="border col-span-4 p-4 rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7] w-1/3">
-      <div className="flex mb-8 items-start justify-between">
-        <div>
-          <h3 className="text-stone-500 mb-2 text-sm">{title}</h3>
-          <p className="text-3xl font-semibold">{value}</p>
+    // <div className="border col-span-4 p-4 rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7] w-1/3">
+    <>
+      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full">
+        <div className="rounded-full bg-[#111827] p-3 w-fit">
+          <img src={dollar} alt="money" />
         </div>
-
-        <span
-          className={`text-xs flex items-center gap-1 font-medium px-2 py-1 rounded ${
-            trend === "up"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
-          }`}
-        >
-          {trend === "up" ? <FiTrendingUp /> : <FiTrendingDown />} {pillText}
-        </span>
+        <div>
+          <p className="font-[500]">{value}</p>
+          <p className="text-[#9CA3AF] font-[500]">{title}</p>
+        </div>
       </div>
-
-      <p className="text-xs text-stone-500">{period}</p>
-    </div>
+    </>
   );
 };
 

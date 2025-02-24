@@ -2443,7 +2443,12 @@ export default function Messages() {
     return words.slice(0, 3).join(" ") + (words.length > 3 ? "..." : "");
   };
 
-  if (loading) return <div className="p-4">Loading conversations...</div>;
+  if (loading)
+    return (
+      <div className="container pt-40  flex justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   if (error) return <div className="p-4 text-red-500">{error}</div>;
   const handleMessageSearch = (e) => {
     setSearch(e.target.value);
@@ -2471,37 +2476,45 @@ export default function Messages() {
           <SearchIcon className="w-5 text-[#64748B]" />
         </div>
 
-        {filteredApi?.map((conversation) => (
-          <div
-            key={conversation.userId}
-            onClick={() => handleConversationSelect(conversation)}
-            className={`rounded-lg mt-10 p-3   hover:bg-gray-50 cursor-pointer ${
-              selectedConversation?.userId === conversation.userId
-                ? "bg-[#F3F4F6]"
-                : "bg-[#FFFF]"
-            } flex gap-4 items-center`}
-          >
-            <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-              {image ? (
-                <img
-                  src={image}
-                  alt={image}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="text-gray-500 text-sm">
-                  When not available
-                </span>
-              )}
-            </div>
-            <div>
-              <h3 className="font-[500] text-[15.7px]">{conversation.name}</h3>
-              <p className="text-sm text-[#637381] font-[500] max-w-[200px] mt-1 overflow-hidden">
-                {truncateMessage(conversation.lastMessage)}
-              </p>
-            </div>
+        {filteredApi.length <= 0 ? (
+          <div className="text-[14px] font-600 mt-4 ml-4 text-[#64748B]">
+            Couldn't find anything...
           </div>
-        ))}
+        ) : (
+          filteredApi?.map((conversation) => (
+            <div
+              key={conversation.userId}
+              onClick={() => handleConversationSelect(conversation)}
+              className={`rounded-lg mt-4 p-3 transition delay-100 duration-300 ease-out   hover:bg-[#F3F4F6] cursor-pointer ${
+                selectedConversation?.userId === conversation.userId
+                  ? "bg-[#F3F4F6]"
+                  : "bg-[#FFFF]"
+              } flex gap-4 items-center`}
+            >
+              <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                {image ? (
+                  <img
+                    src={image}
+                    alt={image}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-gray-500 text-sm">
+                    When not available
+                  </span>
+                )}
+              </div>
+              <div>
+                <h3 className="font-[500] text-[15.7px]">
+                  {conversation.name}
+                </h3>
+                <p className="text-sm text-[#637381] font-[500] max-w-[200px] mt-1 overflow-hidden">
+                  {truncateMessage(conversation.lastMessage)}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       <div className="flex-1 flex max-h-[100vh]  flex-col">
