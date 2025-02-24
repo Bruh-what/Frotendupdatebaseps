@@ -2207,7 +2207,7 @@ export default function Messages() {
   const [userId, setUserId] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [acceptingContractId, setAcceptingContractId] = useState(null);
-
+  const [search, setSearch] = useState();
   const messagesEndRef = useRef(null);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -2445,6 +2445,12 @@ export default function Messages() {
 
   if (loading) return <div className="p-4">Loading conversations...</div>;
   if (error) return <div className="p-4 text-red-500">{error}</div>;
+  const handleMessageSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const filteredApi = conversations.filter((data) =>
+    data.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className=" flex bg-[#F9FAFB] w-full">
@@ -2460,11 +2466,12 @@ export default function Messages() {
             type="text"
             className="bg-[#F3F4F6] outline-none w-full text-[#64748B]"
             placeholder="Search..."
+            onChange={handleMessageSearch}
           />
           <SearchIcon className="w-5 text-[#64748B]" />
         </div>
 
-        {conversations.map((conversation) => (
+        {filteredApi.map((conversation) => (
           <div
             key={conversation.userId}
             onClick={() => handleConversationSelect(conversation)}
