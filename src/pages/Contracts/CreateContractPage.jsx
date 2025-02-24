@@ -15,17 +15,13 @@ export default function CreateContractPage() {
 
   const [formData, setFormData] = useState({
     athleteId: opportunity?.athleteId || "",
-    sponsorId: "", // Will be set from auth
+    sponsorId: "",
     opportunityId: opportunity?._id || "",
     sport: opportunity?.sport || "",
     totalPrice: opportunity?.priceAsk || "",
-    milestones: Array(4)
-      .fill()
-      .map(() => ({
-        description: "",
-        status: "pending",
-        dueDate: "",
-      })),
+    milestones: [
+      { description: "", status: "pending", dueDate: "" }, // Start with one milestone
+    ],
   });
 
   const [loading, setLoading] = useState(false);
@@ -56,17 +52,39 @@ export default function CreateContractPage() {
   }, []);
 
   const handleMilestoneChange = (index, field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      milestones: prev.milestones.map((milestone, i) =>
+    setFormData((prev) => {
+      const updatedMilestones = prev.milestones.map((milestone, i) =>
         i === index ? { ...milestone, [field]: value } : milestone
-      ),
-    }));
+      );
+
+      // Calculate new total price
+      const newTotalPrice = updatedMilestones.reduce(
+        (sum, milestone) => sum + (parseFloat(milestone.price) || 0),
+        0
+      );
+
+      return {
+        ...prev,
+        milestones: updatedMilestones,
+        totalPrice: newTotalPrice, // Update total price dynamically
+      };
+    });
+  };
+
+  const addMilestone = () => {
+    if (formData.milestones.length < 4) {
+      setFormData((prev) => ({
+        ...prev,
+        milestones: [
+          ...prev.milestones,
+          { description: "", dueDate: "", price: "", status: "pending" },
+        ],
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true);
       setError(null);
@@ -104,6 +122,7 @@ export default function CreateContractPage() {
         milestones: formData.milestones.map((milestone) => ({
           description: milestone.description,
           status: "pending",
+          price: parseFloat(milestone.price) || 0,
           dueDate: new Date(milestone.dueDate),
         })),
         status: "pending",
@@ -121,34 +140,6 @@ export default function CreateContractPage() {
 
       console.log("Contract created successfully:", response.data);
 
-      // Create message with contract data
-      // const messageData = {
-      //   senderId: sponsorId,
-      //   receiverId: opportunity.athleteId,
-      //   content: `New contract offer for ${opportunity.title}`,
-      //   messageType: "contract", // Add message type
-      //   contractData: {
-      //     _id: response.data._id,
-      //     title: opportunity.title,
-      //     sport: opportunity.sport,
-      //     totalPrice: formData.totalPrice,
-      //     milestones: formData.milestones,
-      //     status: "pending",
-      //     opportunityId: opportunity._id,
-      //     athleteId: opportunity.athleteId,
-      //     sponsorId: sponsorId,
-      //   },
-      // };
-
-      // // Send message with contract data
-      // await PROSPONSER.post("/messages", messageData, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-
-      // Navigate to success page or contracts list
       navigate("/contracts", {
         state: {
           success: true,
@@ -263,6 +254,24 @@ export default function CreateContractPage() {
                       required
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label>Price</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2.5 text-gray-500">
+                        $
+                      </span>
+                      <Input
+                        type="number"
+                        value={milestone.price}
+                        onChange={(e) =>
+                          handleMilestoneChange(i, "price", e.target.value)
+                        }
+                        className="input pl-7 rounded-lg"
+                        placeholder="Enter milestone price"
+                        required
+                      />
+                    </div>
+                  </div>
 
                   <div className="space-y-2">
                     <Label>Due Date</Label>
@@ -282,6 +291,16 @@ export default function CreateContractPage() {
                 </div>
               ))}
             </div>
+
+            {formData.milestones.length < 4 && (
+              <button
+                type="button"
+                onClick={addMilestone}
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg"
+              >
+                + Add Milestone
+              </button>
+            )}
           </div>
 
           <button
