@@ -165,10 +165,10 @@ const MessagesContainer = () => {
   }
 
   return (
-    <div className="border w-[45%] overflow-hidden rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7]">
+    <div className="border w-[45%] overflow-hidden rounded-2xl ">
       <div className="p-4 space-y-4">
         <div className="space-y-1">
-          <h2 className="text-lg font-semibold">Open discussions</h2>
+          <h2 className="text-lg font-[600]">Open discussions</h2>
           <p className="text-sm text-gray-500">
             Check your recent conversations about open opportunities.
           </p>
@@ -184,7 +184,7 @@ const MessagesContainer = () => {
               <div
                 key={conversation.userId}
                 onClick={() => handleConversationClick(conversation)}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+                className="flex items-center justify-between p-3 bg-[#F3F3F3] rounded-[12px] hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -193,21 +193,22 @@ const MessagesContainer = () => {
                     className="w-10 h-10 rounded-full bg-gray-200"
                   />
                   <div>
-                    <p className="font-medium text-sm">{conversation.name}</p>
-                    <p className="text-sm text-gray-500 line-clamp-1">
+                    {/* <p className="font-medium text-sm">{conversation.name}</p> */}
+                    <p className="text-sm text-[#9CA3AF] line-clamp-1 max-w-56 overflow-hidden">
                       {conversation.lastMessage}
                     </p>
                   </div>
                 </div>
-                <span className="text-xs text-gray-400">
+                {/* <span className="text-xs text-gray-400">
                   {format(new Date(conversation.updatedAt), "MMM d, HH:mm")}
-                </span>
+                </span> */}
+                <button className="text-[#1F2937] font-[500]">Open</button>
               </div>
             ))
           )}
         </div>
 
-        <button className="bg-[#4F46E5] hover:bg-indigo-600 transition-colors duration-200 text-white py-2 px-4 rounded-full w-full">
+        <button className="text-[10px] font-[500]">
           <a href="/messages" className="block text-sm font-medium">
             Open Discussions
           </a>
