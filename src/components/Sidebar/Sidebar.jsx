@@ -14,15 +14,18 @@ import { useNavigate } from "react-router-dom";
 // import { supabase } from "../../lib/supabaseClient";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../feature/auth/auth.action";
+
 import toast from "react-hot-toast";
 import UpgradeToPro from "../upgradePro";
+import { clearAuthMessages } from "../../feature/auth/auth.slicer";
 const Sidebar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogout = async () => {
     localStorage.clear();
     toast.success("Logged out successfully");
     navigate("/login");
+    dispatch(clearAuthMessages());
   };
 
   return (
