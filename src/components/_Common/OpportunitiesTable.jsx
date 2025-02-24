@@ -132,7 +132,7 @@ const OpportunitiesTable = () => {
         {opportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="flex items-center justify-between p-3 rounded-2xl bg-[#F9FAFB]"
+            className="grid grid-cols-3 items-center p-3 gap-6 rounded-2xl bg-[#F9FAFB]"
           >
             <div className="space-y-1 flex flex-row gap-2">
               <div className="flex flex-col">
@@ -146,14 +146,17 @@ const OpportunitiesTable = () => {
                 <p className="text-sm text-gray-500">{opportunity.sport}</p> */}
               </div>
             </div>
-            <span
-              className={`px-3 py-1 text-sm font-medium  rounded-full ${getStatusColor(
-                opportunity
-              )}`}
-            >
-              {getStatusText(opportunity)}
-            </span>
-            <div className="flex items-center ">
+            <div className="text-center">
+              <span
+                className={`px-3 py-1 text-sm font-medium  rounded-full ${getStatusColor(
+                  opportunity
+                )}`}
+              >
+                {getStatusText(opportunity)}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-end">
               <Link
                 to={`/opportunities/${opportunity._id}`}
                 state={{ opportunity }}
