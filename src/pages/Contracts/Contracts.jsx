@@ -162,8 +162,7 @@ export default function ContractsPage() {
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
                       contract.status
-                    )}`}
-                  >
+                    )}`}>
                     {contract.status.charAt(0).toUpperCase() +
                       contract.status.slice(1)}
                   </span>
@@ -206,8 +205,7 @@ export default function ContractsPage() {
                 <div className="flex gap-3 pt-4">
                   <button
                     onClick={() => navigate(`/contracts/${contract._id}`)}
-                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium"
-                  >
+                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium">
                     View Details
                   </button>
 
@@ -252,8 +250,7 @@ export default function ContractsPage() {
                         acceptingId === contract._id
                           ? "bg-green-300"
                           : "bg-green-700 hover:bg-green-800"
-                      } text-white py-2 px-4 rounded-full text-sm font-medium`}
-                    >
+                      } text-white py-2 px-4 rounded-full text-sm font-medium`}>
                       {acceptingId === contract._id
                         ? "Accepting..."
                         : "Accept Offer"}
@@ -289,8 +286,7 @@ export default function ContractsPage() {
                           },
                         });
                       }}
-                      className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white py-2 px-4 rounded-full text-sm font-medium"
-                    >
+                      className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white py-2 px-4 rounded-full text-sm font-medium">
                       Message{" "}
                       {userId === contract.athleteId ? "Sponsor" : "Athlete"}
                     </button>
