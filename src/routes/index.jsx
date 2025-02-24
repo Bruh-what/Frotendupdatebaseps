@@ -23,6 +23,9 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import ContractDetails from "../pages/Contracts/ContractDetails";
 import UserProfile from "../components/_Common/UserProfile.jsx";
 import OpportunityDetails from "../pages/Opportunities/OpportunityDetails.jsx";
+import SponsorSidebar from "../components/SponsorRightSidebat/index.jsx";
+import FeatureSponsor from "../components/featureSponsors/index.jsx";
+import Annoucements from "../components/annoucements/index.jsx";
 
 const AppRoutes = () => {
   const { isAuthenticated, loading, role } = useAuth();
@@ -32,9 +35,9 @@ const AppRoutes = () => {
   // Define routes where the Sidebar should be hidden
   const hideSidebarRoutes = ["/login", "/signup"];
   const shouldHideSidebar = hideSidebarRoutes.includes(location.pathname);
-  console.log("isAuthenticated", isAuthenticated);
+  // console.log("isAuthenticated", isAuthenticated);
   return (
-    <div className="bg-[#FEFEFE] flex h-screen">
+    <div className="bg-[#FEFEFE] flex ">
       {!shouldHideSidebar && <Sidebar />}
       <Routes>
         <Route
@@ -59,6 +62,7 @@ const AppRoutes = () => {
           element={role === "athlete" ? <Settings /> : <SponsorSettings />}
         />
         <Route path="/Billing" element={<Billing />} />
+
         <Route path="/CreateOpportunity" element={<CreateOpportunity />} />
         <Route path="/opportunities/:id" element={<OpportunityDetails />} />
         <Route
@@ -75,6 +79,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<SignIn />} />
         {/* <Route path="/profile/:userId" element={<UserProfile />} /> */}
       </Routes>
+      {!shouldHideSidebar && <SponsorSidebar />}
     </div>
   );
 };
