@@ -178,7 +178,7 @@ export default function SponsorOpportunitiesPage() {
           </div>
 
           {isFilterModalOpen && (
-            <div className="absolute p-4 right-0  w-74 bg-white rounded-lg shadow-lg z-50">
+            <div className=" absolute p-4 right-0  w-74 bg-white rounded-lg shadow-lg z-50">
               <div className="p-4">
                 <div className="flex justify-between items-center w-full gap-2 m-4">
                   <h3 className="text-lg font-semibold">Filter</h3>
@@ -279,7 +279,7 @@ export default function SponsorOpportunitiesPage() {
               {opportunity.sport}
             </p>
 
-            <p className="text-gray-600 mb-4 text-[12px]">
+            <p className="text-gray-600 mb-4 text-[12px] min-h-[40px]">
               {opportunity.description}
             </p>
             <p className="text-gray-600 mb-4 text-[12px]">
