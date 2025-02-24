@@ -131,7 +131,7 @@ export default function ContractsPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="container flex justify-center items-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
       </div>
     );
@@ -156,15 +156,13 @@ export default function ContractsPage() {
           {contracts.map((contract) => (
             <Card key={contract._id} className="overflow-hidden">
               <CardContent className="p-6 space-y-1  grid grid-cols-[200px,1fr,1fr] max-sm:grid-cols-1 max-md:grid-cols-1 max-lg:grid-cols-1 gap-8  justify-around ">
-              <div className="w-full h-full ">
+                <div className="w-full h-full ">
                   <img
                     src={bikes}
                     alt="bike1"
                     className="w-full h-full  object-cover"
                   />
                 </div>
-
-              
 
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-2 justify-between items-start">
@@ -175,18 +173,14 @@ export default function ContractsPage() {
                     <p className="text-md font-semibold">
                       {contract.opportunityTitle || "Untitled Opportunity"}
                     </p>
-                   
-                  </div>
-
-
-                  <div>
-                  <span className="text-[#1C2434]">Summer campaign</span>
                   </div>
 
                   <div>
-              
+                    <span className="text-[#1C2434]">Summer campaign</span>
+                  </div>
 
-                  <span
+                  <div>
+                    <span
                       className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
                         contract.status
                       )}`}
@@ -204,14 +198,18 @@ export default function ContractsPage() {
                       </span>
                     </div>
                     <div className="flex gap-2 text-sm">
-                      <span className="text-[#1C2434]">Sponsorship duration:</span>
-                      <span className="font-medium">{format(
+                      <span className="text-[#1C2434]">
+                        Sponsorship duration:
+                      </span>
+                      <span className="font-medium">
+                        {format(
                           addMonths(
                             new Date(contract.createdAt),
                             contract.duration || 12
                           ),
                           "dd MMM yyyy"
-                        )}</span>
+                        )}
+                      </span>
                       {/* <span className="font-medium">
                         {userProfiles[contract.sponsorId]?.companyName}
                       </span> */}
@@ -225,61 +223,85 @@ export default function ContractsPage() {
                     <div className="flex gap-2 text-sm">
                       <span className="text-[#1C2434]">In escrow:</span>
                       <span className="font-medium">
-                      ${contract.totalPrice?.toLocaleString()}
+                        ${contract.totalPrice?.toLocaleString()}
                       </span>
                     </div>
                   </div>
-
-                  
                 </div>
 
-
                 <div className="">
-                <div className="flex gap-3 pt-6 flex-col h-full justify-between">
-
+                  <div className="flex gap-3 pt-6 flex-col h-full justify-between">
+                    <div>
+                      <div className="flex gap-2 text-[#1C2434]">
+                        <span>Sponsor rating:</span>
                         <div>
-                            <div className="flex gap-2 text-[#1C2434]">
-                              <span>Sponsor rating:</span>
-                              <div>
-                              <div class="flex items-center">
-    <svg class="w-4 h-4 text-[#FFBE19] ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-[#FFBE19] ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-[#FFBE19] ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-[#FFBE19] ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-    <svg class="w-4 h-4 text-[#FFBE19] ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-    </svg>
-</div>
-                              </div>
-                            </div>
-
-                            <div className="flex gap-2 text-[#1C2434]">
-                              <span>Time left: </span>
-                              <span className="font-medium">4 months</span>
-                            </div>
+                          <div class="flex items-center">
+                            <svg
+                              class="w-4 h-4 text-[#FFBE19] ms-1"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 22 20"
+                            >
+                              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg
+                              class="w-4 h-4 text-[#FFBE19] ms-1"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 22 20"
+                            >
+                              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg
+                              class="w-4 h-4 text-[#FFBE19] ms-1"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 22 20"
+                            >
+                              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg
+                              class="w-4 h-4 text-[#FFBE19] ms-1"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 22 20"
+                            >
+                              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg
+                              class="w-4 h-4 text-[#FFBE19] ms-1"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 22 20"
+                            >
+                              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                          </div>
                         </div>
+                      </div>
 
+                      <div className="flex gap-2 text-[#1C2434]">
+                        <span>Time left: </span>
+                        <span className="font-medium">4 months</span>
+                      </div>
+                    </div>
 
-                            {/* buton */}
-                      
-                      <div className="flex gap-3">
+                    {/* buton */}
 
+                    <div className="flex gap-3">
                       <button
-                      onClick={() => navigate(`/contracts/${contract._id}`)}
-                      className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium"
-                    >
-                      View Details
-                    </button>
+                        onClick={() => navigate(`/contracts/${contract._id}`)}
+                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium"
+                      >
+                        View Details
+                      </button>
 
-                    {/* {contract.athleteId === userId &&
+                      {/* {contract.athleteId === userId &&
                   contract.status === "pending" ? (
                     <button
                       onClick={() => handleAcceptContract(contract._id)}
@@ -311,62 +333,61 @@ export default function ContractsPage() {
                       {userId === contract.athleteId ? "Sponsor" : "Athlete"}
                     </button>
                   )} */}
-                    {contract.athleteId === userId &&
-                    contract.status === "pending" ? (
-                      <button
-                        onClick={() => handleAcceptContract(contract._id)}
-                        disabled={acceptingId === contract._id}
-                        className={`flex-1 ${
-                          acceptingId === contract._id
-                            ? "bg-green-300"
-                            : "bg-green-700 hover:bg-green-800"
-                        } text-white py-2 px-4 rounded-full text-sm font-medium`}
-                      >
-                        {acceptingId === contract._id
-                          ? "Accepting..."
-                          : "Accept Offer"}
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          // First fetch contracts for this conversation
-                          const otherUserId =
-                            userId === contract.athleteId
-                              ? contract.sponsorId
-                              : contract.athleteId;
+                      {contract.athleteId === userId &&
+                      contract.status === "pending" ? (
+                        <button
+                          onClick={() => handleAcceptContract(contract._id)}
+                          disabled={acceptingId === contract._id}
+                          className={`flex-1 ${
+                            acceptingId === contract._id
+                              ? "bg-green-300"
+                              : "bg-green-700 hover:bg-green-800"
+                          } text-white py-2 px-4 rounded-full text-sm font-medium`}
+                        >
+                          {acceptingId === contract._id
+                            ? "Accepting..."
+                            : "Accept Offer"}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            // First fetch contracts for this conversation
+                            const otherUserId =
+                              userId === contract.athleteId
+                                ? contract.sponsorId
+                                : contract.athleteId;
 
-                          // Pass both conversation and contracts data
-                          navigate("/messages", {
-                            state: {
-                              selectedConversation: {
-                                userId: otherUserId,
-                                name:
-                                  userId === contract.athleteId
-                                    ? userProfiles[contract.sponsorId]
-                                        ?.companyName || "Sponsor"
-                                    : `${
-                                        userProfiles[contract.athleteId]
-                                          ?.firstName || ""
-                                      } ${
-                                        userProfiles[contract.athleteId]
-                                          ?.lastName || ""
-                                      }` || "Athlete",
+                            // Pass both conversation and contracts data
+                            navigate("/messages", {
+                              state: {
+                                selectedConversation: {
+                                  userId: otherUserId,
+                                  name:
+                                    userId === contract.athleteId
+                                      ? userProfiles[contract.sponsorId]
+                                          ?.companyName || "Sponsor"
+                                      : `${
+                                          userProfiles[contract.athleteId]
+                                            ?.firstName || ""
+                                        } ${
+                                          userProfiles[contract.athleteId]
+                                            ?.lastName || ""
+                                        }` || "Athlete",
+                                },
+                                // Pass the relevant contract for initialization
+                                initialContracts: [contract],
                               },
-                              // Pass the relevant contract for initialization
-                              initialContracts: [contract],
-                            },
-                          });
-                        }}
-                        className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white px-4 rounded-full text-sm font-medium"
-                      >
-                        Message{" "}
-                        {userId === contract.athleteId ? "Sponsor" : "Athlete"}
-                      </button>
-                    )}
-
-                        
-                      </div>
-                   
+                            });
+                          }}
+                          className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white px-4 rounded-full text-sm font-medium"
+                        >
+                          Message{" "}
+                          {userId === contract.athleteId
+                            ? "Sponsor"
+                            : "Athlete"}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </CardContent>

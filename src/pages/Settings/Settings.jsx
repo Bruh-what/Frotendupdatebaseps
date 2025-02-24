@@ -172,7 +172,7 @@ export default function Settings() {
     }));
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="container">Loading...</div>;
 
   return (
     <form onSubmit={handleSubmit} className="w-[75rem] p-12">
@@ -308,7 +308,8 @@ export default function Settings() {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="w-full h-10 px-3 rounded-lg border bg-[#F3F4F6]">
+              className="w-full h-10 px-3 rounded-lg border bg-[#F3F4F6]"
+            >
               <option value="">Select gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -428,7 +429,8 @@ export default function Settings() {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="aspect-square bg-[#F3F4F6] rounded-lg border-2  border-gray-100 flex items-center justify-center">
+                  className="aspect-square bg-[#F3F4F6] rounded-lg border-2  border-gray-100 flex items-center justify-center"
+                >
                   <button type="button" className="text-2xl">
                     +
                   </button>
@@ -440,12 +442,14 @@ export default function Settings() {
             <button
               type="button"
               onClick={() => fetchProfileData()}
-              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
+              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
+            >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
+              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
+            >
               Save changes
             </button>
           </div>
