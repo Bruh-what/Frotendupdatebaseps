@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   BriefcaseBusiness,
   CreditCard,
@@ -6,36 +6,40 @@ import {
   LayoutDashboard,
   Mail,
   Settings2,
-} from "lucide-react";
-import { NavLink } from "react-router-dom";
-import logo from "../../assets/logofinalised.svg";
+} from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import logo from '../../assets/logofinalised.svg';
 // import Search from "../../components/_Common/Search";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 // import { supabase } from "../../lib/supabaseClient";
-import { FaSignOutAlt } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 
-import toast from "react-hot-toast";
-import UpgradeToPro from "../upgradePro";
-import { clearAuthMessages } from "../../feature/auth/auth.slicer";
+import toast from 'react-hot-toast';
+import UpgradeToPro from '../upgradePro';
+import { clearAuthMessages } from '../../feature/auth/auth.slicer';
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = async () => {
     localStorage.clear();
-    toast.success("Logged out successfully");
-    navigate("/login");
+    toast.success('Logged out successfully');
+    navigate('/login');
     dispatch(clearAuthMessages());
   };
 
   return (
+<<<<<<< HEAD
     <div className="flex flex-col p-6 w-[300px] max-h-[100vh] justify-between gap-6 border-r-[1px] border-gray-100 items-center">
+=======
+    <div className="h-screen flex flex-col p-6 w-[300px] justify-between gap-6 border-r-[1px] border-gray-100 items-center">
+>>>>>>> 9f520bd0430361df7bcff7ec62fc38333f18dffa
       {/* <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto " /> */}
       <img
         src={logo}
         alt="Prosponsor Logo"
         className="w-24 h-auto cursor-pointer mb-4"
-        onClick={() => (window.location.href = "https://prosponsor.co.uk")}
+        onClick={() => (window.location.href = 'https://prosponsor.co.uk')}
       />
       {/* <h3 className="text-xl font-bold text-[#151515] p-2">Prosponsor</h3> */}
       {/* <Search /> */}
@@ -55,7 +59,7 @@ const Sidebar = () => {
         />
         <NavItem to="/billing" label="Billing" Icon={CreditCard} />
       </ul>
-      <div className="flex flex-col gap-20 mt-14">
+      <div className="flex flex-col gap-10 mt-14">
         <UpgradeToPro />
         <li
           onClick={handleLogout}
@@ -74,8 +78,8 @@ const NavItem = ({ to, label, Icon }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex flex-row gap-1 items-center p-2 pr-4 rounded-md ${
-        isActive ? "bg-[#111827]  text-[#F9FAFB]" : "hover:bg-gray-100"
+      `flex flex-row gap-1 items-center p-2 pr-4 rounded-md w-[200px] ${
+        isActive ? 'bg-[#111827]  text-[#F9FAFB]' : 'hover:bg-gray-100'
       }`
     }
   >

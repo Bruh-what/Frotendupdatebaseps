@@ -2443,7 +2443,12 @@ export default function Messages() {
     return words.slice(0, 3).join(" ") + (words.length > 3 ? "..." : "");
   };
 
-  if (loading) return <div className="p-4">Loading conversations...</div>;
+  if (loading)
+    return (
+      <div className="container pt-40  flex justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   if (error) return <div className="p-4 text-red-500">{error}</div>;
   const handleMessageSearch = (e) => {
     setSearch(e.target.value);
