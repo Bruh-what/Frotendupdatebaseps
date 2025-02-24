@@ -2179,16 +2179,16 @@
 //   );
 // }
 // with contract offer
-import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { supabase } from "../../lib/supabaseClient";
-import { format } from "date-fns";
-import useAuth from "../../hooks/useAuth";
-import { PROSPONSER } from "../../https/config";
-import { MoreHorizontal, SearchIcon, Send } from "lucide-react";
-import image from "../../assets/images/Rectangle 34624146.png";
-import smile from "../../assets/icons/smile.png";
-import paperclip from "../../assets/icons/paperclip.png";
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { supabase } from '../../lib/supabaseClient';
+import { format } from 'date-fns';
+import useAuth from '../../hooks/useAuth';
+import { PROSPONSER } from '../../https/config';
+import { MoreHorizontal, SearchIcon, Send } from 'lucide-react';
+import image from '../../assets/images/Rectangle 34624146.png';
+import smile from '../../assets/icons/smile.png';
+import paperclip from '../../assets/icons/paperclip.png';
 
 export default function Messages() {
   const { role } = useAuth();
@@ -2205,12 +2205,12 @@ export default function Messages() {
   const [sendingMessage, setSendingMessage] = useState(false);
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState('');
   const [acceptingContractId, setAcceptingContractId] = useState(null);
   const [search, setSearch] = useState();
   const messagesEndRef = useRef(null);
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [combinedMessages]);
 
   // useEffect(() => {
@@ -2240,12 +2240,12 @@ export default function Messages() {
     const combined = [
       ...messages.map((msg) => ({
         ...msg,
-        type: "message",
+        type: 'message',
         timestamp: new Date(msg.createdAt).getTime(),
       })),
       ...contracts.map((contract) => ({
         ...contract,
-        type: "contract",
+        type: 'contract',
         timestamp: new Date(contract.createdAt).getTime(),
       })),
     ];
@@ -2258,7 +2258,7 @@ export default function Messages() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      if (!session) throw new Error("No authenticated session");
+      if (!session) throw new Error('No authenticated session');
       setUserId(session.user.id);
 
       const response = await PROSPONSER.get(
@@ -2266,7 +2266,7 @@ export default function Messages() {
         {
           headers: {
             Authorization: `Bearer ${session.access_token}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -2275,7 +2275,7 @@ export default function Messages() {
         setConversations(response.data.data);
       }
     } catch (error) {
-      setError("Failed to load conversations");
+      setError('Failed to load conversations');
     } finally {
       setLoading(false);
     }
@@ -2293,7 +2293,7 @@ export default function Messages() {
         {
           headers: {
             Authorization: `Bearer ${session.access_token}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -2302,7 +2302,7 @@ export default function Messages() {
         setMessages(response.data.data || []);
       }
     } catch (error) {
-      console.error("Error fetching messages:", error);
+      console.error('Error fetching messages:', error);
     } finally {
       setMessagesLoading(false);
     }
@@ -2314,10 +2314,10 @@ export default function Messages() {
         data: { session },
       } = await supabase.auth.getSession();
 
-      const response = await PROSPONSER.get("/contracts", {
+      const response = await PROSPONSER.get('/contracts', {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -2330,7 +2330,7 @@ export default function Messages() {
 
       setContracts(conversationContracts);
     } catch (error) {
-      console.error("Error fetching contracts:", error);
+      console.error('Error fetching contracts:', error);
     }
   };
 
@@ -2354,7 +2354,7 @@ export default function Messages() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      if (!session) throw new Error("No authenticated session");
+      if (!session) throw new Error('No authenticated session');
 
       const messageData = {
         senderId: session.user.id,
@@ -2364,10 +2364,10 @@ export default function Messages() {
         content: newMessage,
       };
 
-      const response = await PROSPONSER.post("/messages", messageData, {
+      const response = await PROSPONSER.post('/messages', messageData, {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -2379,7 +2379,7 @@ export default function Messages() {
         };
 
         setMessages((prev) => [...prev, newMessageObj]);
-        setNewMessage("");
+        setNewMessage('');
         setConversations((prev) =>
           prev.map((conv) =>
             conv.userId === selectedConversation.userId
@@ -2393,15 +2393,15 @@ export default function Messages() {
         );
       }
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error('Error sending message:', error);
     } finally {
       setSendingMessage(false);
     }
   };
 
   const handleCreateContract = (opportunityData) => {
-    if (role !== "sponsor") return;
-    navigate("/CreateContractPage", {
+    if (role !== 'sponsor') return;
+    navigate('/CreateContractPage', {
       state: {
         opportunity: {
           _id: opportunityData.opportunityId,
@@ -2433,23 +2433,28 @@ export default function Messages() {
       // Refresh contracts after accepting
       await fetchContracts(selectedConversation.userId);
     } catch (error) {
-      console.error("Accept contract error:", error);
+      console.error('Accept contract error:', error);
     }
   };
 
   const truncateMessage = (message) => {
-    if (!message) return "";
-    const words = message.split(" ");
-    return words.slice(0, 3).join(" ") + (words.length > 3 ? "..." : "");
+    if (!message) return '';
+    const words = message.split(' ');
+    return words.slice(0, 3).join(' ') + (words.length > 3 ? '...' : '');
   };
 
-  if (loading) return <div className="p-4">Loading conversations...</div>;
+  if (loading)
+    return (
+      <div className="container pt-40  flex justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   if (error) return <div className="p-4 text-red-500">{error}</div>;
   const handleMessageSearch = (e) => {
     setSearch(e.target.value);
   };
   const filteredApi = conversations.filter((data) =>
-    (data.name || "").toLowerCase().includes((search || "").toLowerCase())
+    (data.name || '').toLowerCase().includes((search || '').toLowerCase())
   );
 
   return (
@@ -2477,8 +2482,8 @@ export default function Messages() {
             onClick={() => handleConversationSelect(conversation)}
             className={`rounded-lg mt-10 p-3   hover:bg-gray-50 cursor-pointer ${
               selectedConversation?.userId === conversation.userId
-                ? "bg-[#F3F4F6]"
-                : "bg-[#FFFF]"
+                ? 'bg-[#F3F4F6]'
+                : 'bg-[#FFFF]'
             } flex gap-4 items-center`}
           >
             <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
@@ -2536,15 +2541,15 @@ export default function Messages() {
               ) : (
                 combinedMessages.map((item, index) => {
                   const isCurrentUser =
-                    (item.type === "message" && item.senderId === userId) ||
-                    (item.type === "contract" && item.sponsorId === userId);
+                    (item.type === 'message' && item.senderId === userId) ||
+                    (item.type === 'contract' && item.sponsorId === userId);
 
                   return (
                     <div key={`${item.type}-${index}`}>
-                      {item.type === "message" && (
+                      {item.type === 'message' && (
                         <div
                           className={`flex ${
-                            isCurrentUser ? "justify-end" : "justify-start"
+                            isCurrentUser ? 'justify-end' : 'justify-start'
                           } mb-4`}
                         >
                           <div className={``}>
@@ -2554,23 +2559,23 @@ export default function Messages() {
                             <p
                               className={`break-words max-w-[360px]  rounded-lg px-4 py-2 ${
                                 isCurrentUser
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-gray-200"
+                                  ? 'bg-blue-500 text-white'
+                                  : 'bg-gray-200'
                               }`}
                             >
                               {item.content}
                             </p>
                             <span className="text-[12px] text-[#64748B] font-[500] opacity-70">
-                              {format(new Date(item.createdAt), "MMM d, HH:mm")}
+                              {format(new Date(item.createdAt), 'MMM d, HH:mm')}
                             </span>
                           </div>
                         </div>
                       )}
 
-                      {item.type === "contract" && (
+                      {item.type === 'contract' && (
                         <div
                           className={`flex ${
-                            isCurrentUser ? "justify-end" : "justify-start"
+                            isCurrentUser ? 'justify-end' : 'justify-start'
                           } mb-4`}
                         >
                           <div className="max-w-[85%] w-full sm:max-w-[70%] bg-white rounded-lg shadow-md p-6 border border-gray-200">
@@ -2581,11 +2586,11 @@ export default function Messages() {
                                 </h4>
                                 <span
                                   className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                    item.status === "pending"
-                                      ? "bg-yellow-100 text-yellow-800"
-                                      : item.status === "active"
-                                      ? "bg-green-100 text-green-800"
-                                      : "bg-gray-100 text-gray-800"
+                                    item.status === 'pending'
+                                      ? 'bg-yellow-100 text-yellow-800'
+                                      : item.status === 'active'
+                                      ? 'bg-green-100 text-green-800'
+                                      : 'bg-gray-100 text-gray-800'
                                   }`}
                                 >
                                   {item.status.charAt(0).toUpperCase() +
@@ -2609,7 +2614,7 @@ export default function Messages() {
                               <div className="text-xs text-gray-400">
                                 {format(
                                   new Date(item.createdAt),
-                                  "MMM d, HH:mm"
+                                  'MMM d, HH:mm'
                                 )}
                               </div>
 
@@ -2624,7 +2629,7 @@ export default function Messages() {
                                 </button>
 
                                 {!isCurrentUser &&
-                                  item.status === "pending" && (
+                                  item.status === 'pending' && (
                                     <button
                                       onClick={async () => {
                                         setAcceptingContractId(item._id);
@@ -2636,13 +2641,13 @@ export default function Messages() {
                                       }
                                       className={`flex-1 ${
                                         acceptingContractId === item._id
-                                          ? "bg-green-300"
-                                          : "bg-green-700 hover:bg-green-800"
+                                          ? 'bg-green-300'
+                                          : 'bg-green-700 hover:bg-green-800'
                                       } text-white py-2 px-4 rounded-full text-sm font-medium`}
                                     >
                                       {acceptingContractId === item._id
-                                        ? "Accepting..."
-                                        : "Accept Offer"}
+                                        ? 'Accepting...'
+                                        : 'Accept Offer'}
                                     </button>
                                   )}
                               </div>
@@ -2651,10 +2656,10 @@ export default function Messages() {
                         </div>
                       )}
 
-                      {item.type === "message" && item.opportunityData && (
+                      {item.type === 'message' && item.opportunityData && (
                         <div
                           className={`flex ${
-                            isCurrentUser ? "justify-end" : "justify-start"
+                            isCurrentUser ? 'justify-end' : 'justify-start'
                           } mb-4`}
                         >
                           <div className="max-w-[70%] bg-white rounded-lg shadow-md p-4 border border-gray-200">
@@ -2678,10 +2683,10 @@ export default function Messages() {
                               <span className="text-xs text-gray-400">
                                 {format(
                                   new Date(item.createdAt),
-                                  "MMM d, HH:mm"
+                                  'MMM d, HH:mm'
                                 )}
                               </span>
-                              {role === "sponsor" && (
+                              {role === 'sponsor' && (
                                 <button
                                   onClick={() =>
                                     handleCreateContract(item.opportunityData)
@@ -2738,7 +2743,7 @@ export default function Messages() {
                   disabled={sendingMessage || !newMessage.trim()}
                   className="bg-[#6366F1] text-white rounded-md px-3 py-2 hover:bg-blue-600 disabled:opacity-50"
                 >
-                  {sendingMessage ? "Sending..." : <Send />}
+                  {sendingMessage ? 'Sending...' : <Send />}
                 </button>
               </form>
             </div>

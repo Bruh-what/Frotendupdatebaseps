@@ -273,7 +273,11 @@ export default function ContractDetails() {
   };
 
   if (loading)
-    return <div className="p-6 text-center">Loading contract details...</div>;
+    return (
+      <div className="container flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
   if (!contract)
     return <div className="p-6 text-center">Contract not found</div>;
