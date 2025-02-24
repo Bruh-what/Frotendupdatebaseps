@@ -2185,6 +2185,7 @@ import { supabase } from "../../lib/supabaseClient";
 import { format } from "date-fns";
 import useAuth from "../../hooks/useAuth";
 import { PROSPONSER } from "../../https/config";
+import Search from "../../components/_Common/Search";
 
 export default function Messages() {
   const { role } = useAuth();
@@ -2438,11 +2439,15 @@ export default function Messages() {
   if (error) return <div className="p-4 text-red-500">{error}</div>;
 
   return (
-    <div className="h-screen flex bg-gray-100 w-full">
-      <div className="w-1/3 bg-white border-r overflow-y-auto">
-        <div className="p-4 border-b">
-          <h2 className="text-xl font-semibold">Messages</h2>
+    <div className=" h-screen flex bg-[#F9FAFB] w-full">
+      <div className=" p-4 w-96  border-r ">
+        <div className="p-4 border-b flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Active conversations</h2>
+          <h2 className="pr-3 pl-3 pt-1 pb-1 bg-[#F3F4F6] rounded-lg font-[500]">
+            4
+          </h2>
         </div>
+        <Search />
         {conversations.map((conversation) => (
           <div
             key={conversation.userId}
@@ -2485,7 +2490,7 @@ export default function Messages() {
                     (item.type === "contract" && item.sponsorId === userId);
 
                   return (
-                    <div key={`${item.type}-${index}`}>
+                    <div key={`${item.type}-${index}`} className="bg-[#FFFFFF]">
                       {item.type === "message" && (
                         <div
                           className={`flex ${

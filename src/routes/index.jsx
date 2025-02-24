@@ -34,7 +34,9 @@ const AppRoutes = () => {
 
   // Define routes where the Sidebar should be hidden
   const hideSidebarRoutes = ["/login", "/signup"];
+  const hideRightSidebar = ["/login", "/signup", "/messages"];
   const shouldHideSidebar = hideSidebarRoutes.includes(location.pathname);
+  const shouldHidRighteSidebar = hideRightSidebar.includes(location.pathname);
   // console.log("isAuthenticated", isAuthenticated);
   return (
     <div className="bg-[#FEFEFE] flex ">
@@ -79,7 +81,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<SignIn />} />
         {/* <Route path="/profile/:userId" element={<UserProfile />} /> */}
       </Routes>
-      {!shouldHideSidebar && <SponsorSidebar />}
+      {!shouldHidRighteSidebar && <SponsorSidebar />}
     </div>
   );
 };

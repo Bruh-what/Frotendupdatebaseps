@@ -14,7 +14,7 @@ const data = [
 
 export const ProfileViews = () => {
   return (
-    <div className="border w-[55%] overflow-hidden rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7]">
+    <div className="border w-[55%] overflow-hidden rounded-2xl ">
       <div className="p-4">
         <div>
           <h3 className="text-[#111827] text-lg font-[600]">
