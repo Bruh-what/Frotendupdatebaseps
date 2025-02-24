@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { FiFile, FiTrendingDown, FiTrendingUp } from "react-icons/fi";
 import { supabase } from "../../lib/supabaseClient";
@@ -6,12 +5,6 @@ import { PROSPONSER } from "../../https/config";
 import dollar from "../../assets/icons/Vector.svg";
 import breifcase from "../../assets/icons/briefcase.svg";
 import docs from "../../assets/icons/clipboard-document-list.svg";
-=======
-import React, { useState, useEffect } from 'react';
-import { FiFile, FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
-import { supabase } from '../../lib/supabaseClient';
-import { PROSPONSER } from '../../https/config';
->>>>>>> 9f520bd0430361df7bcff7ec62fc38333f18dffa
 
 function Statcards() {
   const [activeContractsCount, setActiveContractsCount] = useState(0);
@@ -30,9 +23,9 @@ function Statcards() {
         const userId = sessionData.session.user.id;
 
         // Fetch contracts
-        const response = await PROSPONSER.get('/contracts', {
+        const response = await PROSPONSER.get("/contracts", {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
@@ -45,13 +38,13 @@ function Statcards() {
 
         // Count pending contracts
         const pendingContracts = userContracts.filter(
-          (contract) => contract.status.toLowerCase() === 'pending'
+          (contract) => contract.status.toLowerCase() === "pending"
         );
         setPendingContractsCount(pendingContracts.length);
 
         // Calculate total spending from active contracts
         const activeContracts = userContracts.filter(
-          (contract) => contract.status.toLowerCase() === 'active'
+          (contract) => contract.status.toLowerCase() === "active"
         );
         setActiveContractsCount(activeContracts.length);
 
@@ -62,7 +55,7 @@ function Statcards() {
         );
         setTotalSpending(totalAmount);
       } catch (error) {
-        console.error('Error fetching contracts:', error);
+        console.error("Error fetching contracts:", error);
       } finally {
         setIsLoading(false);
       }
@@ -91,34 +84,20 @@ function Statcards() {
       <Card
         title="Active contracts"
         value={activeContractsCount}
-<<<<<<< HEAD
 
         // pillText={`${
         // activeContractsCount > 0 ? "+" : ""
         // }${activeContractsCount}%`}
         // trend={activeContractsCount > 0 ? "up" : "down"}
-=======
-        pillText={`${
-          activeContractsCount > 0 ? '+' : ''
-        }${activeContractsCount}%`}
-        trend={activeContractsCount > 0 ? 'up' : 'down'}
->>>>>>> 9f520bd0430361df7bcff7ec62fc38333f18dffa
         // period="From Jan 1st - Jul 31st"
       />
       <Card
         title="Pending contracts"
         value={pendingContractsCount}
-<<<<<<< HEAD
         // pillText={`${
         //   pendingContractsCount > 0 ? "+" : ""
         // }${pendingContractsCount}%`}
         // trend={pendingContractsCount > 0 ? "up" : "down"}
-=======
-        pillText={`${
-          pendingContractsCount > 0 ? '+' : ''
-        }${pendingContractsCount}%`}
-        trend={pendingContractsCount > 0 ? 'up' : 'down'}
->>>>>>> 9f520bd0430361df7bcff7ec62fc38333f18dffa
         // period="Previous 365 days"
       />
     </>
@@ -139,19 +118,6 @@ const Card = (props) => {
           <p className="font-[500]">{value}</p>
           <p className="text-[#9CA3AF] font-[500]">{title}</p>
         </div>
-<<<<<<< HEAD
-=======
-
-        <span
-          className={`text-xs flex items-center gap-1 font-medium px-2 py-1 rounded ${
-            trend === 'up'
-              ? 'bg-green-100 text-green-700'
-              : 'bg-red-100 text-red-700'
-          }`}
-        >
-          {trend === 'up' ? <FiTrendingUp /> : <FiTrendingDown />} {pillText}
-        </span>
->>>>>>> 9f520bd0430361df7bcff7ec62fc38333f18dffa
       </div>
     </>
   );
