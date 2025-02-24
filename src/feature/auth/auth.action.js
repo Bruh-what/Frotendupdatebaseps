@@ -46,12 +46,25 @@ export const signinUser = createAsyncThunk(
 
       if (error) return rejectWithValue(error.message);
 
-      return { user: data.user, message: "Sign in successful!" };
+      const user = data.user;
+      if (!user) return rejectWithValue("User not found");
+
+      // Fetch role from the 'profiles' table
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("uid", user.id)
+        .single();
+
+      if (profileError) return rejectWithValue(profileError.message);
+
+      return { user, role: profile.role, message: "Sign in successful!" };
     } catch (error) {
       return rejectWithValue(error.message || "Something went wrong.");
     }
   }
 );
+
 export const logoutUser = createAsyncThunk(
   "auth/logoutUser",
   async (_, { rejectWithValue }) => {

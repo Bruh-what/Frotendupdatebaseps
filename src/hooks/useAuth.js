@@ -1,59 +1,75 @@
-import React, { useState, useEffect } from "react"
-import { supabase } from "../lib/supabaseClient" // Adjust the path to your Supabase client file
+import React, { useState, useEffect } from "react";
+import { supabase } from "../lib/supabaseClient"; // Adjust the path to your Supabase client file
 
 const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [role, setRole] = useState(null) // Store user profile data
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null); // Store user role
 
   useEffect(() => {
     const fetchUserProfile = async (userId) => {
       try {
         const { data, error } = await supabase
           .from("profiles")
-          .select("*")
+          .select("role") // Fetch only role instead of "*"
           .eq("uid", userId)
-          .single() // Fetch the profile for the current user
+          .single();
 
         if (error) {
-          console.error("Error fetching profile:", error.message)
-          return
+          console.error("Error fetching profile:", error.message);
+          return;
         }
 
-        setRole(data.role) // Set profile data
+        if (data) {
+          setRole(data.role); // Set user role
+        } else {
+          console.warn("No profile found for user:", userId);
+          setRole(null); // Clear role if no profile exists
+        }
       } catch (err) {
-        console.error("Unexpected error fetching profile:", err)
+        console.error("Unexpected error fetching profile:", err);
       }
-    }
+    };
 
     const checkSession = async () => {
-      setLoading(true)
-      const { data, error } = await supabase.auth.getSession()
-      console.log(data)
+      setLoading(true);
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error) {
+        console.error("Error fetching session:", error.message);
+      }
+
       if (data.session) {
-        setIsAuthenticated(true)
-        await fetchUserProfile(data.session.user.id) // Fetch user profile
+        setIsAuthenticated(true);
+        await fetchUserProfile(data.session.user.id); // Fetch user profile
       } else {
-        setIsAuthenticated(false)
+        setIsAuthenticated(false);
+        setRole(null); // Clear role on logout
       }
-      setLoading(false)
-    }
+      setLoading(false);
+    };
 
-    checkSession()
+    checkSession();
 
-    // Listen for authentication changes
-    const { subscription } = supabase.auth.onAuthStateChange(
+    // Properly handle auth state change
+    const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        setIsAuthenticated(!!session)
+        if (session) {
+          setIsAuthenticated(true);
+          fetchUserProfile(session.user.id);
+        } else {
+          setIsAuthenticated(false);
+          setRole(null); // Clear role when logged out
+        }
       }
-    )
+    );
 
-    return () => subscription?.unsubscribe()
-  }, [])
+    return () => {
+      authListener?.subscription?.unsubscribe(); // Proper cleanup
+    };
+  }, []);
 
-  console.log("profile", role)
+  return { isAuthenticated, loading, role };
+};
 
-  return { isAuthenticated, loading, role }
-}
-
-export default useAuth
+export default useAuth;
