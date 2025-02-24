@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
-import { supabase } from '../../lib/supabaseClient';
-import { PROSPONSER } from '../../https/config';
-import dollar from '../../assets/icons/Vector.svg';
-import breifcase from '../../assets/icons/briefcase.svg';
-import docs from '../../assets/icons/clipboard-document-list.svg';
+import React, { useState, useEffect } from "react";
+import { FiTrendingDown, FiTrendingUp } from "react-icons/fi";
+import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
+import dollar from "../../assets/icons/Vector.svg";
+import breifcase from "../../assets/icons/briefcase.svg";
+import docs from "../../assets/icons/clipboard-document-list.svg";
 
 function Statcards() {
   // Initialize with null to distinguish between loading and zero values
@@ -24,11 +24,11 @@ function Statcards() {
         const userId = sessionData.session.user.id;
 
         const [contractsResponse, opportunitiesResponse] = await Promise.all([
-          PROSPONSER.get('/contracts', {
+          PROSPONSER.get("/contracts", {
             headers: { Authorization: `Bearer ${token}` },
           }),
           PROSPONSER.post(
-            '/opportunities/getopportunities',
+            "/opportunities/getopportunities",
             { athleteId: userId },
             { headers: { Authorization: `Bearer ${token}` } }
           ),
@@ -40,7 +40,7 @@ function Statcards() {
         );
 
         const activeContracts = userContracts.filter(
-          (contract) => contract.status.toLowerCase() === 'completed'
+          (contract) => contract.status.toLowerCase() === "completed"
         );
 
         const totalEarnings = activeContracts.reduce(
@@ -49,7 +49,7 @@ function Statcards() {
         );
 
         const pendingContracts = userContracts.filter(
-          (contract) => contract.status.toLowerCase() === 'pending'
+          (contract) => contract.status.toLowerCase() === "pending"
         ).length;
 
         if (isMounted) {
@@ -60,7 +60,7 @@ function Statcards() {
           });
         }
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        console.error("Error fetching stats:", error);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -142,12 +142,12 @@ const Card = (props) => {
 
         <span
           className={`text-xs flex items-center gap-1 font-medium px-2 py-1 rounded ${
-            trend === 'up'
-              ? 'bg-green-100 text-green-700'
-              : 'bg-red-100 text-red-700'
+            trend === "up"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
           }`}
         >
-          {trend === 'up' ? <FiTrendingUp /> : <FiTrendingDown />} {pillText}
+          {trend === "up" ? <FiTrendingUp /> : <FiTrendingDown />} {pillText}
         </span>
       </div>
 
