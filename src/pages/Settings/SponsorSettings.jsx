@@ -36,7 +36,7 @@ export default function SponsorSettings() {
         };
 
         const response = await PROSPONSER.post(
-          "sponsors/profile",
+          "/sponsors/profile",
           updatedProfile,
           {
             headers: {
