@@ -57,7 +57,7 @@ const ContractsTable = () => {
     <div className="col-span-12 space-y-4 mt-4">
       <div className="flex justify-between items-center">
         {/* <h2 className="text-xl font-semibold">Recent Contracts</h2> */}
-        <button className="bg-[#111827] text-white font-[500] text-sm px-6 py-1 rounded-lg">
+        <button className="bg-[#111827] hover:bg-[#0d131f] text-white font-[500] text-sm px-6 py-1 rounded-lg">
           Contracts
         </button>
         <button className="font-[500] text-sm text-[#1F2937]">
