@@ -52,3 +52,15 @@ export const signinUser = createAsyncThunk(
     }
   }
 );
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) return rejectWithValue(error.message);
+      return true; // Logout successful
+    } catch (error) {
+      return rejectWithValue(error.message || "Logout failed. Try again.");
+    }
+  }
+);

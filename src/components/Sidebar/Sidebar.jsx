@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BriefcaseBusiness,
   CreditCard,
@@ -9,22 +9,22 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logofinalised.svg";
-import Search from "../../components/_Common/Search";
+// import Search from "../../components/_Common/Search";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../lib/supabaseClient";
+// import { supabase } from "../../lib/supabaseClient";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../feature/auth/auth.action";
+import toast from "react-hot-toast";
 import UpgradeToPro from "../upgradePro";
 const Sidebar = () => {
   const navigate = useNavigate();
-
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Error signing out:", error.message);
-      return;
-    }
-    navigate("/login"); // Redirect to login page after logout
+    localStorage.clear();
+    toast.success("Logged out successfully");
+    navigate("/login");
   };
+
   return (
     <div className="flex flex-col p-6 w-[300px] gap-6 border-r-[1px] border-gray-100 items-center">
       {/* <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto " /> */}
