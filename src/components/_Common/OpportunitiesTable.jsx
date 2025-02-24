@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Eye, Plus } from "lucide-react";
+import { Eye, Plus, Trash2 } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
 import { PROSPONSER } from "../../https/config";
 
@@ -121,10 +121,10 @@ const OpportunitiesTable = () => {
         <h2 className="text-xl font-semibold">Opportunities</h2>
         <Link
           to="/CreateOpportunity"
-          className="flex items-center gap-1 bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-4 rounded-full shadow-xs"
+          className="flex items-center gap-1 font-500"
         >
-          <Plus className="w-4 h-4" />
-          <span>Create Opportunity</span>
+          <Plus className="w-4 h-4 font-[500]" />
+          <span className="font-[500]">Create Opportunity</span>
         </Link>
       </div>
 
@@ -132,34 +132,37 @@ const OpportunitiesTable = () => {
         {opportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="flex items-center justify-between p-3 rounded-2xl bg-gray-50"
+            className="flex items-center justify-between p-3 rounded-2xl bg-[#F9FAFB]"
           >
             <div className="space-y-1 flex flex-row gap-2">
-              <h3 className="font-medium text-gray-900">{opportunity.title}</h3>
-              <div className="flex items-center space-x-4">
-                <p className="text-sm text-gray-500">
+              <div className="flex flex-col">
+                <h3 className="font-[500] text-gray-900 capitalize">
+                  {opportunity.title}
+                </h3>
+                <p className="text-sm font-[500]  text-[#9CA3AF]">
                   ${opportunity.priceAsk?.toLocaleString()}
                 </p>
                 {/* <span className="text-sm text-gray-400">•</span>
                 <p className="text-sm text-gray-500">{opportunity.sport}</p> */}
               </div>
             </div>
-
-            <div className="flex items-center gap-4">
-              <span
-                className={`px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(
-                  opportunity
-                )}`}
-              >
-                {getStatusText(opportunity)}
-              </span>
-
+            <span
+              className={`px-3 py-1 text-sm font-medium  rounded-full ${getStatusColor(
+                opportunity
+              )}`}
+            >
+              {getStatusText(opportunity)}
+            </span>
+            <div className="flex items-center ">
               <Link
                 to={`/opportunities/${opportunity._id}`}
                 state={{ opportunity }}
                 className="p-2 text-gray-500 hover:text-gray-700"
               >
                 <Eye className="w-4 h-4" />
+              </Link>
+              <Link className="p-2 text-gray-500 hover:text-gray-700">
+                <Trash2 className="w-4 h-4" />
               </Link>
             </div>
           </div>
