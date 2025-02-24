@@ -3,7 +3,7 @@ import axios from 'axios';
 // console.log(backendUrl);
 
 const backendUrl = 'https://backenddeploymentps-production.up.railway.app';
-// const backendUrl = 'https://localhost:5000';
+// const backendUrl = 'http://localhost:5000';
 
 export const BaseUrl = backendUrl;
 export const PROSPONSER = axios.create({ baseURL: BaseUrl });

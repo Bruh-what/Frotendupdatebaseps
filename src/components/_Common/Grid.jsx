@@ -39,6 +39,7 @@ import MessagesContainer from './MessagesContainer';
 import OpportunitiesTable from './OpportunitiesTable';
 import bell from '../../assets/icons/bell-alert.svg';
 import msg from '../../assets/icons/chat-bubble-left-ellipsis.svg';
+import image from '../../assets/images/Rectangle 34624146.png';
 
 function Grid() {
   const [profileData, setProfileData] = useState(null);
@@ -79,20 +80,20 @@ function Grid() {
             <img src={bell} alt="bell" width="100%" />
           </div>
         </div>
-        {profileData?.avatar ? (
+        {profileData ? (
           <>
             <div>
               <p className="text-[12px] font-[500] text-[#9CA3AF]">
-                James Murray
+                {profileData?.firstName}
               </p>
               <p className="text-[12px] font-[500] text-[#111827]">
-                Motocross pro
+                {profileData?.lastName}
               </p>
             </div>
             <div>
               <Link to="/settings">
                 <img
-                  src={profileData?.avatar}
+                  src={profileData?.avatar || image}
                   alt="Profile"
                   className="w-10 h-10 rounded-full object-cover cursor-pointer"
                 />
