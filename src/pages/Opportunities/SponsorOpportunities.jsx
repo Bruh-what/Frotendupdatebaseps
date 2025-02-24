@@ -5,6 +5,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "../../components/_Common/Avatar";
+import filterIcon from "../../assets/filter.svg";
 import { Badge } from "../../components/_Common/Badge";
 import { supabase } from "../../lib/supabaseClient";
 import { Link } from "react-router-dom";
@@ -19,6 +20,10 @@ export default function SponsorOpportunitiesPage() {
   const [messageText, setMessageText] = useState("");
   const [athleteProfiles, setAthleteProfiles] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [budget, setBudget] = useState("");
+  const [gender, setGender] = useState("Any");
+  const [followerCount, setFollowerCount] = useState("");
 
   const navigate = useNavigate();
 
@@ -42,30 +47,6 @@ export default function SponsorOpportunitiesPage() {
       console.error("Error fetching athlete avatar:", error);
     }
   };
-  // existing fetch - new fetch adds filtering of active contracts
-  // const fetchOpportunities = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data: sessionData } = await supabase.auth.getSession();
-  //     const response = await PROSPONSER.get("/opportunities/all", {
-  //       headers: {
-  //         Authorization: `Bearer ${sessionData.session.access_token}`,
-  //       },
-  //     });
-  //     setOpportunities(response.data);
-
-  //     response.data.forEach((opp) => {
-  //       if (opp.athleteId) {
-  //         fetchAthleteAvatar(opp.athleteId);
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching opportunities:", error);
-  //     setError("Failed to fetch opportunities.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const fetchOpportunities = async () => {
     try {
@@ -77,13 +58,11 @@ export default function SponsorOpportunitiesPage() {
         },
       };
 
-      // Fetch both opportunities and contracts
       const [opportunitiesRes, contractsRes] = await Promise.all([
         PROSPONSER.get("/opportunities/all", authHeaders),
         PROSPONSER.get("/contracts", authHeaders),
       ]);
 
-      // Filter out opportunities with active contracts
       const activeContracts = contractsRes.data.filter(
         (contract) => contract.status === "active"
       );
@@ -97,7 +76,6 @@ export default function SponsorOpportunitiesPage() {
 
       setOpportunities(availableOpportunities);
 
-      // Keep existing avatar fetching
       availableOpportunities.forEach((opp) => {
         if (opp.athleteId) {
           fetchAthleteAvatar(opp.athleteId);
@@ -110,6 +88,7 @@ export default function SponsorOpportunitiesPage() {
       setLoading(false);
     }
   };
+
   const handleContactClick = (opportunity) => {
     setSelectedOpportunity(opportunity);
     setShowMessageModal(true);
@@ -151,7 +130,6 @@ export default function SponsorOpportunitiesPage() {
         setShowMessageModal(false);
         setMessageText("");
 
-        // Navigate to Messages with correct conversation data
         navigate("/messages", {
           state: {
             selectedConversation: {
@@ -175,30 +153,127 @@ export default function SponsorOpportunitiesPage() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="container px-4 py-8 ">
+    <div className="container px-4 py-8 relative">
       <h1 className="text-3xl font-bold mb-6">Sponsorship Opportunities</h1>
 
-      {/* Add search bar */}
-      <div className="mb-6">
+      <div className="relative mb-6">
         <input
           type="text"
           placeholder="Search by sport..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full md:w-96 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent"
+          className="w-full p-5 pl-8 pr-16 text-lg rounded-full border border-gray-300 bg-[#F9FAFB]"
         />
+        <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
+          <div
+            className="bg-[#ffff] cursor-pointer rounded-full w-[7rem] h-[2.5rem] border border-gray-300 flex items-center justify-center"
+            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}>
+            <img src={filterIcon} alt="Filter" className="w-[4rem] h-[4rem]" />
+          </div>
+
+          {isFilterModalOpen && (
+            <div className="absolute p-4 right-0  w-74 bg-white rounded-lg shadow-lg z-50">
+              <div className="p-4">
+                <div className="flex justify-between items-center w-full gap-2 m-4">
+                  <h3 className="text-lg font-semibold">Filter</h3>
+                  <button
+                    onClick={() => setIsFilterModalOpen(false)}
+                    className="px-4 py-1 rounded-full bg-black text-white">
+                    Clear
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Budget
+                    </label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="10000"
+                      value={budget}
+                      onChange={(e) => setBudget(e.target.value)}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-gray-500">Selected: ${budget}</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Gender
+                    </label>
+                    <div className="flex gap-2">
+                      <button
+                        className={`px-4 py-2 border rounded-[50px] ${
+                          gender === "Male"
+                            ? "bg-[#4736FB] text-white"
+                            : "bg-white text-black"
+                        }`}
+                        onClick={() => setGender("Male")}>
+                        Male
+                      </button>
+                      <button
+                        className={`px-4 py-2 border rounded-[50px] ${
+                          gender === "Female"
+                            ? "bg-[#4736FB] text-white"
+                            : "bg-white text-black"
+                        }`}
+                        onClick={() => setGender("Female")}>
+                        Female
+                      </button>
+                      <button
+                        className={`px-4 py-2 border rounded-[50px] ${
+                          gender === "Any"
+                            ? "bg-[#4736FB] text-white"
+                            : "bg-white text-black"
+                        }`}
+                        onClick={() => setGender("Any")}>
+                        Any
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Social Follower Count Range */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Social Follower Count
+                    </label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1000000"
+                      value={followerCount}
+                      onChange={(e) => setFollowerCount(e.target.value)}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-gray-500">
+                      Selected: {followerCount}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="bg-white rounded-2xl shadow-md p-6"
-          >
+            className="bg-white rounded-2xl shadow-md p-6">
             <h4 className="font-medium  text-[16px]">{opportunity.title}</h4>
-            <p className="text-sm mb-2 text-[12px] text-black font-medium">{opportunity.sport}</p>
+            <p className="text-sm mb-2 text-[12px] text-black font-medium">
+              {opportunity.sport}
+            </p>
 
-            <p className="text-gray-600 mb-4 text-[12px]">{opportunity.description}</p>
-            <p className="text-gray-600 mb-4 text-[12px]">£{opportunity.priceAsk}</p>
+            <p className="text-gray-600 mb-4 text-[12px]">
+              {opportunity.description}
+            </p>
+            <p className="text-gray-600 mb-4 text-[12px]">
+              £{opportunity.priceAsk}
+            </p>
             <div className="flex flex-wrap gap-2 mb-4">
               {opportunity.tags?.map((tag, index) => (
                 <Badge key={index} variant="secondary">
@@ -209,7 +284,6 @@ export default function SponsorOpportunitiesPage() {
 
             <div className="flex items-center flex-row mb-4 gap-2 justify-between max-xl:flex-col  max-sm:gap-0">
               <div className="flex items-center max-sm:mb-2 w-full">
-
                 <Avatar>
                   <AvatarImage
                     src={
@@ -220,14 +294,15 @@ export default function SponsorOpportunitiesPage() {
                   />
                   <AvatarFallback>{opportunity.athleteName[0]}</AvatarFallback>
                 </Avatar>
-                      
+
                 <div className="ml-3 text-[8.89px]">
-                  <h3 className="font-semibold text-[12px] max-sm:text-[11px]">{opportunity.athleteName}</h3>
+                  <h3 className="font-semibold text-[12px] max-sm:text-[11px]">
+                    {opportunity.athleteName}
+                  </h3>
                   <p className=" text-gray-500">
                     <Link
                       to={`/athlete/${opportunity.athleteId}`}
-                      className=" "
-                    >
+                      className=" ">
                       View Profile
                     </Link>
                   </p>
@@ -236,18 +311,10 @@ export default function SponsorOpportunitiesPage() {
 
               <button
                 onClick={() => handleContactClick(opportunity)}
-                className="bg-black hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full"
-              >
+                className="bg-black hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full">
                 message
               </button>
             </div>
-            {/* 
-            <Link
-              to={`/athlete/${opportunity.athleteId}`}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-6 rounded-full ml-2"
-            >
-              View Profile
-            </Link> */}
           </div>
         ))}
       </div>
@@ -269,15 +336,13 @@ export default function SponsorOpportunitiesPage() {
                   setShowMessageModal(false);
                   setMessageText("");
                 }}
-                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900"
-              >
+                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900">
                 Cancel
               </button>
               <button
                 onClick={handleSendMessage}
                 disabled={!messageText.trim()}
-                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50"
-              >
+                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50">
                 Send
               </button>
             </div>
