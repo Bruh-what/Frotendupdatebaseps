@@ -26,10 +26,11 @@ import OpportunityDetails from "../pages/Opportunities/OpportunityDetails.jsx";
 import SponsorSidebar from "../components/SponsorRightSidebat/index.jsx";
 import FeatureSponsor from "../components/featureSponsors/index.jsx";
 import Annoucements from "../components/annoucements/index.jsx";
+import MilestoneManager from "../pages/milestone/index.jsx";
 
 const AppRoutes = () => {
   const { isAuthenticated, loading, role } = useAuth();
-
+  console.log("Role: " + role);
   const location = useLocation();
 
   // Define routes where the Sidebar should be hidden
@@ -77,6 +78,7 @@ const AppRoutes = () => {
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<SignIn />} />
+        <Route path="/milestones" element={<MilestoneManager />} />
         {/* <Route path="/profile/:userId" element={<UserProfile />} /> */}
       </Routes>
       {!shouldHideSidebar && <SponsorSidebar />}
