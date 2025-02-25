@@ -180,7 +180,6 @@ export default function Settings() {
       console.error("Error updating profile:", error);
       toast.error("Failed to update profile.");
       // alert("Failed to update profile.");
-
     }
   };
 
@@ -246,8 +245,8 @@ export default function Settings() {
                   Profile picture
                 </label>
                 <p className="text-sm text-gray-500">
-                  Use a profile picture to stand out. Upload an image that is 312px square
-
+                  Use a profile picture to stand out. Upload an image that is
+                  312px square
                 </p>
               </div>
             </div>
@@ -287,12 +286,9 @@ export default function Settings() {
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
               <Input
-
                 type="text"
                 name="surname"
                 value={formData.surname}
-
-
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
