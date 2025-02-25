@@ -9,7 +9,7 @@ export default function Settings() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    surname: '',
+
     email: '',
     gender: '',
     dateOfBirth: '',
@@ -113,7 +113,7 @@ export default function Settings() {
       setFormData({
         firstName: '',
         lastName: '',
-        surname: '',
+
         email: '',
         gender: '',
         dateOfBirth: '',
@@ -263,12 +263,12 @@ export default function Settings() {
             </div>
             <div className="space-y-2">
               <label className="block text-[16px] font-medium text-[#111827]">
-                Surname
+                Last Name
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
               <Input
-                name="surname"
-                value={formData.surname}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
@@ -294,7 +294,7 @@ export default function Settings() {
               <label className=" text-[16px] font-medium text-[#111827]">
                 Age
               </label>
-              <p className="text-sm text-gray-500">Your official surname</p>
+              <p className="text-sm text-gray-500">Your official LastName</p>
               <Input
                 name="age"
                 type="number"
