@@ -108,7 +108,7 @@ function Grid() {
       </div>
 
       <div className="px-4 flex items-center gap-4 mb-6 justify-between">
-        <h1 className="text-[24px] font-[600]">
+        <h1 className="text-[28px] font-[600]">
           Hello, {profileData?.firstName}
         </h1>
       </div>

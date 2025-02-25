@@ -141,7 +141,8 @@ export default function SponsorSettings() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-6 px-[36px] py-[2rem] w-[80rem]">
+      className="flex gap-6 px-[36px] py-[2rem] w-[80rem]"
+    >
       <div className="flex-1 space-y-6 w-[800px]">
         <div className="space-y-6">
           <div className="bg-white  rounded-lg">
@@ -274,12 +275,14 @@ export default function SponsorSettings() {
             <button
               type="button"
               onClick={() => fetchSponsorProfile()}
-              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
+              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
+            >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
+              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
+            >
               Save changes
             </button>
           </div>

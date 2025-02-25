@@ -268,11 +268,11 @@ export default function SponsorOpportunitiesPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-4">
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="bg-white rounded-2xl border border-[#F3F4F6] p-6"
+            className="bg-white rounded-2xl border border-[#F3F4F6]  p-6"
           >
             <h4 className="font-medium  text-[18px] capitalize">
               {opportunity.title}
@@ -284,9 +284,9 @@ export default function SponsorOpportunitiesPage() {
             <p className="text-gray-600 mb-4 text-sm min-h-[40px]">
               {opportunity.description}
             </p>
-            <p className="text-gray-600 mb-4 text-[14px] font-[600]">
+            {/* <p className="text-gray-600 mb-4 text-[14px] font-[600]">
               £{opportunity.priceAsk}
-            </p>
+            </p> */}
             <div className="flex flex-wrap gap-2 mb-4">
               {opportunity.tags?.map((tag, index) => (
                 <Badge key={index} variant="secondary">

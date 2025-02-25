@@ -60,7 +60,7 @@ const ContractsTable = () => {
         <button className="bg-[#111827] hover:bg-[#0d131f] text-white font-[500] text-sm px-6 py-1 rounded-lg">
           Contracts
         </button>
-        <button className="font-[500] text-sm text-[#1F2937]">
+        <button className="font-[500] text-md text-[#1F2937]">
           Browse opportunities
         </button>
       </div>
@@ -107,7 +107,7 @@ const ContractsTable = () => {
         ))}
 
         {contracts.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center text-[18px] py-8 text-gray-500">
             No contracts found
           </div>
         )}

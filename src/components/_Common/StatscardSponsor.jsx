@@ -110,12 +110,12 @@ const Card = (props) => {
   return (
     // <div className="border col-span-4 p-4 rounded-2xl shadow-[0px_0.2px_20px_0.2px_#edf2f7] w-1/3">
     <>
-      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full">
+      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full hover:cursor-pointer">
         <div className="rounded-full bg-[#111827] p-3 w-fit">
           <img src={dollar} alt="money" />
         </div>
         <div>
-          <p className="font-[500]">{value}</p>
+          <p className="font-[500] text-[20px]">{value}</p>
           <p className="text-[#9CA3AF] font-[500]">{title}</p>
         </div>
       </div>
