@@ -23,7 +23,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     localStorage.clear();
-    toast.success("Logged out successfully");
+    toast.error("Logged out successfully");
     navigate("/login");
     dispatch(clearAuthMessages());
   };

@@ -1,35 +1,37 @@
-import { useState, useEffect } from 'react';
-import { Input } from '../../components/_Common/Input';
-import { Textarea } from '../../components/_Common/TextArea';
-import { supabase } from '../../lib/supabaseClient';
-import { PROSPONSER } from '../../https/config';
-import toast from 'react-hot-toast';
+import { useState, useEffect } from "react";
+import { Input } from "../../components/_Common/Input";
+import { Textarea } from "../../components/_Common/TextArea";
+import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
+import toast from "react-hot-toast";
 
 export default function Settings() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    surname: '',
-    email: '',
-    gender: '',
-    dateOfBirth: '',
-    age: '',
-    username: '',
-    instagram: '',
-    tiktok: '',
-    youtube: '',
-    x: '',
-    bio: '',
+    firstName: "",
+    lastName: "",
+    surname: "",
+    email: "",
+    gender: "",
+    dateOfBirth: "",
+    age: "",
+    username: "",
+    instagram: "",
+    tiktok: "",
+    youtube: "",
+    x: "",
+    bio: "",
     images: [],
-    avatar: '',
-    totalFollowers: '',
+    avatar: "",
+    totalFollowers: "",
   });
 
   const [loading, setLoading] = useState(true);
   const [avatarUploading, setAvatarUploading] = useState(false);
-
+  const [updateProfileloading, setUpdateProfileloading] = useState(false);
+  const [updateProfilelSuccess, setUpdateProfilelSuccess] = useState(null);
+  const [updateProfilelError, setUpdateProfilelError] = useState(null);
   const calculateAge = (dateOfBirth) => {
-    if (!dateOfBirth) return '';
+    if (!dateOfBirth) return "";
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -62,11 +64,11 @@ export default function Settings() {
         };
 
         const response = await PROSPONSER.post(
-          'athletes/profile',
+          "athletes/profile",
           updatedProfile,
           {
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
               Authorization: `Bearer ${sessionData.session.access_token}`,
             },
           }
@@ -74,11 +76,11 @@ export default function Settings() {
 
         // Update form data with response
         setFormData(response.data.data);
-        console.log('Profile updated with avatar:', response.data);
+        console.log("Profile updated with avatar:", response.data);
       };
     } catch (error) {
-      console.error('Error uploading avatar:', error);
-      alert('Failed to upload image');
+      console.error("Error uploading avatar:", error);
+      alert("Failed to upload image");
     } finally {
       setAvatarUploading(false);
     }
@@ -88,7 +90,7 @@ export default function Settings() {
     try {
       setLoading(true);
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error('No authenticated session');
+      if (!sessionData.session) throw new Error("No authenticated session");
 
       const userId = sessionData.session.user.id;
 
@@ -108,25 +110,25 @@ export default function Settings() {
       }
     } catch (error) {
       setLoading(false);
-      console.error('Error fetching profile:', error);
+      console.error("Error fetching profile:", error);
 
       setFormData({
-        firstName: '',
-        lastName: '',
-        surname: '',
-        email: '',
-        gender: '',
-        dateOfBirth: '',
-        age: '',
-        username: '',
-        instagram: '',
-        tiktok: '',
-        youtube: '',
-        x: '',
-        bio: '',
+        firstName: "",
+        lastName: "",
+        surname: "",
+        email: "",
+        gender: "",
+        dateOfBirth: "",
+        age: "",
+        username: "",
+        instagram: "",
+        tiktok: "",
+        youtube: "",
+        x: "",
+        bio: "",
         images: [],
-        avatar: '',
-        totalFollowers: '',
+        avatar: "",
+        totalFollowers: "",
       });
     } finally {
       setLoading(false);
@@ -139,9 +141,12 @@ export default function Settings() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUpdateProfileloading(true);
+    setUpdateProfilelSuccess(null);
+    setUpdateProfilelError(null);
     try {
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error('No authenticated session');
+      if (!sessionData.session) throw new Error("No authenticated session");
 
       const userId = sessionData.session.user.id;
 
@@ -150,18 +155,30 @@ export default function Settings() {
         ...formData,
       };
 
-      const response = await PROSPONSER.post('/athletes/profile', payload, {
+      const response = await PROSPONSER.post("/athletes/profile", payload, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
       });
 
+      console.log(response.data);
+
       setFormData(response.data);
-      toast.success('Profile updated successfully!');
+      if (response?.data?.success) {
+        setUpdateProfilelSuccess(true);
+        toast.success("Profile updated successfully!");
+      }
+      setUpdateProfileloading(false);
+
+      setUpdateProfilelError(false);
     } catch (error) {
-      console.error('Error updating profile:', error);
-      toast.error('Failed to update profile.');
+      setUpdateProfileloading(false);
+      setUpdateProfilelSuccess(false);
+      setUpdateProfilelError(true);
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile.");
+      // alert("Failed to update profile.");
     }
   };
 
@@ -184,7 +201,7 @@ export default function Settings() {
     <form onSubmit={handleSubmit} className="w-[75rem] p-12">
       <div className="bg-white  ">
         <div className="p-12 pr-16">
-          {' '}
+          {" "}
           <h2 className="text-[24px] font-semibold mb-4">Profile settings</h2>
           <div className="mb-6 space-y-2">
             <label className="block text-[16px] font-medium text-[#111827]">
@@ -198,14 +215,14 @@ export default function Settings() {
                     alt="Avatar"
                     className="h-16 w-16 object-cover rounded-full cursor-pointer"
                     onClick={() =>
-                      document.getElementById('avatar-input').click()
+                      document.getElementById("avatar-input").click()
                     }
                   />
                 ) : (
                   <div
                     className="h-16 w-16 rounded-full bg-gray-200 cursor-pointer"
                     onClick={() =>
-                      document.getElementById('avatar-input').click()
+                      document.getElementById("avatar-input").click()
                     }
                   />
                 )}
@@ -227,7 +244,7 @@ export default function Settings() {
                 </label>
                 <p className="text-sm text-gray-500">
                   Use a profile picture to stand out. Upload an image that is
-                  312px square.surname
+                  312px square
                 </p>
               </div>
             </div>
@@ -267,8 +284,8 @@ export default function Settings() {
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
               <Input
-                name="surname"
-                value={formData.surname}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
@@ -456,7 +473,7 @@ export default function Settings() {
               type="submit"
               className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
             >
-              Save changes
+              {updateProfileloading ? "Updating...." : "Save changes"}
             </button>
           </div>
         </div>
