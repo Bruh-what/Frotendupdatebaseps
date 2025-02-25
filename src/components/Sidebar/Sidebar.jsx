@@ -23,47 +23,50 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     localStorage.clear();
-    toast.success("Logged out successfully");
+    toast.error("Logged out successfully");
     navigate("/login");
     dispatch(clearAuthMessages());
   };
 
   return (
-    <div className="h-screen flex flex-col p-6 w-[300px] justify-between gap-6 border-r-[1px] border-gray-100 items-center">
+    <div className="max-h-[120vh] min-h-[100vh] flex flex-col p-6 w-[300px] justify-between gap-6 border-r-[1px] border-gray-100">
       {/* <img src={logo} alt="Prosponsor Logo" className="w-24 h-auto " /> */}
-      <img
-        src={logo}
-        alt="Prosponsor Logo"
-        className="w-24 h-auto cursor-pointer mb-4"
-        onClick={() => (window.location.href = "https://prosponsor.co.uk")}
-      />
-      {/* <h3 className="text-xl font-bold text-[#151515] p-2">Prosponsor</h3> */}
-      {/* <Search /> */}
-      <ul className="flex flex-col gap-3 text-[#111827] font-medium w-full">
-        <NavItem to="/" label="Dashboard" Icon={LayoutDashboard} />
-        <NavItem to="/messages" label="Messages" Icon={Mail} />
-        <NavItem
-          to="/opportunities"
-          label="Opportunities"
-          Icon={BriefcaseBusiness}
+      <div className="flex flex-col gap-5">
+        <img
+          src={logo}
+          alt="Prosponsor Logo"
+          className="w-24 h-auto cursor-pointer mb-4"
+          onClick={() => (window.location.href = "https://prosponsor.co.uk")}
         />
-        <NavItem to="/contracts" label="Contracts" Icon={File} />
-        <NavItem
-          to="/settings"
-          label={<span className="whitespace-nowrap">Account Settings</span>}
-          Icon={Settings2}
-        />
-        <NavItem to="/billing" label="Billing" Icon={CreditCard} />
-      </ul>
-      <div className="flex flex-col gap-10 mt-14">
+        {/* <h3 className="text-xl font-bold text-[#151515] p-2">Prosponsor</h3> */}
+        {/* <Search /> */}
+        <ul className="flex flex-col gap-3 text-[#111827] font-medium w-full">
+          <NavItem to="/" label="Dashboard" Icon={LayoutDashboard} />
+          <NavItem to="/messages" label="Messages" Icon={Mail} />
+          <NavItem
+            to="/opportunities"
+            label="Opportunities"
+            Icon={BriefcaseBusiness}
+          />
+          <NavItem to="/contracts" label="Contracts" Icon={File} />
+          <NavItem
+            to="/settings"
+            label={<span className="whitespace-nowrap">Account Settings</span>}
+            Icon={Settings2}
+          />
+          <NavItem to="/billing" label="Billing" Icon={CreditCard} />
+        </ul>
+      </div>
+
+      <div className="">
         <UpgradeToPro />
-        <li
-          onClick={handleLogout}
-          className="flex flex-row gap-1 items-center p-2 pr-4 rounded-md cursor-pointer hover:bg-gray-100 text-gray-900"
-        >
-          <FaSignOutAlt className="w-5 h-4" />
-          Log Out
-        </li>
+      </div>
+      <div
+        onClick={handleLogout}
+        className="flex flex-row gap-1 items-center p-2 rounded-md cursor-pointer hover:bg-gray-100 text-gray-900"
+      >
+        <FaSignOutAlt className="w-5 h-4" />
+        <p>Log Out</p>
       </div>
     </div>
   );
