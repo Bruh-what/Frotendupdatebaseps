@@ -146,7 +146,7 @@ export default function ContractsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-[36px] py-8">
       <h1 className="text-2xl font-bold mb-8">Contracts</h1>
 
       {contracts.length === 0 ? (
@@ -183,8 +183,7 @@ export default function ContractsPage() {
                     <span
                       className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
                         contract.status
-                      )}`}
-                    >
+                      )}`}>
                       {contract.status.charAt(0).toUpperCase() +
                         contract.status.slice(1)}
                     </span>
@@ -241,8 +240,7 @@ export default function ContractsPage() {
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor"
-                              viewBox="0 0 22 20"
-                            >
+                              viewBox="0 0 22 20">
                               <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                             </svg>
                             <svg
@@ -250,8 +248,7 @@ export default function ContractsPage() {
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor"
-                              viewBox="0 0 22 20"
-                            >
+                              viewBox="0 0 22 20">
                               <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                             </svg>
                             <svg
@@ -259,8 +256,7 @@ export default function ContractsPage() {
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor"
-                              viewBox="0 0 22 20"
-                            >
+                              viewBox="0 0 22 20">
                               <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                             </svg>
                             <svg
@@ -268,8 +264,7 @@ export default function ContractsPage() {
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor"
-                              viewBox="0 0 22 20"
-                            >
+                              viewBox="0 0 22 20">
                               <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                             </svg>
                             <svg
@@ -277,8 +272,7 @@ export default function ContractsPage() {
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor"
-                              viewBox="0 0 22 20"
-                            >
+                              viewBox="0 0 22 20">
                               <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                             </svg>
                           </div>
@@ -296,8 +290,7 @@ export default function ContractsPage() {
                     <div className="flex gap-3">
                       <button
                         onClick={() => navigate(`/contracts/${contract._id}`)}
-                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium"
-                      >
+                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium">
                         View Details
                       </button>
 
@@ -342,8 +335,7 @@ export default function ContractsPage() {
                             acceptingId === contract._id
                               ? "bg-green-300"
                               : "bg-green-700 hover:bg-green-800"
-                          } text-white py-2 px-4 rounded-full text-sm font-medium`}
-                        >
+                          } text-white py-2 px-4 rounded-full text-sm font-medium`}>
                           {acceptingId === contract._id
                             ? "Accepting..."
                             : "Accept Offer"}
@@ -379,8 +371,7 @@ export default function ContractsPage() {
                               },
                             });
                           }}
-                          className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white px-4 rounded-full text-sm font-medium"
-                        >
+                          className="flex-1 bg-[#4F46E5] hover:bg-[#4338CA] text-white px-4 rounded-full text-sm font-medium">
                           Message{" "}
                           {userId === contract.athleteId
                             ? "Sponsor"
