@@ -6,6 +6,8 @@ import { Card, CardContent } from "../../components/_Common/Card";
 import { Label } from "../../components/_Common/Label";
 import { supabase } from "../../lib/supabaseClient";
 import { PROSPONSER } from "../../https/config";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateOpportunity() {
   const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ export default function CreateOpportunity() {
     benefits: "",
     image: null, // Optional image field
   });
-
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -64,17 +66,18 @@ export default function CreateOpportunity() {
         opportunityData,
         {
           headers: {
-            "Content-Type": "application/json", // Set Content-Type to JSON
-            Authorization: `Bearer ${token}`, // Include Supabase token
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       console.log("Opportunity created:", response.data);
-      alert("Opportunity created successfully!");
+      toast.success("Opportunity created successfully!");
+      navigate("/opportunities");
     } catch (error) {
       console.error("Error creating opportunity:", error);
-      alert("Failed to create opportunity.");
+      toast.error("Failed to create opportunity.");
     }
   };
 
