@@ -77,7 +77,7 @@ const visitors = [
 
 export default function AnalyticsPage() {
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto ">
+    <div className=" p-6 space-y-6 max-w-7xl mx-auto ">
       <h1 className="text-3xl font-semibold">Your Analytics</h1>
 
       {/* Key Metrics */}

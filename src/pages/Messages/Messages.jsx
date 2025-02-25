@@ -2458,7 +2458,7 @@ export default function Messages() {
   );
 
   return (
-    <div className=" flex bg-[#F9FAFB] w-full">
+    <div className=" px-[1rem] flex bg-[#F9FAFB] w-full">
       <div className=" p-6 w-96  mt-10">
         <div className=" flex items-center justify-between">
           <h2 className="text-xl font-semibold">Active conversations</h2>
@@ -2489,8 +2489,7 @@ export default function Messages() {
                 selectedConversation?.userId === conversation.userId
                   ? "bg-[#F3F4F6]"
                   : "bg-[#FFFF]"
-              } flex gap-4 items-center`}
-            >
+              } flex gap-4 items-center`}>
               <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
                 {image ? (
                   <img
@@ -2558,8 +2557,7 @@ export default function Messages() {
                         <div
                           className={`flex ${
                             isCurrentUser ? "justify-end" : "justify-start"
-                          } mb-4`}
-                        >
+                          } mb-4`}>
                           <div className={``}>
                             <p className="text-[12.5px] mb-1 font-[500] text-[#64748B]">
                               {selectedConversation.name}
@@ -2569,8 +2567,7 @@ export default function Messages() {
                                 isCurrentUser
                                   ? "bg-blue-500 text-white"
                                   : "bg-gray-200"
-                              }`}
-                            >
+                              }`}>
                               {item.content}
                             </p>
                             <span className="text-[12px] text-[#64748B] font-[500] opacity-70">
@@ -2584,8 +2581,7 @@ export default function Messages() {
                         <div
                           className={`flex ${
                             isCurrentUser ? "justify-end" : "justify-start"
-                          } mb-4`}
-                        >
+                          } mb-4`}>
                           <div className="max-w-[85%] w-full sm:max-w-[70%] bg-white rounded-lg shadow-md p-6 border border-gray-200">
                             <div className="space-y-4">
                               <div className="flex justify-between items-start">
@@ -2599,8 +2595,7 @@ export default function Messages() {
                                       : item.status === "active"
                                       ? "bg-green-100 text-green-800"
                                       : "bg-gray-100 text-gray-800"
-                                  }`}
-                                >
+                                  }`}>
                                   {item.status.charAt(0).toUpperCase() +
                                     item.status.slice(1)}
                                 </span>
@@ -2631,8 +2626,7 @@ export default function Messages() {
                                   onClick={() =>
                                     navigate(`/contracts/${item._id}`)
                                   }
-                                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium"
-                                >
+                                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-full text-sm font-medium">
                                   View Details
                                 </button>
 
@@ -2651,8 +2645,7 @@ export default function Messages() {
                                         acceptingContractId === item._id
                                           ? "bg-green-300"
                                           : "bg-green-700 hover:bg-green-800"
-                                      } text-white py-2 px-4 rounded-full text-sm font-medium`}
-                                    >
+                                      } text-white py-2 px-4 rounded-full text-sm font-medium`}>
                                       {acceptingContractId === item._id
                                         ? "Accepting..."
                                         : "Accept Offer"}
@@ -2668,8 +2661,7 @@ export default function Messages() {
                         <div
                           className={`flex ${
                             isCurrentUser ? "justify-end" : "justify-start"
-                          } mb-4`}
-                        >
+                          } mb-4`}>
                           <div className="max-w-[70%] bg-white rounded-lg shadow-md p-4 border border-gray-200">
                             <div className="border-b pb-2 mb-2">
                               <h4 className="font-semibold text-lg">
@@ -2699,8 +2691,7 @@ export default function Messages() {
                                   onClick={() =>
                                     handleCreateContract(item.opportunityData)
                                   }
-                                  className="bg-green-500 text-white text-sm px-4 py-1 rounded-full hover:bg-green-600"
-                                >
+                                  className="bg-green-500 text-white text-sm px-4 py-1 rounded-full hover:bg-green-600">
                                   Send Contract
                                 </button>
                               )}
@@ -2718,8 +2709,7 @@ export default function Messages() {
             <div className="px-8 py-4 bg-white ">
               <form
                 onSubmit={handleSendMessageInConversation}
-                className="flex gap-2"
-              >
+                className="flex gap-2">
                 <div className="flex items-center justify-between border rounded-[5px] px-4 py-2 bg-[#F9FAFB] w-full">
                   <input
                     type="text"
@@ -2749,8 +2739,7 @@ export default function Messages() {
                 <button
                   type="submit"
                   disabled={sendingMessage || !newMessage.trim()}
-                  className="bg-[#6366F1] text-white rounded-md px-3 py-2 hover:bg-blue-600 disabled:opacity-50"
-                >
+                  className="bg-[#6366F1] text-white rounded-md px-3 py-2 hover:bg-blue-600 disabled:opacity-50">
                   {sendingMessage ? "Sending..." : <Send />}
                 </button>
               </form>

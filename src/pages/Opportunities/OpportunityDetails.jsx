@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Trash2, ArrowLeft } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
 import { PROSPONSER } from "../../https/config";
+import toast from "react-hot-toast";
 
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, isLoading }) => {
   if (!isOpen) return null;
@@ -69,7 +70,7 @@ export default function OpportunityDetails() {
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
       });
-
+      toast.error("Opportunities Delete Sucessfully");
       navigate("/opportunities", { replace: true });
     } catch (error) {
       console.error("Error deleting opportunity:", error);

@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Label } from '../../components/_Common/Label';
-import { Input } from '../../components/_Common/Input';
-import { Textarea } from '../../components/_Common/TextArea';
-import { supabase } from '../../lib/supabaseClient';
-import { PROSPONSER } from '../../https/config';
+import { useState, useEffect } from "react";
+import { Label } from "../../components/_Common/Label";
+import { Input } from "../../components/_Common/Input";
+import { Textarea } from "../../components/_Common/TextArea";
+import { supabase } from "../../lib/supabaseClient";
+import { PROSPONSER } from "../../https/config";
 
 export default function SponsorSettings() {
   const [formData, setFormData] = useState({
-    companyName: '',
-    website: '',
-    email: '',
-    description: '',
+    companyName: "",
+    website: "",
+    email: "",
+    description: "",
     images: [],
-    avatar: '',
-    link: '',
+    avatar: "",
+    link: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -38,11 +38,11 @@ export default function SponsorSettings() {
         };
 
         const response = await PROSPONSER.post(
-          '/sponsors/profile',
+          "/sponsors/profile",
           updatedProfile,
           {
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
               Authorization: `Bearer ${sessionData.session.access_token}`,
             },
           }
@@ -51,8 +51,8 @@ export default function SponsorSettings() {
         setFormData(response.data.data);
       };
     } catch (error) {
-      console.error('Error uploading avatar:', error);
-      alert('Failed to upload image');
+      console.error("Error uploading avatar:", error);
+      alert("Failed to upload image");
     } finally {
       setAvatarUploading(false);
     }
@@ -62,7 +62,7 @@ export default function SponsorSettings() {
     try {
       setLoading(true);
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error('No authenticated session');
+      if (!sessionData.session) throw new Error("No authenticated session");
 
       const userId = sessionData.session.user.id;
 
@@ -76,15 +76,15 @@ export default function SponsorSettings() {
         setFormData(response.data.data);
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      console.error("Error fetching profile:", error);
       setFormData({
-        companyName: '',
-        website: '',
-        description: '',
+        companyName: "",
+        website: "",
+        description: "",
         images: [],
-        avatar: '',
-        link: '',
-        email: '',
+        avatar: "",
+        link: "",
+        email: "",
       });
     } finally {
       setLoading(false);
@@ -99,7 +99,7 @@ export default function SponsorSettings() {
     e.preventDefault();
     try {
       const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) throw new Error('No authenticated session');
+      if (!sessionData.session) throw new Error("No authenticated session");
 
       const userId = sessionData.session.user.id;
 
@@ -108,18 +108,18 @@ export default function SponsorSettings() {
         ...formData,
       };
 
-      const response = await PROSPONSER.post('sponsors/profile', payload, {
+      const response = await PROSPONSER.post("sponsors/profile", payload, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${sessionData.session.access_token}`,
         },
       });
 
       setFormData(response.data.data);
-      alert('Profile updated successfully!');
+      alert("Profile updated successfully!");
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Failed to update profile.');
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile.");
     }
   };
 
@@ -139,10 +139,12 @@ export default function SponsorSettings() {
     );
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-6 p-6 w-[75rem]">
+    <form
+      onSubmit={handleSubmit}
+      className="flex gap-6 px-[36px] py-[2rem] w-[80rem]">
       <div className="flex-1 space-y-6 w-[800px]">
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg">
+          <div className="bg-white  rounded-lg">
             <h2 className="text-[24px] font-semibold mb-4">Profile settings</h2>
             <div className="mb-6 space-y-2">
               <label className="block text-[16px] font-medium text-[#111827]">
@@ -156,14 +158,14 @@ export default function SponsorSettings() {
                       alt="Avatar"
                       className="h-16 w-16 object-cover rounded-full cursor-pointer"
                       onClick={() =>
-                        document.getElementById('avatar-input').click()
+                        document.getElementById("avatar-input").click()
                       }
                     />
                   ) : (
                     <div
                       className="h-16 w-16 rounded-full bg-gray-200 cursor-pointer"
                       onClick={() =>
-                        document.getElementById('avatar-input').click()
+                        document.getElementById("avatar-input").click()
                       }
                     />
                   )}
@@ -209,10 +211,10 @@ export default function SponsorSettings() {
               </div>
               <div className="space-y-2">
                 <label className="block text-[16px] font-medium text-[#111827]">
-                  Email address{' '}
+                  Email address{" "}
                 </label>
                 <p className="text-sm text-gray-500">
-                  Your primary email. Used for contracts.{' '}
+                  Your primary email. Used for contracts.{" "}
                 </p>
                 <Input
                   name="email"
@@ -224,10 +226,10 @@ export default function SponsorSettings() {
               </div>
               <div className="space-y-2">
                 <label className="block text-[16px] font-medium text-[#111827]">
-                  Business website{' '}
+                  Business website{" "}
                 </label>
                 <p className="text-sm text-gray-500">
-                  Your official brand’s website.{' '}
+                  Your official brand’s website.{" "}
                 </p>
                 <Input
                   name="website"
@@ -239,7 +241,7 @@ export default function SponsorSettings() {
               </div>
               <div className="space-y-2 col-span-2">
                 <label className="block text-[16px] font-medium text-[#111827]">
-                  Brand bio{' '}
+                  Brand bio{" "}
                 </label>
                 <p className="text-sm text-gray-500">
                   This will be visible to athletes. We recommend you list all
@@ -254,7 +256,7 @@ export default function SponsorSettings() {
               </div>
               <div className="space-y-2 col-span-2">
                 <label className="block text-[16px] font-medium text-[#111827]">
-                  Instagram profile link{' '}
+                  Instagram profile link{" "}
                 </label>
 
                 <Input
@@ -272,14 +274,12 @@ export default function SponsorSettings() {
             <button
               type="button"
               onClick={() => fetchSponsorProfile()}
-              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
-            >
+              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
-            >
+              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
               Save changes
             </button>
           </div>
