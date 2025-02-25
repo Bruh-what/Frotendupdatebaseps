@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "../../components/_Common/Avatar";
-import filterIcon from "../../assets/filter.svg";
-import { Badge } from "../../components/_Common/Badge";
-import { supabase } from "../../lib/supabaseClient";
-import { Link } from "react-router-dom";
-import { PROSPONSER } from "../../https/config";
+} from '../../components/_Common/Avatar';
+import filterIcon from '../../assets/filter.svg';
+import { Badge } from '../../components/_Common/Badge';
+import { supabase } from '../../lib/supabaseClient';
+import { Link } from 'react-router-dom';
+import { PROSPONSER } from '../../https/config';
 
 export default function SponsorOpportunitiesPage() {
   const [opportunities, setOpportunities] = useState([]);
@@ -17,13 +17,13 @@ export default function SponsorOpportunitiesPage() {
   const [error, setError] = useState(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
-  const [messageText, setMessageText] = useState("");
+  const [messageText, setMessageText] = useState('');
   const [athleteProfiles, setAthleteProfiles] = useState({});
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [budget, setBudget] = useState("");
-  const [gender, setGender] = useState("Any");
-  const [followerCount, setFollowerCount] = useState("");
+  const [budget, setBudget] = useState('');
+  const [gender, setGender] = useState('Any');
+  const [followerCount, setFollowerCount] = useState('');
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ export default function SponsorOpportunitiesPage() {
         [athleteId]: response.data,
       }));
     } catch (error) {
-      console.error("Error fetching athlete avatar:", error);
+      console.error('Error fetching athlete avatar:', error);
     }
   };
 
@@ -59,12 +59,12 @@ export default function SponsorOpportunitiesPage() {
       };
 
       const [opportunitiesRes, contractsRes] = await Promise.all([
-        PROSPONSER.get("/opportunities/all", authHeaders),
-        PROSPONSER.get("/contracts", authHeaders),
+        PROSPONSER.get('/opportunities/all', authHeaders),
+        PROSPONSER.get('/contracts', authHeaders),
       ]);
 
       const activeContracts = contractsRes.data.filter(
-        (contract) => contract.status === "active"
+        (contract) => contract.status === 'active'
       );
 
       const availableOpportunities = opportunitiesRes.data.filter(
@@ -82,8 +82,8 @@ export default function SponsorOpportunitiesPage() {
         }
       });
     } catch (error) {
-      console.error("Error fetching opportunities:", error);
-      setError("Failed to fetch opportunities.");
+      console.error('Error fetching opportunities:', error);
+      setError('Failed to fetch opportunities.');
     } finally {
       setLoading(false);
     }
@@ -99,7 +99,7 @@ export default function SponsorOpportunitiesPage() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      if (!session) throw new Error("No authenticated session");
+      if (!session) throw new Error('No authenticated session');
 
       const messageData = {
         senderId: session.user.id,
@@ -119,18 +119,18 @@ export default function SponsorOpportunitiesPage() {
         },
       };
 
-      const response = await PROSPONSER.post("/messages", messageData, {
+      const response = await PROSPONSER.post('/messages', messageData, {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
       if (response.data.success) {
         setShowMessageModal(false);
-        setMessageText("");
+        setMessageText('');
 
-        navigate("/messages", {
+        navigate('/messages', {
           state: {
             selectedConversation: {
               userId: selectedOpportunity.athleteId,
@@ -140,8 +140,8 @@ export default function SponsorOpportunitiesPage() {
         });
       }
     } catch (error) {
-      console.error("Send message error:", error);
-      setError("Failed to send message.");
+      console.error('Send message error:', error);
+      setError('Failed to send message.');
     }
   };
 
@@ -149,7 +149,12 @@ export default function SponsorOpportunitiesPage() {
     fetchOpportunities();
   }, []);
 
-  if (loading) return <div className="container">Loading opportunities...</div>;
+  if (loading)
+    return (
+      <div className="container flex justify-center mt-40">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   if (error) return <div>{error}</div>;
 
   return (
@@ -162,7 +167,7 @@ export default function SponsorOpportunitiesPage() {
           placeholder="Search by sport..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-5 pl-8 pr-16 text-lg rounded-full border border-gray-300 bg-[#F9FAFB]"
+          className="w-full p-2 pl-8 pr-16 text-lg rounded-full border border-gray-300 bg-[#F9FAFB]"
         />
         <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
           <div
@@ -173,7 +178,7 @@ export default function SponsorOpportunitiesPage() {
           </div>
 
           {isFilterModalOpen && (
-            <div className="absolute p-4 right-0  w-74 bg-white rounded-lg shadow-lg z-50">
+            <div className=" absolute p-4 right-0  w-74 bg-white rounded-lg shadow-lg z-50">
               <div className="p-4">
                 <div className="flex justify-between items-center w-full gap-2 m-4">
                   <h3 className="text-lg font-semibold">Filter</h3>
@@ -208,31 +213,31 @@ export default function SponsorOpportunitiesPage() {
                     <div className="flex gap-2">
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === "Male"
-                            ? "bg-[#4736FB] text-white"
-                            : "bg-white text-black"
+                          gender === 'Male'
+                            ? 'bg-[#4736FB] text-white'
+                            : 'bg-white text-black'
                         }`}
-                        onClick={() => setGender("Male")}
+                        onClick={() => setGender('Male')}
                       >
                         Male
                       </button>
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === "Female"
-                            ? "bg-[#4736FB] text-white"
-                            : "bg-white text-black"
+                          gender === 'Female'
+                            ? 'bg-[#4736FB] text-white'
+                            : 'bg-white text-black'
                         }`}
-                        onClick={() => setGender("Female")}
+                        onClick={() => setGender('Female')}
                       >
                         Female
                       </button>
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === "Any"
-                            ? "bg-[#4736FB] text-white"
-                            : "bg-white text-black"
+                          gender === 'Any'
+                            ? 'bg-[#4736FB] text-white'
+                            : 'bg-white text-black'
                         }`}
-                        onClick={() => setGender("Any")}
+                        onClick={() => setGender('Any')}
                       >
                         Any
                       </button>
@@ -274,7 +279,7 @@ export default function SponsorOpportunitiesPage() {
               {opportunity.sport}
             </p>
 
-            <p className="text-gray-600 mb-4 text-[12px]">
+            <p className="text-gray-600 mb-4 text-[12px] min-h-[40px]">
               {opportunity.description}
             </p>
             <p className="text-gray-600 mb-4 text-[12px]">
@@ -342,7 +347,7 @@ export default function SponsorOpportunitiesPage() {
               <button
                 onClick={() => {
                   setShowMessageModal(false);
-                  setMessageText("");
+                  setMessageText('');
                 }}
                 className="px-4 py-2 rounded-full bg-gray-100 text-gray-900"
               >

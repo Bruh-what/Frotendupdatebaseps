@@ -162,11 +162,16 @@ export default function Settings() {
         },
       });
 
+      console.log(response.data);
+
       setFormData(response.data);
+      if (response?.data?.success) {
+        setUpdateProfilelSuccess(true);
+        toast.success("Profile updated successfully!");
+      }
       setUpdateProfileloading(false);
-      setUpdateProfilelSuccess(true);
+
       setUpdateProfilelError(false);
-      toast.success("Profile updated successfully!");
     } catch (error) {
       setUpdateProfileloading(false);
       setUpdateProfilelSuccess(false);

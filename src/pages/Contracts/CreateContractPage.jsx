@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Calendar, FileText } from "lucide-react";
-import { Input } from "../../components/_Common/Input";
-import { Textarea } from "../../components/_Common/TextArea";
-import { Label } from "../../components/_Common/Label";
-import { supabase } from "../../lib/supabaseClient";
-import { PROSPONSER } from "../../https/config";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Calendar, FileText } from 'lucide-react';
+import { Input } from '../../components/_Common/Input';
+import { Textarea } from '../../components/_Common/TextArea';
+import { Label } from '../../components/_Common/Label';
+import { supabase } from '../../lib/supabaseClient';
+import { PROSPONSER } from '../../https/config';
 
 export default function CreateContractPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const opportunity = location.state?.opportunity;
-  console.log("Received opportunity:", opportunity);
+  console.log('Received opportunity:', opportunity);
 
   const [formData, setFormData] = useState({
-    athleteId: opportunity?.athleteId || "",
-    sponsorId: "",
-    opportunityId: opportunity?._id || "",
-    sport: opportunity?.sport || "",
-    totalPrice: opportunity?.priceAsk || "",
+    athleteId: opportunity?.athleteId || '',
+    sponsorId: '',
+    opportunityId: opportunity?._id || '',
+    sport: opportunity?.sport || '',
+    totalPrice: opportunity?.priceAsk || '',
     milestones: [
-      { description: "", status: "pending", dueDate: "" }, // Start with one milestone
+      { description: '', status: 'pending', dueDate: '' }, // Start with one milestone
     ],
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
 
   // Get sponsor details on component mount
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function CreateContractPage() {
         await supabase.auth.getSession();
 
       if (sessionError) {
-        setError("Authentication error. Please login again.");
+        setError('Authentication error. Please login again.');
         return;
       }
 
@@ -77,7 +78,7 @@ export default function CreateContractPage() {
         ...prev,
         milestones: [
           ...prev.milestones,
-          { description: "", dueDate: "", price: "", status: "pending" },
+          { description: '', dueDate: '', price: '', status: 'pending' },
         ],
       }));
     }
@@ -85,6 +86,10 @@ export default function CreateContractPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const confirmContractCreation = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -94,11 +99,11 @@ export default function CreateContractPage() {
         await supabase.auth.getSession();
 
       if (sessionError) {
-        throw new Error("Authentication error. Please login again.");
+        throw new Error('Authentication error. Please login again.');
       }
 
       if (!sessionData.session) {
-        throw new Error("No active session found. Please login.");
+        throw new Error('No active session found. Please login.');
       }
 
       const token = sessionData.session.access_token;
@@ -107,7 +112,7 @@ export default function CreateContractPage() {
       // Validate milestones
       if (formData.milestones.some((m) => !m.description || !m.dueDate)) {
         throw new Error(
-          "All milestone descriptions and due dates are required"
+          'All milestone descriptions and due dates are required'
         );
       }
 
@@ -121,36 +126,37 @@ export default function CreateContractPage() {
         totalPrice: parseFloat(formData.totalPrice),
         milestones: formData.milestones.map((milestone) => ({
           description: milestone.description,
-          status: "pending",
+          status: 'pending',
           price: parseFloat(milestone.price) || 0,
           dueDate: new Date(milestone.dueDate),
         })),
-        status: "pending",
+        status: 'pending',
       };
 
-      console.log("Sending contract data:", contractData);
+      console.log('Sending contract data:', contractData);
 
       // Make API call with authentication token
-      const response = await PROSPONSER.post("/contracts", contractData, {
+      const response = await PROSPONSER.post('/contracts', contractData, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
 
-      console.log("Contract created successfully:", response.data);
+      console.log('Contract created successfully:', response.data);
 
-      navigate("/contracts", {
+      navigate('/contracts', {
         state: {
           success: true,
-          message: "Contract created successfully",
+          message: 'Contract created successfully',
         },
       });
     } catch (err) {
-      console.error("Contract creation error:", err);
-      setError(err.response?.data?.message || "Failed to create contract");
+      console.error('Contract creation error:', err);
+      setError(err.response?.data?.message || 'Failed to create contract');
     } finally {
       setLoading(false);
+      setIsModalOpen(false); // Close the modal
     }
   };
 
@@ -164,7 +170,7 @@ export default function CreateContractPage() {
           </div>
           <button
             className="bg-gray-500 text-white py-2 px-6 rounded-full"
-            onClick={() => navigate("/opportunities")}
+            onClick={() => navigate('/opportunities')}
           >
             Back to Opportunities
           </button>
@@ -247,7 +253,7 @@ export default function CreateContractPage() {
                     <Textarea
                       value={milestone.description}
                       onChange={(e) =>
-                        handleMilestoneChange(i, "description", e.target.value)
+                        handleMilestoneChange(i, 'description', e.target.value)
                       }
                       className="textarea min-h-[100px] rounded-lg"
                       placeholder="Enter milestone description"
@@ -264,7 +270,7 @@ export default function CreateContractPage() {
                         type="number"
                         value={milestone.price}
                         onChange={(e) =>
-                          handleMilestoneChange(i, "price", e.target.value)
+                          handleMilestoneChange(i, 'price', e.target.value)
                         }
                         className="input pl-7 rounded-lg"
                         placeholder="Enter milestone price"
@@ -280,7 +286,7 @@ export default function CreateContractPage() {
                         type="date"
                         value={milestone.dueDate}
                         onChange={(e) =>
-                          handleMilestoneChange(i, "dueDate", e.target.value)
+                          handleMilestoneChange(i, 'dueDate', e.target.value)
                         }
                         className="input"
                         required
@@ -308,10 +314,40 @@ export default function CreateContractPage() {
             className="bg-[#4F46E5] w-full hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
             disabled={loading}
           >
-            {loading ? "Creating contract..." : "Send contract"}
+            {loading ? 'Creating contract...' : 'Send contract'}
           </button>
         </form>
       </div>
+
+      {/* Confirmation Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[400px]">
+            <h2 className="text-xl font-semibold mb-4">
+              Confirm Contract Creation
+            </h2>
+            <p className="mb-6">
+              Are you sure you want to send this contract? You will be charged
+              contract price + 7.5% platform fee from your primary payment
+              method .
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-500 text-white py-2 px-4 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmContractCreation}
+                className="bg-[#4F46E5] text-white py-2 px-4 rounded-lg"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
