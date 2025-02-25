@@ -21,17 +21,10 @@ export default function SponsorOpportunitiesPage() {
   const [athleteProfiles, setAthleteProfiles] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-<<<<<<< HEAD
   const [gender, setGender] = useState("Any");
   const [followerCount, setFollowerCount] = useState("");
   const [budget, setBudget] = useState("");
   const [tempBudget, setTempBudget] = useState("");
-=======
-  const [budget, setBudget] = useState("");
-  const [gender, setGender] = useState("Any");
-  const [followerCount, setFollowerCount] = useState("");
-
->>>>>>> fe5b7e325c8dce74ffbae0015cfe4b2f60eb111a
   const navigate = useNavigate();
 
   const filteredOpportunities = opportunities.filter((opp) => {
@@ -235,11 +228,7 @@ export default function SponsorOpportunitiesPage() {
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
                           gender === "Male"
-<<<<<<< HEAD
                             ? "bg-[#4726FB] text-white"
-=======
-                            ? "bg-[#4736FB] text-white"
->>>>>>> fe5b7e325c8dce74ffbae0015cfe4b2f60eb111a
                             : "bg-white text-black"
                         }`}
                         onClick={() => setGender("Male")}
@@ -285,7 +274,8 @@ export default function SponsorOpportunitiesPage() {
                   <div className="flex justify-end">
                     <button
                       onClick={applyBudgetFilter}
-                      className="px-4 py-1 rounded-full bg-black text-white">
+                      className="px-4 py-1 rounded-full bg-black text-white"
+                    >
                       Apply
                     </button>
                   </div>
