@@ -21,15 +21,36 @@ export default function SponsorOpportunitiesPage() {
   const [athleteProfiles, setAthleteProfiles] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+<<<<<<< HEAD
+  const [gender, setGender] = useState("Any");
+  const [followerCount, setFollowerCount] = useState("");
+  const [budget, setBudget] = useState("");
+  const [tempBudget, setTempBudget] = useState("");
+=======
   const [budget, setBudget] = useState("");
   const [gender, setGender] = useState("Any");
   const [followerCount, setFollowerCount] = useState("");
 
+>>>>>>> fe5b7e325c8dce74ffbae0015cfe4b2f60eb111a
   const navigate = useNavigate();
 
-  const filteredOpportunities = opportunities.filter((opp) =>
-    opp.sport.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredOpportunities = opportunities.filter((opp) => {
+    const matchesSearch = opp.sport
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesBudget = budget === "" || opp.priceAsk <= Number(budget);
+
+    return matchesSearch && matchesBudget;
+  });
+
+  const handleBudgetChange = (e) => {
+    setTempBudget(e.target.value);
+  };
+
+  const applyBudgetFilter = () => {
+    setBudget(tempBudget);
+    setIsFilterModalOpen(false);
+  };
 
   const fetchAthleteAvatar = async (athleteId) => {
     try {
@@ -167,7 +188,7 @@ export default function SponsorOpportunitiesPage() {
           placeholder="Search by sport..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-2 pl-8 pr-16 text-lg rounded-full border border-gray-300 bg-[#F9FAFB]"
+          className="w-full p-4 text-lg rounded-full border border-gray-300 bg-[#F9FAFB]"
         />
         <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
           <div
@@ -197,11 +218,11 @@ export default function SponsorOpportunitiesPage() {
                       type="range"
                       min="0"
                       max="10000"
-                      value={budget}
-                      onChange={(e) => setBudget(e.target.value)}
+                      value={tempBudget}
+                      onChange={handleBudgetChange}
                       className="w-full"
                     />
-                    <p className="text-xs text-gray-500">Selected: ${budget}</p>
+                    <p>Selected: ${tempBudget}</p>
                   </div>
 
                   <div>
@@ -212,7 +233,11 @@ export default function SponsorOpportunitiesPage() {
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
                           gender === "Male"
+<<<<<<< HEAD
+                            ? "bg-[#4726FB] text-white"
+=======
                             ? "bg-[#4736FB] text-white"
+>>>>>>> fe5b7e325c8dce74ffbae0015cfe4b2f60eb111a
                             : "bg-white text-black"
                         }`}
                         onClick={() => setGender("Male")}>
@@ -239,22 +264,25 @@ export default function SponsorOpportunitiesPage() {
                     </div>
                   </div>
 
-                  {/* Social Follower Count Range */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Social Follower Count
                     </label>
                     <input
                       type="range"
-                      min="0"
-                      max="1000000"
-                      value={followerCount}
                       onChange={(e) => setFollowerCount(e.target.value)}
                       className="w-full"
                     />
                     <p className="text-xs text-gray-500">
                       Selected: {followerCount}
                     </p>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      onClick={applyBudgetFilter}
+                      className="px-4 py-1 rounded-full bg-black text-white">
+                      Apply
+                    </button>
                   </div>
                 </div>
               </div>
