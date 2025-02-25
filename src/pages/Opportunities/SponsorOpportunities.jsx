@@ -158,7 +158,7 @@ export default function SponsorOpportunitiesPage() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="container px-4 py-8 relative">
+    <div className="container px-[32px] py-8 relative">
       <h1 className="text-3xl font-bold mb-6">Sponsorship Opportunities</h1>
 
       <div className="relative mb-6">

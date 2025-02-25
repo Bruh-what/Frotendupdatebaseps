@@ -200,9 +200,9 @@ export default function Settings() {
   console.log(formData, "form data");
 
   return (
-    <form onSubmit={handleSubmit} className="w-[75rem] p-12">
+    <form onSubmit={handleSubmit} className="w-[75rem] p-[36px]">
       <div className="bg-white  ">
-        <div className="p-12 pr-16">
+        <div className=" pr-16">
           {" "}
           <h2 className="text-[24px] font-semibold mb-4">Profile settings</h2>
           <div className="mb-6 space-y-2">
@@ -433,7 +433,7 @@ export default function Settings() {
             </div>
           </div>
         </div>
-        <div className="pl-12">
+        <div>
           <div className="bg-white mt-4 rounded-lg  ">
             <div className="flex items-center justify-between mb-4">
               <div>
