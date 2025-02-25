@@ -180,7 +180,6 @@ export default function Settings() {
       console.error("Error updating profile:", error);
       toast.error("Failed to update profile.");
       // alert("Failed to update profile.");
-
     }
   };
 
@@ -201,9 +200,9 @@ export default function Settings() {
   console.log(formData, "form data");
 
   return (
-    <form onSubmit={handleSubmit} className="w-[75rem] p-12">
+    <form onSubmit={handleSubmit} className="w-[75rem] p-[36px]">
       <div className="bg-white  ">
-        <div className="p-12 pr-16">
+        <div className=" pr-16">
           {" "}
           <h2 className="text-[24px] font-semibold mb-4">Profile settings</h2>
           <div className="mb-6 space-y-2">
@@ -246,8 +245,8 @@ export default function Settings() {
                   Profile picture
                 </label>
                 <p className="text-sm text-gray-500">
-                  Use a profile picture to stand out. Upload an image that is 312px square
-
+                  Use a profile picture to stand out. Upload an image that is
+                  312px square
                 </p>
               </div>
             </div>
@@ -287,12 +286,9 @@ export default function Settings() {
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
               <Input
-
                 type="text"
                 name="surname"
                 value={formData.surname}
-
-
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
@@ -338,8 +334,7 @@ export default function Settings() {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="w-full h-10 px-3 outline-none rounded-lg border bg-[#F3F4F6]"
-            >
+              className="w-full h-10 px-3 outline-none rounded-lg border bg-[#F3F4F6]">
               <option value="">Select gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -437,7 +432,7 @@ export default function Settings() {
             </div>
           </div>
         </div>
-        <div className="pl-12">
+        <div>
           <div className="bg-white mt-4 rounded-lg  ">
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -459,8 +454,7 @@ export default function Settings() {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="aspect-square bg-[#F3F4F6] rounded-lg border-2  border-gray-100 flex items-center justify-center"
-                >
+                  className="aspect-square bg-[#F3F4F6] rounded-lg border-2  border-gray-100 flex items-center justify-center">
                   <button type="button" className="text-2xl">
                     +
                   </button>
@@ -472,14 +466,12 @@ export default function Settings() {
             <button
               type="button"
               onClick={() => fetchProfileData()}
-              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
-            >
+              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
-            >
+              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs">
               {updateProfileloading ? "Updating...." : "Save changes"}
             </button>
           </div>
