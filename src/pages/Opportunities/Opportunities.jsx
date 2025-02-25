@@ -74,9 +74,9 @@ export default function MyOpportunitiesPage() {
   return (
     <div className="container mx-auto px-[36px] py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">My Sponsorship Opportunities</h1>
+        <h1 className="text-[28px] font-[600]">My Sponsorship Opportunities</h1>
         <Link to="/CreateOpportunity">
-          <button className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 rounded-full shadow-xs">
+          <button className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-2 rounded-full shadow-xs">
             Create Opportunity
           </button>
         </Link>
@@ -120,7 +120,8 @@ export default function MyOpportunitiesPage() {
                 </div>
                 <Link
                   to={`/opportunities/${opportunity._id}`}
-                  state={{ opportunity }}>
+                  state={{ opportunity }}
+                >
                   <button className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 rounded-full shadow-xs">
                     View Details
                   </button>

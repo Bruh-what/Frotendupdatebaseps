@@ -45,6 +45,7 @@ function GridSponsor() {
     }
     return `data:image/png;base64,${base64String}`;
   };
+  console.log(profileData, "sdsdfdsf");
 
   return (
     <>
@@ -94,7 +95,7 @@ function GridSponsor() {
       <div className="px-4 flex flex-col gap-3 mt-4 pb-6 w-full">
         <div>
           {" "}
-          <h1 className="text-2xl font-bold">Hey, welcome back!</h1>
+          <h1 className="text-[30px] font-[600]">Hey, welcome back!</h1>
         </div>
         <div className="flex flex-row gap-3 w-full">
           <Statcards />

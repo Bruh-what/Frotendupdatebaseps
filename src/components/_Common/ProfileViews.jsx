@@ -17,10 +17,10 @@ export const ProfileViews = () => {
     <div className="border w-[55%] overflow-hidden rounded-2xl ">
       <div className="p-4">
         <div>
-          <h3 className="text-[#111827] text-lg font-[600]">
+          <h3 className="text-[#111827] text-[20px] font-[600]">
             Total profile views
           </h3>
-          <p className="text-[12px] text-[#9CA3AF] font-[500]">
+          <p className="text-[14px] text-[#9CA3AF] font-[500]">
             +1000 over last week
           </p>
         </div>

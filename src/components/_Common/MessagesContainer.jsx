@@ -168,7 +168,7 @@ const MessagesContainer = () => {
     <div className="border w-[45%] overflow-hidden rounded-2xl ">
       <div className="p-4 space-y-4">
         <div className="space-y-1">
-          <h2 className="text-lg font-[600]">Open discussions</h2>
+          <h2 className="text-[20px] font-[600]">Open discussions</h2>
           <p className="text-sm text-gray-500">
             Check your recent conversations about open opportunities.
           </p>
@@ -209,7 +209,7 @@ const MessagesContainer = () => {
         </div>
 
         <button className="text-[10px] font-[500]">
-          <a href="/messages" className="block text-sm font-medium">
+          <a href="/messages" className="block text-[16px] font-medium">
             Open Discussions
           </a>
         </button>

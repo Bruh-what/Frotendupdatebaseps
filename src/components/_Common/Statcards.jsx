@@ -84,30 +84,30 @@ function Statcards() {
 
   return (
     <div className="flex justify-between items-center gap-3">
-      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full">
+      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full hover:cursor-pointer">
         <div className="rounded-full bg-[#111827] p-3 w-fit">
           <img src={dollar} alt="money" />
         </div>
         <div>
-          <p className="font-[500]">{`+$${stats.totalEarnings.toLocaleString()}`}</p>
+          <p className="font-[500] text-[20px]">{`+$${stats.totalEarnings.toLocaleString()}`}</p>
           <p className="text-[#9CA3AF] font-[500]">Total Earnings</p>
         </div>
       </div>
-      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full">
+      <div className="flex items-center gap-4 border rounded-2xl p-6 w-full hover:cursor-pointer">
         <div className="rounded-full bg-[#111827] p-3 w-fit">
           <img src={docs} alt="documents" />
         </div>
         <div>
-          <p className="font-[500]">{stats.totalOpportunities}</p>
+          <p className="font-[500] text-[20px]">{stats.totalOpportunities}</p>
           <p className="text-[#9CA3AF] font-[500]">Opportunities Posted</p>
         </div>
       </div>
-      <div className="flex items-center gap-4 border  rounded-2xl p-6 w-full">
+      <div className="flex items-center gap-4 border  rounded-2xl p-6 w-full hover:cursor-pointer">
         <div className="rounded-full bg-[#111827] p-3 w-fit">
           <img src={breifcase} alt="case" />
         </div>
         <div>
-          <p className="font-[500]">{stats.pendingContracts}</p>
+          <p className="font-[500] text-[20px]">{stats.pendingContracts}</p>
           <p className="text-[#9CA3AF] font-[500]">Pending Offers</p>
         </div>
       </div>

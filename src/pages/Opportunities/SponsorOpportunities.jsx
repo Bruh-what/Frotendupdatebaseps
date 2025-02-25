@@ -193,7 +193,8 @@ export default function SponsorOpportunitiesPage() {
         <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
           <div
             className="bg-[#ffff] cursor-pointer rounded-full w-[7rem] h-[2.5rem] border border-gray-300 flex items-center justify-center"
-            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}>
+            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
+          >
             <img src={filterIcon} alt="Filter" className="w-[4rem] h-[4rem]" />
           </div>
 
@@ -204,7 +205,8 @@ export default function SponsorOpportunitiesPage() {
                   <h3 className="text-lg font-semibold">Filter</h3>
                   <button
                     onClick={() => setIsFilterModalOpen(false)}
-                    className="px-4 py-1 rounded-full bg-black text-white">
+                    className="px-4 py-1 rounded-full bg-black text-white"
+                  >
                     Clear
                   </button>
                 </div>
@@ -240,7 +242,8 @@ export default function SponsorOpportunitiesPage() {
 >>>>>>> fe5b7e325c8dce74ffbae0015cfe4b2f60eb111a
                             : "bg-white text-black"
                         }`}
-                        onClick={() => setGender("Male")}>
+                        onClick={() => setGender("Male")}
+                      >
                         Male
                       </button>
                       <button
@@ -249,7 +252,8 @@ export default function SponsorOpportunitiesPage() {
                             ? "bg-[#4736FB] text-white"
                             : "bg-white text-black"
                         }`}
-                        onClick={() => setGender("Female")}>
+                        onClick={() => setGender("Female")}
+                      >
                         Female
                       </button>
                       <button
@@ -258,7 +262,8 @@ export default function SponsorOpportunitiesPage() {
                             ? "bg-[#4736FB] text-white"
                             : "bg-white text-black"
                         }`}
-                        onClick={() => setGender("Any")}>
+                        onClick={() => setGender("Any")}
+                      >
                         Any
                       </button>
                     </div>
@@ -291,22 +296,25 @@ export default function SponsorOpportunitiesPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-4">
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="bg-white rounded-2xl shadow-md p-6">
-            <h4 className="font-medium  text-[16px]">{opportunity.title}</h4>
-            <p className="text-sm mb-2 text-[12px] text-black font-medium">
+            className="bg-white rounded-2xl border border-[#F3F4F6]  p-6"
+          >
+            <h4 className="font-medium  text-[18px] capitalize">
+              {opportunity.title}
+            </h4>
+            <p className="text-sm mb-2 text-[12px] text-black font-[500] capitalize">
               {opportunity.sport}
             </p>
 
-            <p className="text-gray-600 mb-4 text-[12px] min-h-[40px]">
+            <p className="text-gray-600 mb-4 text-sm min-h-[40px]">
               {opportunity.description}
             </p>
-            <p className="text-gray-600 mb-4 text-[12px]">
+            {/* <p className="text-gray-600 mb-4 text-[14px] font-[600]">
               £{opportunity.priceAsk}
-            </p>
+            </p> */}
             <div className="flex flex-wrap gap-2 mb-4">
               {opportunity.tags?.map((tag, index) => (
                 <Badge key={index} variant="secondary">
@@ -315,7 +323,7 @@ export default function SponsorOpportunitiesPage() {
               ))}
             </div>
 
-            <div className="flex items-center flex-row mb-4 gap-2 justify-between max-xl:flex-col  max-sm:gap-0">
+            <div className="flex items-center flex-row  gap-2 justify-between max-xl:flex-col  max-sm:gap-0">
               <div className="flex items-center max-sm:mb-2 w-full">
                 <Avatar>
                   <AvatarImage
@@ -329,13 +337,14 @@ export default function SponsorOpportunitiesPage() {
                 </Avatar>
 
                 <div className="ml-3 text-[8.89px]">
-                  <h3 className="font-semibold text-[12px] max-sm:text-[11px]">
+                  <h3 className="font-semibold text-[14px] max-sm:text-[11px]">
                     {opportunity.athleteName}
                   </h3>
                   <p className=" text-gray-500">
                     <Link
                       to={`/athlete/${opportunity.athleteId}`}
-                      className=" ">
+                      className="text-[12px] font-[500] capitalize"
+                    >
                       View Profile
                     </Link>
                   </p>
@@ -344,8 +353,9 @@ export default function SponsorOpportunitiesPage() {
 
               <button
                 onClick={() => handleContactClick(opportunity)}
-                className="bg-black hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full">
-                message
+                className="bg-black transition delay-50 ease-linear hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full"
+              >
+                Message
               </button>
             </div>
           </div>
@@ -369,13 +379,15 @@ export default function SponsorOpportunitiesPage() {
                   setShowMessageModal(false);
                   setMessageText("");
                 }}
-                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900">
+                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900"
+              >
                 Cancel
               </button>
               <button
                 onClick={handleSendMessage}
                 disabled={!messageText.trim()}
-                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50">
+                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50"
+              >
                 Send
               </button>
             </div>
