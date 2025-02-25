@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '../../components/_Common/Avatar';
-import filterIcon from '../../assets/filter.svg';
-import { Badge } from '../../components/_Common/Badge';
-import { supabase } from '../../lib/supabaseClient';
-import { Link } from 'react-router-dom';
-import { PROSPONSER } from '../../https/config';
+} from "../../components/_Common/Avatar";
+import filterIcon from "../../assets/filter.svg";
+import { Badge } from "../../components/_Common/Badge";
+import { supabase } from "../../lib/supabaseClient";
+import { Link } from "react-router-dom";
+import { PROSPONSER } from "../../https/config";
 
 export default function SponsorOpportunitiesPage() {
   const [opportunities, setOpportunities] = useState([]);
@@ -17,13 +17,13 @@ export default function SponsorOpportunitiesPage() {
   const [error, setError] = useState(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
-  const [messageText, setMessageText] = useState('');
+  const [messageText, setMessageText] = useState("");
   const [athleteProfiles, setAthleteProfiles] = useState({});
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [budget, setBudget] = useState('');
-  const [gender, setGender] = useState('Any');
-  const [followerCount, setFollowerCount] = useState('');
+  const [budget, setBudget] = useState("");
+  const [gender, setGender] = useState("Any");
+  const [followerCount, setFollowerCount] = useState("");
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ export default function SponsorOpportunitiesPage() {
         [athleteId]: response.data,
       }));
     } catch (error) {
-      console.error('Error fetching athlete avatar:', error);
+      console.error("Error fetching athlete avatar:", error);
     }
   };
 
@@ -59,12 +59,12 @@ export default function SponsorOpportunitiesPage() {
       };
 
       const [opportunitiesRes, contractsRes] = await Promise.all([
-        PROSPONSER.get('/opportunities/all', authHeaders),
-        PROSPONSER.get('/contracts', authHeaders),
+        PROSPONSER.get("/opportunities/all", authHeaders),
+        PROSPONSER.get("/contracts", authHeaders),
       ]);
 
       const activeContracts = contractsRes.data.filter(
-        (contract) => contract.status === 'active'
+        (contract) => contract.status === "active"
       );
 
       const availableOpportunities = opportunitiesRes.data.filter(
@@ -82,8 +82,8 @@ export default function SponsorOpportunitiesPage() {
         }
       });
     } catch (error) {
-      console.error('Error fetching opportunities:', error);
-      setError('Failed to fetch opportunities.');
+      console.error("Error fetching opportunities:", error);
+      setError("Failed to fetch opportunities.");
     } finally {
       setLoading(false);
     }
@@ -99,7 +99,7 @@ export default function SponsorOpportunitiesPage() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      if (!session) throw new Error('No authenticated session');
+      if (!session) throw new Error("No authenticated session");
 
       const messageData = {
         senderId: session.user.id,
@@ -119,18 +119,18 @@ export default function SponsorOpportunitiesPage() {
         },
       };
 
-      const response = await PROSPONSER.post('/messages', messageData, {
+      const response = await PROSPONSER.post("/messages", messageData, {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       if (response.data.success) {
         setShowMessageModal(false);
-        setMessageText('');
+        setMessageText("");
 
-        navigate('/messages', {
+        navigate("/messages", {
           state: {
             selectedConversation: {
               userId: selectedOpportunity.athleteId,
@@ -140,8 +140,8 @@ export default function SponsorOpportunitiesPage() {
         });
       }
     } catch (error) {
-      console.error('Send message error:', error);
-      setError('Failed to send message.');
+      console.error("Send message error:", error);
+      setError("Failed to send message.");
     }
   };
 
@@ -158,7 +158,7 @@ export default function SponsorOpportunitiesPage() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="container px-4 py-8 relative">
+    <div className="container px-[32px] py-8 relative">
       <h1 className="text-3xl font-bold mb-6">Sponsorship Opportunities</h1>
 
       <div className="relative mb-6">
@@ -172,8 +172,7 @@ export default function SponsorOpportunitiesPage() {
         <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
           <div
             className="bg-[#ffff] cursor-pointer rounded-full w-[7rem] h-[2.5rem] border border-gray-300 flex items-center justify-center"
-            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
-          >
+            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}>
             <img src={filterIcon} alt="Filter" className="w-[4rem] h-[4rem]" />
           </div>
 
@@ -184,8 +183,7 @@ export default function SponsorOpportunitiesPage() {
                   <h3 className="text-lg font-semibold">Filter</h3>
                   <button
                     onClick={() => setIsFilterModalOpen(false)}
-                    className="px-4 py-1 rounded-full bg-black text-white"
-                  >
+                    className="px-4 py-1 rounded-full bg-black text-white">
                     Clear
                   </button>
                 </div>
@@ -213,32 +211,29 @@ export default function SponsorOpportunitiesPage() {
                     <div className="flex gap-2">
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === 'Male'
-                            ? 'bg-[#4736FB] text-white'
-                            : 'bg-white text-black'
+                          gender === "Male"
+                            ? "bg-[#4736FB] text-white"
+                            : "bg-white text-black"
                         }`}
-                        onClick={() => setGender('Male')}
-                      >
+                        onClick={() => setGender("Male")}>
                         Male
                       </button>
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === 'Female'
-                            ? 'bg-[#4736FB] text-white'
-                            : 'bg-white text-black'
+                          gender === "Female"
+                            ? "bg-[#4736FB] text-white"
+                            : "bg-white text-black"
                         }`}
-                        onClick={() => setGender('Female')}
-                      >
+                        onClick={() => setGender("Female")}>
                         Female
                       </button>
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === 'Any'
-                            ? 'bg-[#4736FB] text-white'
-                            : 'bg-white text-black'
+                          gender === "Any"
+                            ? "bg-[#4736FB] text-white"
+                            : "bg-white text-black"
                         }`}
-                        onClick={() => setGender('Any')}
-                      >
+                        onClick={() => setGender("Any")}>
                         Any
                       </button>
                     </div>
@@ -272,8 +267,7 @@ export default function SponsorOpportunitiesPage() {
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="bg-white rounded-2xl shadow-md p-6"
-          >
+            className="bg-white rounded-2xl shadow-md p-6">
             <h4 className="font-medium  text-[16px]">{opportunity.title}</h4>
             <p className="text-sm mb-2 text-[12px] text-black font-medium">
               {opportunity.sport}
@@ -313,8 +307,7 @@ export default function SponsorOpportunitiesPage() {
                   <p className=" text-gray-500">
                     <Link
                       to={`/athlete/${opportunity.athleteId}`}
-                      className=" "
-                    >
+                      className=" ">
                       View Profile
                     </Link>
                   </p>
@@ -323,8 +316,7 @@ export default function SponsorOpportunitiesPage() {
 
               <button
                 onClick={() => handleContactClick(opportunity)}
-                className="bg-black hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full"
-              >
+                className="bg-black hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full w-full">
                 message
               </button>
             </div>
@@ -347,17 +339,15 @@ export default function SponsorOpportunitiesPage() {
               <button
                 onClick={() => {
                   setShowMessageModal(false);
-                  setMessageText('');
+                  setMessageText("");
                 }}
-                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900"
-              >
+                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900">
                 Cancel
               </button>
               <button
                 onClick={handleSendMessage}
                 disabled={!messageText.trim()}
-                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50"
-              >
+                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50">
                 Send
               </button>
             </div>

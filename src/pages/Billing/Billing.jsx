@@ -6,7 +6,7 @@ import mcLogo from "../../assets/cdt.svg";
 
 const Billing = () => {
   return (
-    <div className="container pl-[6rem] py-8 w-[80rem]">
+    <div className="container  py-8 px-[36px]">
       <h1 className="text-[32px] font-bold mb-6">Billing & Payments</h1>
 
       <p className="text-[#111827] text-[16px] font-medium mb-6">
