@@ -165,6 +165,7 @@ export default function Settings() {
       console.log(response.data);
 
       setFormData(response.data);
+
       if (response?.data?.success) {
         setUpdateProfilelSuccess(true);
         toast.success("Profile updated successfully!");
@@ -179,6 +180,7 @@ export default function Settings() {
       console.error("Error updating profile:", error);
       toast.error("Failed to update profile.");
       // alert("Failed to update profile.");
+
     }
   };
 
@@ -196,6 +198,7 @@ export default function Settings() {
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
       </div>
     );
+  console.log(formData, "form data");
 
   return (
     <form onSubmit={handleSubmit} className="w-[75rem] p-12">
@@ -243,8 +246,8 @@ export default function Settings() {
                   Profile picture
                 </label>
                 <p className="text-sm text-gray-500">
-                  Use a profile picture to stand out. Upload an image that is
-                  312px square
+                  Use a profile picture to stand out. Upload an image that is 312px square
+
                 </p>
               </div>
             </div>
@@ -284,8 +287,12 @@ export default function Settings() {
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
               <Input
-                name="lastName"
-                value={formData.lastName}
+
+                type="text"
+                name="surname"
+                value={formData.surname}
+
+
                 onChange={handleChange}
                 required
                 className="bg-[#F3F4F6]"
@@ -304,14 +311,14 @@ export default function Settings() {
                 value={formData.dateOfBirth}
                 onChange={handleChange}
                 required
-                className="bg-[#F3F4F6]"
+                className="bg-[#F3F4F6] text-[14px] font-[500]"
               />
             </div>
             <div className="space-y-2">
               <label className=" text-[16px] font-medium text-[#111827]">
                 Age
               </label>
-              <p className="text-sm text-gray-500">Your official surname</p>
+              <p className="text-sm text-gray-500">Your official age</p>
               <Input
                 name="age"
                 type="number"
@@ -331,7 +338,7 @@ export default function Settings() {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="w-full h-10 px-3 rounded-lg border bg-[#F3F4F6]"
+              className="w-full h-10 px-3 outline-none rounded-lg border bg-[#F3F4F6]"
             >
               <option value="">Select gender</option>
               <option value="male">Male</option>
