@@ -1,44 +1,85 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
-import Sidebar from "../components/Sidebar/Sidebar";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import Messages from "../pages/Messages/Messages";
-import Opportunities from "../pages/Opportunities/Opportunities";
-import Contracts from "../pages/Contracts/Contracts";
-import Settings from "../pages/Settings/Settings";
-import Signup from "../pages/Signup/Signup.jsx";
-import Billing from "../pages/Billing/Billing";
-import TopBar from "../components/Topbar/Topbar";
-import CreateOpportunity from "../pages/Opportunities/CreateOpportunity";
-import SponsorOpportunities from "../pages/Opportunities/SponsorOpportunities";
+import Sidebar from '../components/Sidebar/Sidebar';
+import Dashboard from '../pages/Dashboard/Dashboard';
+import Messages from '../pages/Messages/Messages';
+import Opportunities from '../pages/Opportunities/Opportunities';
+import Contracts from '../pages/Contracts/Contracts';
+import Settings from '../pages/Settings/Settings';
+import Signup from '../pages/Signup/Signup.jsx';
+import Billing from '../pages/Billing/Billing';
+import TopBar from '../components/Topbar/Topbar';
+import CreateOpportunity from '../pages/Opportunities/CreateOpportunity';
+import SponsorOpportunities from '../pages/Opportunities/SponsorOpportunities';
 
-import CreateContractPage from "../pages/Contracts/CreateContractPage";
-import SponsorSettings from "../pages/Settings/SponsorSettings";
-import AnalyticsPage from "../pages/Analytics/Analytics";
-import AthletePage from "../pages/Athlete/AthletePage";
-import SignIn from "../pages/SignIn/SignIn";
-import useAuth from "../hooks/useAuth";
-import ProtectedRoute from "../components/ProtectedRoute";
-import ContractDetails from "../pages/Contracts/ContractDetails";
-import UserProfile from "../components/_Common/UserProfile.jsx";
-import OpportunityDetails from "../pages/Opportunities/OpportunityDetails.jsx";
-import SponsorSidebar from "../components/SponsorRightSidebat/index.jsx";
-import FeatureSponsor from "../components/featureSponsors/index.jsx";
-import Annoucements from "../components/annoucements/index.jsx";
-import MilestoneManager from "../pages/milestone/index.jsx";
+import CreateContractPage from '../pages/Contracts/CreateContractPage';
+import SponsorSettings from '../pages/Settings/SponsorSettings';
+import AnalyticsPage from '../pages/Analytics/Analytics';
+import AthletePage from '../pages/Athlete/AthletePage';
+import SignIn from '../pages/SignIn/SignIn';
+import useAuth from '../hooks/useAuth';
+import ProtectedRoute from '../components/ProtectedRoute';
+import ContractDetails from '../pages/Contracts/ContractDetails';
+import UserProfile from '../components/_Common/UserProfile.jsx';
+import OpportunityDetails from '../pages/Opportunities/OpportunityDetails.jsx';
+import SponsorSidebar from '../components/SponsorRightSidebat/index.jsx';
+import FeatureSponsor from '../components/featureSponsors/index.jsx';
+import Annoucements from '../components/annoucements/index.jsx';
+import MilestoneManager from '../pages/milestone/index.jsx';
+import { PROSPONSER } from '../https/config.js';
+import toast from 'react-hot-toast';
+import { supabase } from '../lib/supabaseClient.js';
 
 const AppRoutes = () => {
   const { isAuthenticated, loading, role } = useAuth();
-  console.log("Role: " + role);
+
   const location = useLocation();
 
   // Define routes where the Sidebar should be hidden
-  const hideSidebarRoutes = ["/login", "/signup"];
-  const hideRightSidebar = ["/login", "/signup", "/messages"];
+  const hideSidebarRoutes = ['/login', '/signup'];
+  const hideRightSidebar = ['/login', '/signup', '/messages'];
   const shouldHideSidebar = hideSidebarRoutes.includes(location.pathname);
   const shouldHidRighteSidebar = hideRightSidebar.includes(location.pathname);
   // console.log("isAuthenticated", isAuthenticated);
+
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data: sessionData, error: sessionError } =
+          await supabase.auth.getSession();
+        if (sessionError || !sessionData.session)
+          throw new Error('No authenticated session');
+
+        const userId = sessionData.session.user.id;
+        const token = sessionData.session.access_token;
+
+        const response = await PROSPONSER.get(`/athletes/profile/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        console.log('Fetched Profile:', response.data);
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching profile:', err);
+        toast.error('Please complete your profile', {
+          position: 'top-center',
+          duration: 3000,
+          style: {
+            fontSize: '18px',
+            padding: '16px',
+            borderRadius: '8px',
+            background: '#000',
+            color: '#fff',
+          },
+        });
+      }
+    };
+
+    fetchProfile();
+  }, [location.pathname]);
   return (
     <div className="bg-[#FEFEFE] flex ">
       {!shouldHideSidebar && <Sidebar />}
@@ -55,14 +96,14 @@ const AppRoutes = () => {
         <Route
           path="/Opportunities"
           element={
-            role === "athlete" ? <Opportunities /> : <SponsorOpportunities />
+            role === 'athlete' ? <Opportunities /> : <SponsorOpportunities />
           }
         />
 
         <Route path="/Contracts" element={<Contracts />} />
         <Route
           path="/Settings"
-          element={role === "athlete" ? <Settings /> : <SponsorSettings />}
+          element={role === 'athlete' ? <Settings /> : <SponsorSettings />}
         />
         <Route path="/Billing" element={<Billing />} />
 
