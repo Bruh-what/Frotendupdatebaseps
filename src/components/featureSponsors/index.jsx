@@ -1,17 +1,9 @@
 import React from "react";
 import imageOne from "../../assets/images/Rectangle 34624146.png";
-const FeatureSponsor = () => {
-  const data = [
-    {
-      title: "FeatureSponsor",
-      img: imageOne,
-      name: "Can motosports",
-      description: "A high impact brand in the cars and motorbike space.",
-    },
-  ];
+const FeatureSponsor = ({ featuresData }) => {
   return (
     <>
-      {data.map((items, index) => {
+      {featuresData?.map((items, index) => {
         return (
           <div key={index} className="p-6">
             <h1 className="text-[24px] font-[600] pt-4 pb-4">{items.title}</h1>
