@@ -3,6 +3,7 @@ import { Input } from '../../components/_Common/Input';
 import { Textarea } from '../../components/_Common/TextArea';
 import { supabase } from '../../lib/supabaseClient';
 import { PROSPONSER } from '../../https/config';
+import toast from 'react-hot-toast';
 
 export default function Settings() {
   const [formData, setFormData] = useState({
@@ -157,10 +158,10 @@ export default function Settings() {
       });
 
       setFormData(response.data);
-      alert('Profile updated successfully!');
+      toast.success('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Failed to update profile.');
+      toast.error('Failed to update profile.');
     }
   };
 
@@ -424,7 +425,7 @@ export default function Settings() {
               <div className="flex flex-col justify-between h-full">
                 <div className="text-md font-semibold ">
                   Need more images or videos?
-                  <a href="" className="text-blue-500 hover:underline ml-2 ">
+                  <a href="" className="text-blue-500  hover:underline ml-2 ">
                     Upgrade now.
                   </a>
                 </div>

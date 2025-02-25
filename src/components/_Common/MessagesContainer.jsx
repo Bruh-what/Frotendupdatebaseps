@@ -202,7 +202,7 @@ const MessagesContainer = () => {
                 {/* <span className="text-xs text-gray-400">
                   {format(new Date(conversation.updatedAt), "MMM d, HH:mm")}
                 </span> */}
-                <button className="text-[#1F2937] font-[500]">Open</button>
+                <button className="text-[#1F2937]  font-[500]">Open</button>
               </div>
             ))
           )}
