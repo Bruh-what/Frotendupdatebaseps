@@ -187,7 +187,8 @@ export default function SponsorOpportunitiesPage() {
         <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
           <div
             className="bg-[#ffff] cursor-pointer rounded-full w-[7rem] h-[2.5rem] border border-gray-300 flex items-center justify-center"
-            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}>
+            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
+          >
             <img src={filterIcon} alt="Filter" className="w-[4rem] h-[4rem]" />
           </div>
 
@@ -198,7 +199,8 @@ export default function SponsorOpportunitiesPage() {
                   <h3 className="text-lg font-semibold">Filter</h3>
                   <button
                     onClick={() => setIsFilterModalOpen(false)}
-                    className="px-4 py-1 rounded-full bg-black text-white">
+                    className="px-4 py-1 rounded-full bg-black text-white"
+                  >
                     Clear
                   </button>
                 </div>
@@ -230,7 +232,8 @@ export default function SponsorOpportunitiesPage() {
                             ? "bg-[#4736FB] text-white"
                             : "bg-white text-black"
                         }`}
-                        onClick={() => setGender("Male")}>
+                        onClick={() => setGender("Male")}
+                      >
                         Male
                       </button>
                       <button
@@ -239,7 +242,8 @@ export default function SponsorOpportunitiesPage() {
                             ? "bg-[#4736FB] text-white"
                             : "bg-white text-black"
                         }`}
-                        onClick={() => setGender("Female")}>
+                        onClick={() => setGender("Female")}
+                      >
                         Female
                       </button>
                       <button
@@ -248,7 +252,8 @@ export default function SponsorOpportunitiesPage() {
                             ? "bg-[#4736FB] text-white"
                             : "bg-white text-black"
                         }`}
-                        onClick={() => setGender("Any")}>
+                        onClick={() => setGender("Any")}
+                      >
                         Any
                       </button>
                     </div>
@@ -270,7 +275,8 @@ export default function SponsorOpportunitiesPage() {
                   <div className="flex justify-end">
                     <button
                       onClick={applyBudgetFilter}
-                      className="px-4 py-1 rounded-full bg-black text-white">
+                      className="px-4 py-1 rounded-full bg-black text-white"
+                    >
                       Apply
                     </button>
                   </div>
@@ -285,7 +291,8 @@ export default function SponsorOpportunitiesPage() {
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="bg-white rounded-2xl border border-[#F3F4F6]  p-6">
+            className="bg-white rounded-2xl border border-[#F3F4F6]  p-6"
+          >
             <h4 className="font-medium  text-[18px] capitalize">
               {opportunity.title}
             </h4>
@@ -327,7 +334,8 @@ export default function SponsorOpportunitiesPage() {
                   <p className=" text-gray-500">
                     <Link
                       to={`/athlete/${opportunity.athleteId}`}
-                      className="text-[12px] font-[500] capitalize">
+                      className="text-[12px] font-[500] capitalize"
+                    >
                       View Profile
                     </Link>
                   </p>
@@ -336,7 +344,8 @@ export default function SponsorOpportunitiesPage() {
 
               <button
                 onClick={() => handleContactClick(opportunity)}
-                className="bg-black transition delay-50 ease-linear hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full">
+                className="bg-black transition delay-50 ease-linear hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full"
+              >
                 Message
               </button>
             </div>
@@ -361,13 +370,15 @@ export default function SponsorOpportunitiesPage() {
                   setShowMessageModal(false);
                   setMessageText("");
                 }}
-                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900">
+                className="px-4 py-2 rounded-full bg-gray-100 text-gray-900"
+              >
                 Cancel
               </button>
               <button
                 onClick={handleSendMessage}
                 disabled={!messageText.trim()}
-                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50">
+                className="px-4 py-2 rounded-full bg-[#4F46E5] text-white hover:bg-[#4338CA] disabled:opacity-50"
+              >
                 Send
               </button>
             </div>
