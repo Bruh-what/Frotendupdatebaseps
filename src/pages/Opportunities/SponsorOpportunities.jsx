@@ -35,6 +35,7 @@ export default function SponsorOpportunitiesPage() {
 
     return matchesSearch && matchesBudget;
   });
+  console.log(opportunities);
 
   const handleBudgetChange = (e) => {
     setTempBudget(e.target.value);
@@ -228,7 +229,7 @@ export default function SponsorOpportunitiesPage() {
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
                           gender === "Male"
-                            ? "bg-[#4726FB] text-white"
+                            ? "bg-[#4736FB] text-white"
                             : "bg-white text-black"
                         }`}
                         onClick={() => setGender("Male")}
