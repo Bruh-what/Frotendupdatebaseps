@@ -5,7 +5,7 @@ const UpgradeToPro = () => {
       <p className="text-[#9CA3AF] text-sm font-[500]">
         Invite 3 friends and get free access to the pro version.
       </p>
-      <button className="bg-[#4F46E5] hover:bg-[#433bdd] text-sm p-1.5 rounded-[46px] text-white">
+      <button className="bg-[#4F46E5] duration-300 hover:bg-[#4338CA] text-sm p-1.5 rounded-[46px] text-white">
         Upgrade
       </button>
     </div>
