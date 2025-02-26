@@ -272,16 +272,18 @@ export default function SponsorSettings() {
           </div>
 
           <div className="flex justify-end gap-4 pb-10">
+            {/* //  adding here also */}
             <button
               type="button"
               onClick={() => fetchSponsorProfile()}
-              className="bg-gray-100 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
+              className="bg-gray-100 hover:bg-gray-300 duration-300 text-gray-900 hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
             >
               Cancel
             </button>
+            {/* //adding hover and duration  */}
             <button
               type="submit"
-              className="bg-[#4F46E5] hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
+              className="bg-[#4F46E5] duration-300 hover:bg-[#4338CA] text-white  py-2 px-6 font-medium rounded-full shadow-xs"
             >
               Save changes
             </button>
