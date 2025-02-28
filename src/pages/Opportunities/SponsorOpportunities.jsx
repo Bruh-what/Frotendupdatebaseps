@@ -287,11 +287,11 @@ export default function SponsorOpportunitiesPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]  gap-4">
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
-            className="bg-white rounded-2xl border border-[#F3F4F6]  p-6"
+            className="bg-white rounded-2xl border border-[#F3F4F6]  p-3"
           >
             <h4 className="font-medium  text-[18px] capitalize">
               {opportunity.title}
@@ -314,8 +314,8 @@ export default function SponsorOpportunitiesPage() {
               ))}
             </div>
 
-            <div className="flex items-center flex-row  gap-2 justify-between max-xl:flex-col  max-sm:gap-0">
-              <div className="flex items-center max-sm:mb-2 w-full">
+            <div className="flex items-center flex-row  gap-2 justify-between max-[840px]:flex-col   max-sm:gap-0 overflow-hidden">
+              <div className="flex items-center max-sm:mb-2 w-full ">
                 <Avatar>
                   <AvatarImage
                     src={
@@ -327,8 +327,8 @@ export default function SponsorOpportunitiesPage() {
                   <AvatarFallback>{opportunity.athleteName[0]}</AvatarFallback>
                 </Avatar>
 
-                <div className="ml-3 text-[8.89px]">
-                  <h3 className="font-semibold text-[14px] max-sm:text-[11px]">
+                <div className="ml-1 text-[8.89px]">
+                  <h3 className="font-semibold text-[13px] max-sm:text-[11px]">
                     {opportunity.athleteName}
                   </h3>
                   <p className=" text-gray-500">
@@ -342,12 +342,16 @@ export default function SponsorOpportunitiesPage() {
                 </div>
               </div>
 
-              <button
+              {/* button p */}
+              <div className="p-2 w-full">
+                <button
                 onClick={() => handleContactClick(opportunity)}
-                className="bg-black transition delay-50 ease-linear hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full"
+                className="bg-black transition delay-50 ease-linear w-full hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full"
               >
                 Message
               </button>
+              </div>
+              
             </div>
           </div>
         ))}
