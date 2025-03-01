@@ -7,20 +7,19 @@ import toast from "react-hot-toast";
 
 export default function Settings() {
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
 
-    firstName: '',
-    lastName: '',
-
-    email: '',
-    gender: '',
-    dateOfBirth: '',
-    age: '',
-    username: '',
-    instagram: '',
-    tiktok: '',
-    youtube: '',
-    x: '',
-    bio: '',
+    email: "",
+    gender: "",
+    dateOfBirth: "",
+    age: "",
+    username: "",
+    instagram: "",
+    tiktok: "",
+    youtube: "",
+    x: "",
+    bio: "",
 
     images: [],
     avatar: "",
@@ -115,20 +114,19 @@ export default function Settings() {
       console.error("Error fetching profile:", error);
 
       setFormData({
+        firstName: "",
+        lastName: "",
 
-        firstName: '',
-        lastName: '',
-
-        email: '',
-        gender: '',
-        dateOfBirth: '',
-        age: '',
-        username: '',
-        instagram: '',
-        tiktok: '',
-        youtube: '',
-        x: '',
-        bio: '',
+        email: "",
+        gender: "",
+        dateOfBirth: "",
+        age: "",
+        username: "",
+        instagram: "",
+        tiktok: "",
+        youtube: "",
+        x: "",
+        bio: "",
 
         images: [],
         avatar: "",
@@ -201,7 +199,7 @@ export default function Settings() {
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
       </div>
     );
-  console.log(formData, "form data");
+  // console.log(formData, "form data");
 
   return (
     <form onSubmit={handleSubmit} className="w-[75rem] p-[36px]">
@@ -290,7 +288,6 @@ export default function Settings() {
               </label>
               <p className="text-sm text-gray-500">Your official surname</p>
               <Input
-
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
@@ -311,7 +308,7 @@ export default function Settings() {
                 value={formData.dateOfBirth}
                 onChange={handleChange}
                 required
-                className="bg-[#F3F4F6] text-[14px] font-[500]"
+                className="bg-[#F3F4F6] text-[14px] font-[500] text-gray-700"
               />
             </div>
             <div className="space-y-2">

@@ -345,13 +345,12 @@ export default function SponsorOpportunitiesPage() {
               {/* button p */}
               <div className="p-2 w-full">
                 <button
-                onClick={() => handleContactClick(opportunity)}
-                className="bg-black transition delay-50 ease-linear w-full hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full"
-              >
-                Message
-              </button>
+                  onClick={() => handleContactClick(opportunity)}
+                  className="bg-black transition delay-50 ease-linear w-full hover:bg-[#4338CA] text-white text-[13px] max-md:text-[10px] py-1 px-6 rounded-full"
+                >
+                  Message
+                </button>
               </div>
-              
             </div>
           </div>
         ))}

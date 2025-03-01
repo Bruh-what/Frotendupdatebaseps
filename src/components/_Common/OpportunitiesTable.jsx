@@ -136,7 +136,7 @@ const OpportunitiesTable = () => {
           >
             <div className="space-y-1 flex flex-row gap-2">
               <div className="flex flex-col">
-                <h3 className="font-[500] text-gray-900 capitalize">
+                <h3 className="font-[600] text-[18px] text-gray-900 capitalize">
                   {opportunity.title}
                 </h3>
                 <p className="text-sm font-[500]  text-[#9CA3AF]">
@@ -162,10 +162,10 @@ const OpportunitiesTable = () => {
                 state={{ opportunity }}
                 className="p-2 text-gray-500 hover:text-gray-700"
               >
-                <Eye className="w-4 h-4" />
+                <Eye className="w-5 h-5 text-black" />
               </Link>
               <Link className="p-2 text-gray-500 hover:text-gray-700">
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-5 h-5 text-black" />
               </Link>
             </div>
           </div>

@@ -70,13 +70,13 @@ function Grid() {
 
   return (
     <div>
-      <div className=" flex justify-end gap-2 items-center">
-        <div className="flex gap-2 pr-2">
-          <div>
+      <div className=" flex justify-end gap-4 items-center">
+        <div className="flex gap-4 pr-2">
+          <div className="min-w-[23px] hover:cursor-pointer">
             {" "}
             <img src={msg} alt="msg" width="100%" />
           </div>
-          <div>
+          <div className="min-w-[23px] hover:cursor-pointer">
             <img src={bell} alt="bell" width="100%" />
           </div>
         </div>
@@ -95,14 +95,14 @@ function Grid() {
                 <img
                   src={profileData?.avatar || image}
                   alt="Profile"
-                  className="w-10 h-10 rounded-full object-cover cursor-pointer"
+                  className="w-11 h-11 rounded-full object-cover cursor-pointer"
                 />
               </Link>
             </div>
           </>
         ) : (
           <Link to="/settings">
-            <div className="w-10 h-10 rounded-full bg-gray-200" />
+            <div className="w-11 h-11 rounded-full bg-gray-200" />
           </Link>
         )}
       </div>
