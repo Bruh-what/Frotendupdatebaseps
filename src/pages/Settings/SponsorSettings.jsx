@@ -5,8 +5,12 @@ import { Textarea } from '../../components/_Common/TextArea';
 import { supabase } from '../../lib/supabaseClient';
 import { PROSPONSER } from '../../https/config';
 import toast from 'react-hot-toast';
+import { setProfileIncomplete } from '../../feature/auth/auth.slicer';
+import { useDispatch } from 'react-redux';
 
 export default function SponsorSettings() {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     companyName: '',
     website: '',
@@ -55,7 +59,8 @@ export default function SponsorSettings() {
       };
     } catch (error) {
       console.error('Error uploading avatar:', error);
-      alert('Failed to upload image');
+
+      toast.error('Failed to upload image');
     } finally {
       setAvatarUploading(false);
     }
@@ -119,10 +124,11 @@ export default function SponsorSettings() {
       });
 
       setFormData(response.data.data);
+      dispatch(setProfileIncomplete(false));
       toast.success('Profile updated successfully');
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Failed to update profile.');
+      toast.error('Failed to update profile.');
     }
   };
 
