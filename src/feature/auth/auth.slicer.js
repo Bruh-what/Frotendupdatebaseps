@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { signupUser, signinUser, logoutUser } from "./auth.action";
+import { createSlice } from '@reduxjs/toolkit';
+import { signupUser, signinUser, logoutUser } from './auth.action';
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: {
     IsRegisterLoading: false,
     IsRegisterFullfilled: false,
@@ -18,6 +18,8 @@ const authSlice = createSlice({
     success: null,
     error: null,
     user: null,
+
+    isProfileIncomplete: false,
   },
   reducers: {
     clearAuthMessages: (state) => {
@@ -29,6 +31,9 @@ const authSlice = createSlice({
       state.IsLoginLoading = false;
       state.IsLoginFullfilled = false;
       state.IsLoginRejected = false;
+    },
+    setProfileIncomplete: (state, action) => {
+      state.isProfileIncomplete = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -89,5 +94,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuthMessages } = authSlice.actions;
+export const { clearAuthMessages, setProfileIncomplete } = authSlice.actions;
 export default authSlice.reducer;

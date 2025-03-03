@@ -5,7 +5,12 @@ import { supabase } from '../../lib/supabaseClient';
 import { PROSPONSER } from '../../https/config';
 import toast from 'react-hot-toast';
 
+import { setProfileIncomplete } from '../../feature/auth/auth.slicer';
+import { useDispatch } from 'react-redux';
+
 export default function Settings() {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -162,9 +167,10 @@ export default function Settings() {
       console.log(response.data);
 
       setFormData(response.data);
+      dispatch(setProfileIncomplete(false));
 
       if (response?.data?.success) {
-        setUpdateProfilelSuccess(true);
+        dispatch(setProfileIncomplete(false));
         toast.success('Profile updated successfully!');
       }
       setUpdateProfileloading(false);
