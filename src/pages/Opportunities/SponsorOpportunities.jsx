@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "../../components/_Common/Avatar";
-import filterIcon from "../../assets/filter.svg";
-import { Badge } from "../../components/_Common/Badge";
-import { supabase } from "../../lib/supabaseClient";
-import { Link } from "react-router-dom";
-import { PROSPONSER } from "../../https/config";
+} from '../../components/_Common/Avatar';
+import filterIcon from '../../assets/filter.svg';
+import { Badge } from '../../components/_Common/Badge';
+import { supabase } from '../../lib/supabaseClient';
+import { Link } from 'react-router-dom';
+import { PROSPONSER } from '../../https/config';
 
 export default function SponsorOpportunitiesPage() {
   const [opportunities, setOpportunities] = useState([]);
@@ -17,25 +17,25 @@ export default function SponsorOpportunitiesPage() {
   const [error, setError] = useState(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
-  const [messageText, setMessageText] = useState("");
+  const [messageText, setMessageText] = useState('');
   const [athleteProfiles, setAthleteProfiles] = useState({});
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [gender, setGender] = useState("Any");
-  const [followerCount, setFollowerCount] = useState("");
-  const [budget, setBudget] = useState("");
-  const [tempBudget, setTempBudget] = useState("");
+  const [gender, setGender] = useState('Any');
+  const [followerCount, setFollowerCount] = useState('');
+  const [budget, setBudget] = useState('');
+  const [tempBudget, setTempBudget] = useState('');
   const navigate = useNavigate();
 
   const filteredOpportunities = opportunities.filter((opp) => {
-    const matchesSearch = opp.sport
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesBudget = budget === "" || opp.priceAsk <= Number(budget);
+    const matchesSearch =
+      String(opp.priceAsk).includes(searchQuery) ||
+      opp.athleteName.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesBudget = budget === '' || opp.priceAsk <= Number(budget);
 
     return matchesSearch && matchesBudget;
   });
-  console.log(opportunities);
 
   const handleBudgetChange = (e) => {
     setTempBudget(e.target.value);
@@ -59,7 +59,7 @@ export default function SponsorOpportunitiesPage() {
         [athleteId]: response.data,
       }));
     } catch (error) {
-      console.error("Error fetching athlete avatar:", error);
+      console.error('Error fetching athlete avatar:', error);
     }
   };
 
@@ -74,12 +74,12 @@ export default function SponsorOpportunitiesPage() {
       };
 
       const [opportunitiesRes, contractsRes] = await Promise.all([
-        PROSPONSER.get("/opportunities/all", authHeaders),
-        PROSPONSER.get("/contracts", authHeaders),
+        PROSPONSER.get('/opportunities/all', authHeaders),
+        PROSPONSER.get('/contracts', authHeaders),
       ]);
 
       const activeContracts = contractsRes.data.filter(
-        (contract) => contract.status === "active"
+        (contract) => contract.status === 'active'
       );
 
       const availableOpportunities = opportunitiesRes.data.filter(
@@ -97,8 +97,8 @@ export default function SponsorOpportunitiesPage() {
         }
       });
     } catch (error) {
-      console.error("Error fetching opportunities:", error);
-      setError("Failed to fetch opportunities.");
+      console.error('Error fetching opportunities:', error);
+      setError('Failed to fetch opportunities.');
     } finally {
       setLoading(false);
     }
@@ -114,7 +114,7 @@ export default function SponsorOpportunitiesPage() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      if (!session) throw new Error("No authenticated session");
+      if (!session) throw new Error('No authenticated session');
 
       const messageData = {
         senderId: session.user.id,
@@ -134,18 +134,18 @@ export default function SponsorOpportunitiesPage() {
         },
       };
 
-      const response = await PROSPONSER.post("/messages", messageData, {
+      const response = await PROSPONSER.post('/messages', messageData, {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
       if (response.data.success) {
         setShowMessageModal(false);
-        setMessageText("");
+        setMessageText('');
 
-        navigate("/messages", {
+        navigate('/messages', {
           state: {
             selectedConversation: {
               userId: selectedOpportunity.athleteId,
@@ -155,8 +155,8 @@ export default function SponsorOpportunitiesPage() {
         });
       }
     } catch (error) {
-      console.error("Send message error:", error);
-      setError("Failed to send message.");
+      console.error('Send message error:', error);
+      setError('Failed to send message.');
     }
   };
 
@@ -173,7 +173,7 @@ export default function SponsorOpportunitiesPage() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="container px-[32px] py-8 relative">
+    <div className="container px-[32px] py-6 relative">
       <h1 className="text-3xl font-bold mb-6">Sponsorship Opportunities</h1>
 
       <div className="relative mb-6">
@@ -198,7 +198,10 @@ export default function SponsorOpportunitiesPage() {
                 <div className="flex justify-between items-center w-full gap-2 m-4">
                   <h3 className="text-lg font-semibold">Filter</h3>
                   <button
-                    onClick={() => setIsFilterModalOpen(false)}
+                    onClick={() => {
+                      setIsFilterModalOpen(false);
+                      setBudget('100000000');
+                    }}
                     className="px-4 py-1 rounded-full bg-black text-white"
                   >
                     Clear
@@ -228,31 +231,31 @@ export default function SponsorOpportunitiesPage() {
                     <div className="flex gap-2">
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === "Male"
-                            ? "bg-[#4736FB] text-white"
-                            : "bg-white text-black"
+                          gender === 'Male'
+                            ? 'bg-[#4736FB] text-white'
+                            : 'bg-white text-black'
                         }`}
-                        onClick={() => setGender("Male")}
+                        onClick={() => setGender('Male')}
                       >
                         Male
                       </button>
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === "Female"
-                            ? "bg-[#4736FB] text-white"
-                            : "bg-white text-black"
+                          gender === 'Female'
+                            ? 'bg-[#4736FB] text-white'
+                            : 'bg-white text-black'
                         }`}
-                        onClick={() => setGender("Female")}
+                        onClick={() => setGender('Female')}
                       >
                         Female
                       </button>
                       <button
                         className={`px-4 py-2 border rounded-[50px] ${
-                          gender === "Any"
-                            ? "bg-[#4736FB] text-white"
-                            : "bg-white text-black"
+                          gender === 'Any'
+                            ? 'bg-[#4736FB] text-white'
+                            : 'bg-white text-black'
                         }`}
-                        onClick={() => setGender("Any")}
+                        onClick={() => setGender('Any')}
                       >
                         Any
                       </button>
@@ -287,15 +290,27 @@ export default function SponsorOpportunitiesPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]  gap-4">
+      <div
+        className={`grid gap-4 ${
+          filteredOpportunities.length === 1
+            ? 'grid-cols-[350px]' // Fixed width if only one item
+            : 'grid-cols-[repeat(auto-fit,minmax(260px,1fr))]'
+        }`}
+      >
         {filteredOpportunities.map((opportunity) => (
           <div
             key={opportunity._id}
             className="bg-white rounded-2xl border border-[#F3F4F6]  p-3"
           >
-            <h4 className="font-medium  text-[18px] capitalize">
-              {opportunity.title}
-            </h4>
+            <div className="flex justify-between">
+              <h4 className="font-medium  text-[18px] capitalize">
+                {opportunity.title}
+              </h4>
+              <p className="text-gray-600 mb-4 text-[14px] font-[600]">
+                £{opportunity.priceAsk}
+              </p>
+            </div>
+
             <p className="text-sm mb-2 text-[12px] text-black font-[500] capitalize">
               {opportunity.sport}
             </p>
@@ -303,9 +318,7 @@ export default function SponsorOpportunitiesPage() {
             <p className="text-gray-600 mb-4 text-sm min-h-[40px]">
               {opportunity.description}
             </p>
-            {/* <p className="text-gray-600 mb-4 text-[14px] font-[600]">
-              £{opportunity.priceAsk}
-            </p> */}
+
             <div className="flex flex-wrap gap-2 mb-4">
               {opportunity.tags?.map((tag, index) => (
                 <Badge key={index} variant="secondary">
@@ -371,7 +384,7 @@ export default function SponsorOpportunitiesPage() {
               <button
                 onClick={() => {
                   setShowMessageModal(false);
-                  setMessageText("");
+                  setMessageText('');
                 }}
                 className="px-4 py-2 rounded-full bg-gray-100 text-gray-900"
               >

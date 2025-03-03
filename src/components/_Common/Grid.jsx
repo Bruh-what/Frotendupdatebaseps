@@ -29,17 +29,17 @@
 // }
 
 // export default Grid;
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { supabase } from "../../lib/supabaseClient";
-import { PROSPONSER } from "../../https/config";
-import Statcards from "./Statcards";
-import { ProfileViews } from "./ProfileViews";
-import MessagesContainer from "./MessagesContainer";
-import OpportunitiesTable from "./OpportunitiesTable";
-import bell from "../../assets/icons/bell-alert.svg";
-import msg from "../../assets/icons/chat-bubble-left-ellipsis.svg";
-import image from "../../assets/images/Rectangle 34624146.png";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { supabase } from '../../lib/supabaseClient';
+import { PROSPONSER } from '../../https/config';
+import Statcards from './Statcards';
+import { ProfileViews } from './ProfileViews';
+import MessagesContainer from './MessagesContainer';
+import OpportunitiesTable from './OpportunitiesTable';
+import bell from '../../assets/icons/bell-alert.svg';
+import msg from '../../assets/icons/chat-bubble-left-ellipsis.svg';
+import image from '../../assets/images/Rectangle 34624146.png';
 
 function Grid() {
   const [profileData, setProfileData] = useState(null);
@@ -61,7 +61,7 @@ function Grid() {
 
         setProfileData(response.data);
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        console.error('Error fetching profile:', error);
       }
     };
 
@@ -73,7 +73,7 @@ function Grid() {
       <div className=" flex justify-end gap-4 items-center">
         <div className="flex gap-4 pr-2">
           <div className="min-w-[23px] hover:cursor-pointer">
-            {" "}
+            {' '}
             <img src={msg} alt="msg" width="100%" />
           </div>
           <div className="min-w-[23px] hover:cursor-pointer">
@@ -83,10 +83,10 @@ function Grid() {
         {profileData ? (
           <>
             <div>
-              <p className="text-[12px] font-[500] text-[#9CA3AF]">
+              <p className="text-[12px] font-[500] text-[#9CA3AF] capitalize">
                 {profileData?.firstName}
               </p>
-              <p className="text-[12px] font-[500] text-[#111827]">
+              <p className="text-[12px] font-[500] text-[#111827] capitalize">
                 {profileData?.lastName}
               </p>
             </div>
