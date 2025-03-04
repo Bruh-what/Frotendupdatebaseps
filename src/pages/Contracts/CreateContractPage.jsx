@@ -311,7 +311,7 @@ export default function CreateContractPage() {
 
           <button
             type="submit"
-            className="bg-[#4F46E5] w-full hover:bg-gray-100 text-white hover:text-gray-900 py-2 px-6 font-medium rounded-full shadow-xs"
+            className="bg-[hsl(243,75%,59%)] w-full hover:bg-[#4338CA] text-white py-2 px-6 font-medium rounded-full shadow-xs"
             disabled={loading}
           >
             {loading ? 'Creating contract...' : 'Send contract'}
@@ -328,8 +328,8 @@ export default function CreateContractPage() {
             </h2>
             <p className="mb-6">
               Are you sure you want to send this contract? You will be charged
-              contract price + 7.5% platform fee from your primary payment
-              method .
+              contract Fee £{formData?.totalPrice} + 7.5% platform fee from your
+              primary payment method .
             </p>
             <div className="flex justify-end gap-4">
               <button

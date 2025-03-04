@@ -24,6 +24,7 @@ import ContractDetails from '../pages/Contracts/ContractDetails';
 import OpportunityDetails from '../pages/Opportunities/OpportunityDetails.jsx';
 import SponsorSidebar from '../components/SponsorRightSidebat/index.jsx';
 import MilestoneManager from '../pages/milestone/index.jsx';
+import Stripe from '../pages/stripe/Stripe.jsx';
 
 const AppRoutes = () => {
   const { isAuthenticated, loading, role } = useAuth();
@@ -76,6 +77,7 @@ const AppRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/milestones" element={<MilestoneManager />} />
+        <Route path="/stripe" element={<Stripe />} />
         {/* <Route path="/profile/:userId" element={<UserProfile />} /> */}
       </Routes>
       {!shouldHidRighteSidebar && <SponsorSidebar />}
